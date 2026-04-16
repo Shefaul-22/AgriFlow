@@ -10,7 +10,7 @@ const stats = [
 
 const State = () => {
   return (
-    <section className="w-full py-14 border-y border-gray-200 dark:border-zinc-900 bg-gray-100 dark:bg-black">
+    <section className="w-full py-14 border-y border-gray-200 dark:border-gray-300 ">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-3 gap-8 text-center">
           {stats.map((stat, index) => (

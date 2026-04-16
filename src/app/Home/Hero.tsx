@@ -6,7 +6,7 @@ import cropImage from "@/app/Images/Crop-Analysis.png";
 import Image from "next/image";
 const Hero = () => {
   return (
-    <section className="relative w-full mt-20 py-20 lg:py-32 overflow-hidden ">
+    <section className="relative w-full mt-20 py-20 overflow-hidden ">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Left Content */}
         <motion.div
@@ -15,11 +15,11 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="flex flex-col gap-6"
         >
-          <span className="inline-block px-4 py-1.5 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold tracking-wider uppercase rounded-full w-fit border border-green-200 dark:border-green-800">
+          <span className="inline-block px-4 py-1.5 dark:bg-green-900/30  text-xs font-bold tracking-wider uppercase rounded-full w-fit border border-green-200 dark:border-green-800">
             Agriculture 4.0
           </span>
 
-          <h1 className="text-5xl lg:text-7xl font-extrabold text-main-black dark:text-white leading-[1.1]">
+          <h1 className="text-5xl lg:text-7xl font-extrabold text-main-black leading-[1.1]">
             Global Trade <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-900 to-lime-600">
               Gateway.
