@@ -1,95 +1,91 @@
 "use client";
-
-import React, { useState, useEffect } from 'react';
-import { HiMenuAlt3, HiX } from 'react-icons/hi'; 
-import { motion, AnimatePresence } from 'framer-motion'; 
-import Logo from './Logo';
+import React, { useState, useEffect } from "react";
+import { HiMenuAlt3, HiX, HiMoon, HiSun } from "react-icons/hi";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
+import Logo from "./Logo";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // 50px scroll korle trigger hobe
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled 
-          ? "bg-white/80 dark:bg-black/80 backdrop-blur-lg py-3" 
-          : "bg-white/90 dark:bg-black/90 backdrop-blur-md py-5 border-b border-gray-100 dark:border-zinc-800"
-      }`}
-    >
-      {/* --- Green Line Animation Section --- */}
-      {/* Eti sudhu scrolled state true hole ekbar animate hobe */}
-      <motion.div 
-        initial={{ scaleX: 0, opacity: 0 }}
-        animate={scrolled ? { scaleX: 1, opacity: [0, 1, 1, 0] } : { scaleX: 0, opacity: 0 }}
-        transition={{ duration: 1.5, times: [0, 0.2, 0.8, 1], ease: "easeInOut" }}
-        className="absolute bottom-0 left-0 h-[2px] w-full bg-green-500 origin-center"
-      />
-
-      <div className="max-w-full mx-auto px-6 md:px-15 flex items-center justify-between relative z-10"> 
-        {/* Logo Section */}
+    <nav className="fixed top-0 left-0 w-full backdrop-blur-md z-50 border-b border-gray-300 ">
+      <div className="max-w-full mx-auto px-6 md:px-15 h-20 flex items-center justify-between">
         <div className="flex items-center">
           <Logo />
         </div>
-  
-        {/* Desktop Buttons */}
+
         <div className="hidden md:flex items-center gap-6">
-          <button className={`text-sm font-medium transition-colors duration-300 ${
-            scrolled ? "text-green-600" : "text-black dark:text-white"
-          } hover:text-green-500`}>
+          {/* Dark Mode Toggle */}
+          {mounted ? (
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-2 rounded-xl  text-xl transition-all hover:scale-110"
+            >
+              {theme === "dark" ? <HiSun /> : <HiMoon />}
+            </button>
+          ) : (
+            <div className="p-2 w-10 h-10" />
+          )}
+
+          <Link
+            href="/login"
+            className="px-5 py-2 text-sm font-medium  hover:text-green-600 transition-colors"
+          >
             Log In
-          </button>
-          <button className={`px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 ${
-            scrolled 
-              ? "bg-green-600 text-white hover:bg-green-700" 
-              : "bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-500/20"
-          }`}>
-            Get Started
-          </button>
+          </Link>
+          <Link
+            href="/Dashboard"
+            className="px-6 py-2.5 text-sm font-medium bg-green-600 hover:bg-green-700 text-white rounded-full transition-all shadow-lg shadow-green-500/20"
+          >
+            Dashboard
+          </Link>
         </div>
 
-        {/* Mobile Toggle Button */}
-        <div className="md:hidden flex items-center">
-          <button 
+        <div className="md:hidden flex items-center gap-4">
+          {mounted ? (
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-2 rounded-xl  text-xl  transition-all hover:scale-110"
+            >
+              {theme === "dark" ? <HiSun /> : <HiMoon />}
+            </button>
+          ) : (
+            <div className="p-2 w-10 h-10" />
+          )}
+          <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`text-3xl focus:outline-none transition-colors ${
-              scrolled ? "text-green-600" : "text-black dark:text-white"
-            }`}
+            className="text-2xl"
           >
             {isOpen ? <HiX /> : <HiMenuAlt3 />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full left-0 w-full bg-white dark:bg-zinc-950 border-b border-green-500/30 p-6 flex flex-col gap-4 md:hidden shadow-2xl"
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-20 right-0 w-full bg-green-600/40 border-b border-zinc-200 dark:border-zinc-800 p-6 flex flex-col gap-4 md:hidden shadow-xl"
           >
-            <button className="w-full py-3 text-center font-medium border border-zinc-200 dark:border-zinc-800 rounded-xl">
+            <Link
+              href="/login"
+              className=" py-3 text-center border-2 border-green-600 font-medium bg-white/80 text-green-600 rounded-xl shadow-lg"
+            >
               Log In
-            </button>
-            <button className="w-full py-3 text-center font-medium bg-green-600 text-white rounded-xl">
-              Get Started
-            </button>
+            </Link>
+            <Link
+              href="/Dashboard"
+              className=" py-3 text-center font-medium bg-green-600 text-white rounded-xl shadow-lg"
+            >
+              Dashboard
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

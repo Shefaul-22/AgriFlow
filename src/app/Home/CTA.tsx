@@ -53,7 +53,7 @@ const CTA = () => {
   }, { scope: container });
 
   return (
-    <section className="max-w-7xl mx-auto px-6 mb-24">
+    <section className="max-w-7xl mx-auto px-6 m-20">
       <div 
         ref={container}
         className="relative w-full py-24 bg-[#00A859] overflow-hidden rounded-[2.5rem] text-center"

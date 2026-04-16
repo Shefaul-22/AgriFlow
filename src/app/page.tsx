@@ -3,7 +3,7 @@ import Hero from "@/app/Home/Hero";
 import State from "@/app/Home/State";
 import Features from "@/app/Home/Features";
 import CTA from "@/app/Home/CTA";
-import Navbar from "@/app/components/Navbar";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   return (
@@ -15,7 +15,9 @@ export default function Home() {
         <Features></Features>
         <CTA></CTA>
       </main>
+
       <Footer></Footer>
+
     </div>
   );
 }

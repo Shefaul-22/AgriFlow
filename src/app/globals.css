@@ -3,17 +3,14 @@
 :root {
   /* Light Mode */
   --background: #ededed; 
-  --foreground: #333232;
-  --nav-bg: rgba(249, 250, 251, 0.8);
+  --foreground: #0a0a0a;
+  --nav-bg: rgba(249, 250, 251, 0.911);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Dark Mode */
-    --background: #333232;
-    --foreground: #ededed;
-    --nav-bg: rgba(75, 85, 99, 0.8); 
-  }
+.dark {
+  --background: #080808;
+  --foreground: #ededed;
+  --nav-bg: rgba(21, 22, 22, 0.8); 
 }
 
 @theme inline {

@@ -10,9 +10,9 @@ const stats = [
 
 const State = () => {
   return (
-    <section className="w-full py-12 bg-white dark:bg-black border-y border-gray-100 dark:border-zinc-900">
+    <section className="w-full py-14 border-y border-gray-200 dark:border-gray-300 ">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div className="grid grid-cols-3 gap-8 text-center">
           {stats.map((stat, index) => (
             <motion.div 
               key={index}
