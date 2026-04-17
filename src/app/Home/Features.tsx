@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 const Features = () => {
   return (
-    <section className="w-full px-10 pt-20  transition-colors duration-300">
+    <section className="w-full px-4 sm:px-6 md:px-10 pt-20 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header Part */}
@@ -28,12 +28,12 @@ const Features = () => {
         </div>
 
         {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* Card 1: Precision Matching (Large) */}
           <motion.div 
             whileHover={{ y: -5 }}
-            className="md:col-span-2 bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm"
+            className="col-span-1 md:col-span-2 lg:col-span-2 bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm"
           >
             <div className="bg-green-100 dark:bg-green-500/10 p-3 rounded-xl w-fit mb-6">
               <HiOutlineChip className="text-3xl text-green-700 dark:text-green-500" />
@@ -91,7 +91,7 @@ const Features = () => {
                  <HiOutlineGlobeAlt className="text-xl" /> View Global Map
                </Link>
             </div>
-            <div className="w-full h-48 bg-zinc-200 dark:bg-zinc-800 rounded-2xl overflow-hidden grayscale hover:grayscale-0 transition-all cursor-crosshair relative">
+            <div className="w-full h-32 sm:h-40 md:h-48 bg-zinc-200 dark:bg-zinc-800 rounded-2xl overflow-hidden grayscale hover:grayscale-0 transition-all cursor-crosshair relative">
                 <Image src={Map} alt="Map" className="w-full h-full object-cover opacity-60 dark:opacity-40" />
             </div>
           </motion.div>
