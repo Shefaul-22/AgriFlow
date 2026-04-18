@@ -7,6 +7,7 @@ import { RiMentalHealthLine } from "react-icons/ri"
 import { MdOutlineInventory2, MdOutlineAnalytics } from "react-icons/md";
 import { IoSettingsOutline, IoHomeOutline } from "react-icons/io5";
 import Logo from '@/app/components/Logo';
+import { RiLiveLine } from "react-icons/ri";
 
 const sidebarLinks = [
   { name: 'Home', href: '/', icon: IoHomeOutline },
@@ -15,13 +16,14 @@ const sidebarLinks = [
   { name: 'Inventory', href: '/Dashboard/inventory', icon: MdOutlineInventory2 },
   { name: 'Analytics', href: '/Dashboard/analytics', icon: MdOutlineAnalytics },
   { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
+ { name: 'Live Farm', href: '/Dashboard/live', icon: RiLiveLine  },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50 dark:bg-zinc-950">
+    <div className="flex flex-col md:flex-row min-h-screen">
       
       {/* --- Desktop Sidebar (Hidden on Mobile) --- */}
       <aside className="hidden md:flex w-64 border-r border-gray-100 dark:border-zinc-800 flex-col p-6 fixed h-full bg-white dark:bg-zinc-900 z-50">
@@ -29,7 +31,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
            <div className="w-8 h-8">
              <Logo />
            </div>
-           <span className="dark:text-white">AgriFlow</span>
         </div>
 
         <nav className="flex-1 space-y-1">
