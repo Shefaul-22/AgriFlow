@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { HiMenuAlt3, HiX, HiMoon, HiSun } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
@@ -13,28 +13,31 @@ const Navbar = () => {
   const [flashLine, setFlashLine] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // Flash line logic thik rakhar jonno useRef proyojon
+  const hasScrolledOnce = useRef(false);
+
   useEffect(() => {
     setMounted(true);
-    let hasScrolledOnce = false;
     let timeout;
 
     const handleScroll = () => {
       const offset = window.scrollY;
-      
-      // Scroll state update for background and text colors
+
+      // Background fix: 50px niche namle transparent hobe
       if (offset > 50) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
 
-      // Flash line logic: Sudhu ekbar scroll-e trigger hobe
-      if (offset > 10 && !hasScrolledOnce) {
-        hasScrolledOnce = true;
+      // Flash line logic fix: Ekbar trigger hobe
+      if (offset > 10 && !hasScrolledOnce.current) {
+        hasScrolledOnce.current = true;
         setFlashLine(true);
-        timeout = setTimeout(() => setFlashLine(false), 100);
+        timeout = setTimeout(() => setFlashLine(false), 600);
       } else if (offset <= 10) {
-        hasScrolledOnce = false;
+        hasScrolledOnce.current = false;
+        setFlashLine(false);
       }
     };
 
@@ -46,19 +49,19 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled 
-          ? "bg-black/50 backdrop-blur-none border-transparent" // Scroll hole transparent
-          : "bg-transparent backdrop-blur-xl border-b border-gray-200 dark:border-gray-800" // Default state
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${
+        scrolled
+          ? "backdrop-blur border-transparent" // Scroll korle purapuri faka
+          : "bg-white/40 dark:bg-black/60 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800" // Default glassmorphism
       }`}
     >
       {/* Interactive Flashing Green Line */}
       <motion.div
         initial={{ width: "0%", opacity: 0 }}
-        animate={flashLine ? { width: "100%", opacity: 1 } : { opacity: 0 }}
+        animate={flashLine ? { width: "100%", opacity: 1 } : { width: "100%", opacity: 0 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="absolute bottom-0 left-0 h-[2px] bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)]"
+        className="absolute bottom-0 left-0 h-[2px] bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.8)]"
       />
 
       <div className="max-w-full mx-auto px-6 md:px-15 h-20 flex items-center justify-between">
@@ -72,7 +75,7 @@ const Navbar = () => {
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className={`p-2 rounded-xl text-xl transition-all hover:scale-110 ${
-                scrolled ? "text-green-600" : "text-black dark:text-white"
+                scrolled ? "text-green-500" : "text-black dark:text-white"
               }`}
             >
               {theme === "dark" ? <HiSun /> : <HiMoon />}
@@ -82,17 +85,17 @@ const Navbar = () => {
           <Link
             href="/login"
             className={`px-5 py-2 text-sm font-medium transition-colors ${
-              scrolled ? "text-green-600 font-bold" : "text-gray-600 dark:text-gray-300"
-            } hover:text-green-500`}
+              scrolled ? "text-green-500 font-bold" : "text-gray-600 dark:text-gray-300"
+            } hover:text-green-400`}
           >
             Log In
           </Link>
-          
+
           <Link
             href="/Dashboard"
             className={`px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 ${
-              scrolled 
-                ? "bg-transparent border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white" 
+              scrolled
+                ? "bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white shadow-lg shadow-green-500/10"
                 : "bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-500/20"
             }`}
           >
@@ -105,14 +108,14 @@ const Navbar = () => {
           {mounted && (
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className={`p-2 text-xl ${scrolled ? "text-green-600" : ""}`}
+              className={`p-2 text-xl ${scrolled ? "text-green-500" : ""}`}
             >
               {theme === "dark" ? <HiSun /> : <HiMoon />}
             </button>
           )}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`text-2xl ${scrolled ? "text-green-600" : ""}`}
+            className={`text-2xl ${scrolled ? "text-green-500" : ""}`}
           >
             {isOpen ? <HiX /> : <HiMenuAlt3 />}
           </button>
