@@ -11,8 +11,8 @@ const stats = [
 const State = () => {
   return (
     <section className="w-full py-14 border-y border-gray-200 dark:border-gray-300 ">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-center">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-3 gap-8 text-center">
           {stats.map((stat, index) => (
             <motion.div 
               key={index}
