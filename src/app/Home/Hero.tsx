@@ -59,8 +59,6 @@ const Hero = () => {
   };
 
   return (
-    // We use w-[100vw] and relative left-1/2 -translate-x-1/2 to force it absolutely full width 
-    // even if the parent container has max-width or padding constraints!
     <section className="relative w-[100vw] left-1/2 -translate-x-1/2 h-[85vh] lg:h-[95vh] overflow-hidden bg-black pt-0 m-0 p-0 border-0">
       <AnimatePresence mode="wait">
         <motion.div
@@ -83,10 +81,8 @@ const Hero = () => {
             />
           </div>
 
-          {/* Dark Overlay Gradient for text readability */}
           <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#031c0b]/90 via-[#031c0b]/50 to-transparent dark:from-black/95 dark:via-black/70 dark:to-transparent z-10 pointer-events-none" />
 
-          {/* Text Content */}
           <div className="relative z-20 w-full h-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col justify-center">
             <motion.div
               initial={{ y: 30, opacity: 0 }}
