@@ -7,7 +7,7 @@ const Logo = () => {
       <div className="p-1.5 bg-green-600 rounded-lg">
         <RiLeafFill className="text-white text-xl" />
       </div>
-      <span className="text-xl font-bold tracking-tight ">
+      <span className="text-xl font-bold tracking-tight text-yellow-500">
         Agri<span className="text-green-600">Flow</span>
       </span>
     </div>
