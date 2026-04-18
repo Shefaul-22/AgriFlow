@@ -2,7 +2,6 @@ import FarmInfo from "@/app/components/live/FarmInfo";
 import LiveSidebar from "@/app/components/live/LiveSidebar";
 import VideoPlayer from "@/app/components/live/VideoPlayer";
 
-
 export default function Page({ params }: any) {
   return (
     <div className="min-h-screen bg-gray-100 p-4">
