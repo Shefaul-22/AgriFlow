@@ -59,7 +59,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative w-[100vw] left-1/2 -translate-x-1/2 h-[85vh] lg:h-[95vh] overflow-hidden bg-black pt-0 m-0 p-0 border-0">
+    <section className="relative w-full h-[85vh] lg:h-[95vh] overflow-hidden bg-black">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
@@ -72,6 +72,7 @@ const Hero = () => {
           {/* Slide Background Video */}
           <div className="absolute inset-0 w-full h-full">
             <video
+              key={slides[currentIndex].video} // ইউনিক কি যোগ করা হয়েছে ভিডিও রিলোড করার জন্য
               src={slides[currentIndex].video}
               autoPlay
               loop
@@ -81,8 +82,10 @@ const Hero = () => {
             />
           </div>
 
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#031c0b]/90 via-[#031c0b]/50 to-transparent dark:from-black/95 dark:via-black/70 dark:to-transparent z-10 pointer-events-none" />
+          {/* Overlay: Text visibility improvement */}
+          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10 pointer-events-none" />
 
+          {/* Text Content */}
           <div className="relative z-20 w-full h-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col justify-center">
             <motion.div
               initial={{ y: 30, opacity: 0 }}
@@ -94,19 +97,18 @@ const Hero = () => {
                 {slides[currentIndex].badge}
               </div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-[1.15] drop-shadow-lg">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-6 leading-[1.15] drop-shadow-lg">
                 {slides[currentIndex].title} <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#CCFF00] to-green-500">
                   {slides[currentIndex].titleHighlight}
                 </span>
               </h1>
 
-              <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-xl leading-relaxed drop-shadow-md">
+              <p className="text-base md:text-lg lg:text-xl text-gray-200 mb-8 max-w-xl leading-relaxed drop-shadow-md">
                 {slides[currentIndex].description}
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
-                {/* Notice that Button from your global components is used here */}
                 <Button
                   text={slides[currentIndex].buttonText}
                   href="/services"
@@ -119,36 +121,37 @@ const Hero = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Slider Custom Controls */}
-      <div className="absolute bottom-10 left-0 right-0 z-30 max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6 pointer-events-auto">
-
+      {/* Slider Controls */}
+      <div className="absolute bottom-8 left-0 right-0 z-30 max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6 pointer-events-none">
+        
         {/* Pagination Dots */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 pointer-events-auto">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`transition-all duration-300 rounded-full ${currentIndex === index
-                ? "w-10 h-2.5 bg-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.5)]"
-                : "w-2.5 h-2.5 bg-white/40 hover:bg-white/70"
-                }`}
+              className={`transition-all duration-300 rounded-full ${
+                currentIndex === index
+                  ? "w-10 h-2.5 bg-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.5)]"
+                  : "w-2.5 h-2.5 bg-white/40 hover:bg-white/70"
+              }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
 
         {/* Navigation Arrows */}
-        <div className="flex items-center gap-4 opacity-0 md:opacity-100">
+        <div className="flex items-center gap-4 pointer-events-auto">
           <button
             onClick={prevSlide}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] text-white hover:text-black backdrop-blur-md transition-all group pointer-events-auto"
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] text-white hover:text-black backdrop-blur-md transition-all group"
             aria-label="Previous slide"
           >
             <FaChevronLeft className="group-hover:-translate-x-0.5 transition-transform" />
           </button>
           <button
             onClick={nextSlide}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] text-white hover:text-black backdrop-blur-md transition-all group pointer-events-auto"
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] text-white hover:text-black backdrop-blur-md transition-all group"
             aria-label="Next slide"
           >
             <FaChevronRight className="group-hover:translate-x-0.5 transition-transform" />
