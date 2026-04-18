@@ -49,8 +49,8 @@ const Navbar = () => {
     <nav 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         scrolled 
-          ? "bg-transparent backdrop-blur-none border-transparent" // Scroll hole transparent
-          : "bg-white/40 dark:bg-black/90 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800" // Default state
+          ? "bg-black/50 backdrop-blur-none border-transparent" // Scroll hole transparent
+          : "bg-transparent backdrop-blur-xl border-b border-gray-200 dark:border-gray-800" // Default state
       }`}
     >
       {/* Interactive Flashing Green Line */}

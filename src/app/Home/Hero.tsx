@@ -72,7 +72,7 @@ const Hero = () => {
           {/* Slide Background Video */}
           <div className="absolute inset-0 w-full h-full">
             <video
-              key={slides[currentIndex].video} // ইউনিক কি যোগ করা হয়েছে ভিডিও রিলোড করার জন্য
+              key={slides[currentIndex].video}
               src={slides[currentIndex].video}
               autoPlay
               loop
