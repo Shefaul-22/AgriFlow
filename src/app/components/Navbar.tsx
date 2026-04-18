@@ -20,7 +20,7 @@ const Navbar = () => {
 
     const handleScroll = () => {
       const offset = window.scrollY;
-
+      
       // Scroll state update for background and text colors
       if (offset > 50) {
         setScrolled(true);
@@ -46,11 +46,12 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled
-        ? "bg-transparent backdrop-blur-none border-transparent" // Scroll hole transparent
-        : "bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800" // Default state
-        }`}
+    <nav 
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        scrolled 
+          ? "bg-transparent backdrop-blur-none border-transparent" // Scroll hole transparent
+          : "bg-white/40 dark:bg-black/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800" // Default state
+      }`}
     >
       {/* Interactive Flashing Green Line */}
       <motion.div
@@ -70,8 +71,9 @@ const Navbar = () => {
           {mounted && (
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className={`p-2 rounded-xl text-xl transition-all hover:scale-110 ${scrolled ? "text-green-800 font-semibold hover:text-white" : "text-black dark:text-white"
-                }`}
+              className={`p-2 rounded-xl text-xl transition-all hover:scale-110 ${
+                scrolled ? "text-green-600" : "text-black dark:text-white"
+              }`}
             >
               {theme === "dark" ? <HiSun /> : <HiMoon />}
             </button>
@@ -79,18 +81,20 @@ const Navbar = () => {
 
           <Link
             href="/login"
-            className={`px-5 py-2 text-sm font-medium transition-colors ${scrolled ? "text-green-800 font-bold" : "text-gray-600 dark:text-gray-300"
-              } hover:text-white`}
+            className={`px-5 py-2 text-sm font-medium transition-colors ${
+              scrolled ? "text-green-600 font-bold" : "text-gray-600 dark:text-gray-300"
+            } hover:text-green-500`}
           >
             Log In
           </Link>
-
+          
           <Link
             href="/Dashboard"
-            className={`px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 ${scrolled
-              ? "bg-transparent border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
-              : "bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-500/20"
-              }`}
+            className={`px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 ${
+              scrolled 
+                ? "bg-transparent border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white" 
+                : "bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-500/20"
+            }`}
           >
             Dashboard
           </Link>
