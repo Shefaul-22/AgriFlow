@@ -1,46 +1,54 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Button from "@/app/components/Button";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const slides = [
   {
-    badge: "GUESS FARMING AI",
-    title: "Turn soil data into",
-    titleHighlight: "crop decisions",
-    description: "Combine your farm inputs with regional patterns so you can choose crops with higher confidence and clearer expectations.",
-    video: "https://www.pexels.com/download/video/10816528/",
-    buttonText: "Discover Now",
+    badge: "SMART AI FARMING",
+    title: "Optimize every acre with",
+    titleHighlight: "real-time intelligence",
+    description:
+      "Predict yields, tune irrigation, and balance nutrients using AI-powered field insights that make every decision smarter.",
+    video: "https://assets.mixkit.co/videos/36957/36957-720.mp4",
   },
   {
-    badge: "CROP MONITORING",
-    title: "See field health",
-    titleHighlight: "as it changes",
-    description: "Track growth stages, stress signals, and anomalies early so interventions happen while they are still affordable.",
-    video: "https://www.pexels.com/download/video/34182419/",
-    buttonText: "Learn More",
+    badge: "FARMER CONSULTING",
+    title: "Connect directly with",
+    titleHighlight: "agriculture specialists",
+    description:
+      "Access expert agronomy advice, crop planning support, and practical guidance when your farm needs it most.",
+    video: "https://assets.mixkit.co/videos/36930/36930-720.mp4",
   },
   {
-    badge: "SOIL HEALTH",
-    title: "Balance nutrients",
-    titleHighlight: "before you fertilize",
-    description: "Measure NPK, organic matter, and pH so every input has a purpose and runoff risk stays lower.",
-    video: "https://www.pexels.com/download/video/4768007/",
-    buttonText: "Read More",
+    badge: "HYGIENIC PACKAGING",
+    title: "Preserve harvest quality with",
+    titleHighlight: "clean mango handling",
+    description:
+      "Reduce contamination and spoilage with hygienic workflows designed for freshness, safety, and premium value.",
+    video: "https://assets.mixkit.co/videos/21795/21795-720.mp4",
   },
   {
-    badge: "DISEASE DETECTION",
-    title: "Catch outbreaks",
-    titleHighlight: "while they are local",
-    description: "Upload leaf or canopy images to flag probable diseases fast—then match them to treatment playbooks.",
-    video: "https://www.pexels.com/download/video/32947253/",
-    buttonText: "Start Scanning",
-  }
+    badge: "HARVEST OPERATIONS",
+    title: "Harvest smarter on",
+    titleHighlight: "soil-friendly workflows",
+    description:
+      "Streamline harvest timing, crew coordination, and post-cut handling to protect soil health and maximize crop value.",
+    video: "https://assets.mixkit.co/videos/25075/25075-720.mp4",
+  },
+  {
+    badge: "DRONE MONITORING",
+    title: "Monitor fields from",
+    titleHighlight: "above with precision",
+    description:
+      "Use aerial scouting and drone imagery to spot stress, pests, and nutrient gaps before they become costly problems.",
+    video: "https://assets.mixkit.co/videos/7717/7717-720.mp4",
+  },
 ];
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const slide = slides[currentIndex];
 
   // Auto slide interval
   useEffect(() => {
@@ -59,7 +67,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative w-full h-[85vh] lg:h-[95vh] overflow-hidden bg-black">
+    <section className="relative w-full h-[85vh] lg:h-[95vh] overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
@@ -72,8 +80,8 @@ const Hero = () => {
           {/* Slide Background Video */}
           <div className="absolute inset-0 w-full h-full">
             <video
-              key={slides[currentIndex].video}
-              src={slides[currentIndex].video}
+              key={slide.video}
+              src={slide.video}
               autoPlay
               loop
               muted
@@ -94,27 +102,23 @@ const Hero = () => {
               className="max-w-2xl"
             >
               <div className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-[#CCFF00] bg-green-950/40 backdrop-blur-sm border border-[#CCFF00]/30 rounded-full uppercase shadow-lg">
-                {slides[currentIndex].badge}
+                {slide.badge}
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-6 leading-[1.15] drop-shadow-lg">
-                {slides[currentIndex].title} <br />
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-[1.15] drop-shadow-lg">
+                {slide.title} <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#CCFF00] to-green-500">
-                  {slides[currentIndex].titleHighlight}
+                  {slide.titleHighlight}
                 </span>
               </h1>
 
               <p className="text-base md:text-lg lg:text-xl text-gray-200 mb-8 max-w-xl leading-relaxed drop-shadow-md">
-                {slides[currentIndex].description}
+                {slide.description}
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
-                <Button
-                  text={slides[currentIndex].buttonText}
-                  href="/services"
-                  variant="primary"
-                  className="bg-[#CCFF00] text-black hover:bg-[#bbe600] px-8 py-3.5 rounded-full font-bold transition-all shadow-[0_0_20px_rgba(204,255,0,0.25)] border-none hover:-translate-y-1"
-                />
+              <div className="inline-flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-[#CCFF00]">
+                <span className="h-1 w-10 rounded-full bg-[#CCFF00]" />
+                <span>Modern agriculture, smarter every day</span>
               </div>
             </motion.div>
           </div>
@@ -123,18 +127,17 @@ const Hero = () => {
 
       {/* Slider Controls */}
       <div className="absolute bottom-8 left-0 right-0 z-30 max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6 pointer-events-none">
-        
+
         {/* Pagination Dots */}
         <div className="flex items-center gap-3 pointer-events-auto">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`transition-all duration-300 rounded-full ${
-                currentIndex === index
+              className={`transition-all duration-300 rounded-full ${currentIndex === index
                   ? "w-10 h-2.5 bg-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.5)]"
                   : "w-2.5 h-2.5 bg-white/40 hover:bg-white/70"
-              }`}
+                }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
