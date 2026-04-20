@@ -1,10 +1,10 @@
 "use client";
 
+import { createPeer } from "@/app/lib/webrtc";
 import { useEffect } from "react";
-import { createPeer } from "@/lib/webrtc";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:4000");
+const socket = io("http://localhost:3000");
 
 export default function LiveRoom({ roomId }) {
   useEffect(() => {
