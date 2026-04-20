@@ -11,7 +11,7 @@ import { LuNotepadText } from "react-icons/lu";
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6 md:space-y-8 pb-10 px-4 md:px-0">     
+    <div className="space-y-6 md:space-y-8 p-15 ">     
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -90,7 +90,7 @@ export default function DashboardPage() {
             </div>
             <h4 className="text-lg md:text-2xl font-bold dark:text-white mb-1">{item.val}</h4>
             <span className={`text-[8px] md:text-[10px] font-bold px-2 py-0.5 rounded-md inline-block ${
-              i === 0 ? 'bg-green-100 text-green-700' : 'bg-gray-100 dark:bg-zinc-800 text-gray-500'
+              i === 0 ? 'bg-green-100 text-green-700' : '  text-gray-500'
             }`}>
               {item.status}
             </span>

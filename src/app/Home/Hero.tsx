@@ -23,7 +23,7 @@ const slides = [
   {
     badge: "HYGIENIC PACKAGING",
     title: "Preserve harvest quality with",
-    titleHighlight: "clean mango handling",
+    titleHighlight: "clean fruits handling",
     description:
       "Reduce contamination and spoilage with hygienic workflows designed for freshness, safety, and premium value.",
     video: "https://assets.mixkit.co/videos/21795/21795-720.mp4",

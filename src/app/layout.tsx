@@ -40,7 +40,7 @@ export default function RootLayout({
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
       pageLanguage: 'en',
-      includedLanguages: 'en,bn', 
+      includedLanguages: 'en,bn,es,zh-CN,ar,fr', 
       layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
       autoDisplay: false
     }, 'google_translate_element');
