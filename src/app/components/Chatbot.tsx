@@ -17,6 +17,7 @@ const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -27,34 +28,62 @@ const Chatbot = () => {
     scrollToBottom();
   }, [messages, isTyping, isOpen, mode]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
-    
+
+    setError(null);
     const newMessage: Message = { id: Date.now(), text: input, sender: "user" };
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
     setIsTyping(true);
 
-    // Simulate AI or Consultant response
-    setTimeout(() => {
-      let responseText = "";
-      if (mode === "AI") {
-        responseText = "I'm analyzing your request using our AgriFlow intelligence. How else can I assist you with your farming operations?";
-      } else {
-        responseText = "Hello, I'm an agricultural specialist. I'm currently reviewing your details. How can I help you today?";
+    try {
+      if (!mode) return;
+
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          mode,
+          messages: [...messages, newMessage].map((m) => ({
+            text: m.text,
+            sender: m.sender,
+          })),
+        }),
+      });
+
+      const data = (await res.json().catch(() => ({}))) as { reply?: string; error?: string };
+      if (!res.ok) {
+        throw new Error(data.error || "Chat request failed.");
       }
-      
+
+      const replyText = (data.reply || "").trim();
+      if (!replyText) throw new Error("Empty reply.");
+
       setMessages((prev) => [
-        ...prev, 
-        { id: Date.now() + 1, text: responseText, sender: mode === "AI" ? "ai" : "consultant" }
+        ...prev,
+        { id: Date.now() + 1, text: replyText, sender: mode === "AI" ? "ai" : "consultant" },
       ]);
+    } catch (e) {
+      const message = e instanceof Error ? e.message : "Something went wrong.";
+      setError(message);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          text: "Sorry—something went wrong on my side. Please try again.",
+          sender: mode === "AI" ? "ai" : "consultant",
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const resetChat = () => {
     setMode(null);
     setMessages([]);
+    setError(null);
   };
 
   return (
@@ -159,6 +188,11 @@ const Chatbot = () => {
               ) : (
                 // Chat Interface
                 <div className="flex-1 flex flex-col p-4 gap-4">
+                  {error && (
+                    <div className="text-xs text-red-700 bg-red-50 border border-red-200 rounded-xl px-3 py-2">
+                      {error}
+                    </div>
+                  )}
                   {messages.map((msg) => (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
@@ -207,13 +241,13 @@ const Chatbot = () => {
                       type="text"
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                      onKeyDown={(e) => e.key === "Enter" && handleSend()}
                       placeholder="Type your message..."
                       className="flex-1 bg-gray-100 text-sm text-gray-800 rounded-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all"
                     />
                     <button
                       onClick={handleSend}
-                      disabled={!input.trim()}
+                      disabled={!input.trim() || isTyping}
                       className="p-3 bg-green-600 text-[#CCFF00] rounded-full disabled:opacity-50 hover:bg-green-700 transition-colors"
                     >
                       <FaPaperPlane size={16} />
