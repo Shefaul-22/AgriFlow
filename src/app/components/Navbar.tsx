@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { HiMenuAlt3, HiX, HiMoon, HiSun } from "react-icons/hi";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"; 
 import { useTheme } from "next-themes";
 import Logo from "@/app/components/Logo";
 import Link from "next/link";
@@ -11,36 +11,18 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [flashLine, setFlashLine] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const hasScrolledOnce = useRef(false);
+  const [scrollProgress, setScrollProgress] = useState(0); 
+
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (v) => {
+    setScrolled(v > 60);
+    const max = document.body.scrollHeight - window.innerHeight;
+    setScrollProgress(max > 0 ? (v / max) * 100 : 0);
+  });
 
   useEffect(() => {
     setMounted(true);
-    let timeout;
-    const handleScroll = () => {
-      const offset = window.scrollY;
-
-      if (offset > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-      if (offset > 10 && !hasScrolledOnce.current) {
-        hasScrolledOnce.current = true;
-        setFlashLine(true);
-        timeout = setTimeout(() => setFlashLine(false), 400);
-      } else if (offset <= 10) {
-        hasScrolledOnce.current = false;
-        setFlashLine(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(timeout);
-    };
   }, []);
 
   return (
@@ -51,15 +33,10 @@ const Navbar = () => {
           : " dark:bg-white/30 backdrop-blur-xl dark:border-gray-800"
       }`}
     >
-      {/* Interactive Flashing Green Line */}
+      {/* Interactive Scroll Progress Line */}
       <motion.div
-        initial={{ width: "0%", opacity: 0 }}
-        animate={
-          flashLine
-            ? { width: "100%", opacity: 1 }
-            : { width: "100%", opacity: 0 }
-        }
-        transition={{ duration: 0.5, ease: "easeInOut" }}
+        animate={{ width: `${scrollProgress}%` }} 
+        transition={{ type: "spring", stiffness: 100, damping: 30, restDelta: 0.001 }}
         className="absolute bottom-0 left-0 h-[2px] bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.8)]"
       />
 
@@ -69,14 +46,12 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-8 font-medium">
-          {/* 🏠 Main Links */}
           <Link href="/" className="hover:text-green-500 transition">
             Home
           </Link>
           <Link href="/marketplace" className="hover:text-green-500 transition">
              Marketplace
           </Link>
-          {/* 🌾 Solutions Dropdown */}
           <Dropdown
             title="Solutions"
             items={[
@@ -163,112 +138,29 @@ const Navbar = () => {
             transition={{ duration: 0.25 }}
             className="absolute top-21 bg-gray-600/90 right-2 w-[85%] max-w-sm rounded-2xl  backdrop-blur-xl border border-green-500/20 p-6 flex flex-col gap-5 md:hidden shadow-2xl"
           >
-            {/* 🌍 MAIN LINKS */}
             <div className="flex flex-col gap-3">
-              <Link
-                href="/"
-                onClick={() => setIsOpen(false)}
-                className="font-bold text-lg"
-              >
-                Home
-              </Link>
-
-              <Link
-                href="/marketplace"
-                onClick={() => setIsOpen(false)}
-                className="font-bold text-lg"
-              >
-                Marketplace
-              </Link>
-
-              <Link
-                href="/about"
-                onClick={() => setIsOpen(false)}
-                className="font-bold text-lg"
-              >
-                About
-              </Link>
+              <Link href="/" onClick={() => setIsOpen(false)} className="font-bold text-lg">Home</Link>
+              <Link href="/marketplace" onClick={() => setIsOpen(false)} className="font-bold text-lg">Marketplace</Link>
+              <Link href="/about" onClick={() => setIsOpen(false)} className="font-bold text-lg">About</Link>
             </div>
-
             <hr className="border-gray-300 " />
-
-            {/* 🌾 SOLUTIONS */}
             <div className="flex flex-col gap-2">
               <p className="text-xs uppercase font-semibold">Solutions</p>
-
-              <Link
-                href="/fertilizer"
-                onClick={() => setIsOpen(false)}
-                className="font-semibold text-lg hover:text-green-600"
-              >
-                Fertilizer
-              </Link>
-
-              <Link
-                href="/crops"
-                onClick={() => setIsOpen(false)}
-                className="font-semibold text-lg hover:text-green-600"
-              >
-                Crops & Diseases
-              </Link>
-
-              <Link
-                href="/live"
-                onClick={() => setIsOpen(false)}
-                className="font-semibold text-lg hover:text-green-600"
-              >
-                Live Crops
-              </Link>
-
-              <Link
-                href="/services"
-                onClick={() => setIsOpen(false)}
-                className="font-semibold text-lg hover:text-green-600"
-              >
-                Services
-              </Link>
+              <Link href="/fertilizer" onClick={() => setIsOpen(false)} className="font-semibold text-lg hover:text-green-600">Fertilizer</Link>
+              <Link href="/crops" onClick={() => setIsOpen(false)} className="font-semibold text-lg hover:text-green-600">Crops & Diseases</Link>
+              <Link href="/live" onClick={() => setIsOpen(false)} className="font-semibold text-lg hover:text-green-600">Live Crops</Link>
+              <Link href="/services" onClick={() => setIsOpen(false)} className="font-semibold text-lg hover:text-green-600">Services</Link>
             </div>
-
             <hr className="border-gray-300" />
             <div className="flex flex-col gap-2">
-              <p className="text-xs uppercase  font-semibold">Resources</p>
-
-              <Link
-                href="/how-it-works"
-                onClick={() => setIsOpen(false)}
-                className="text-lg font-semibold"
-              >
-                How It Works
-              </Link>
-
-              <Link
-                href="/experts"
-                onClick={() => setIsOpen(false)}
-                className="text-lg font-semibold"
-              >
-                Agriculturists
-              </Link>
+              <p className="text-xs uppercase font-semibold">Resources</p>
+              <Link href="/how-it-works" onClick={() => setIsOpen(false)} className="text-lg font-semibold">How It Works</Link>
+              <Link href="/experts" onClick={() => setIsOpen(false)} className="text-lg font-semibold">Agriculturists</Link>
             </div>
-
             <hr className="border-gray-300" />
-
-            {/* 🔐 ACTIONS */}
             <div className="flex flex-col gap-3 mt-2">
-              <Link
-                href="/login"
-                className="py-3 text-center border-2 border-green-600 font-medium text-green-600 rounded-xl"
-                onClick={() => setIsOpen(false)}
-              >
-                Log In
-              </Link>
-
-              <Link
-                href="/Dashboard"
-                className="py-3 text-center font-medium bg-green-600 text-white rounded-xl"
-                onClick={() => setIsOpen(false)}
-              >
-                Dashboard
-              </Link>
+              <Link href="/login" className="py-3 text-center border-2 border-green-600 font-medium text-green-600 rounded-xl" onClick={() => setIsOpen(false)}>Log In</Link>
+              <Link href="/Dashboard" className="py-3 text-center font-medium bg-green-600 text-white rounded-xl" onClick={() => setIsOpen(false)}>Dashboard</Link>
             </div>
           </motion.div>
         )}

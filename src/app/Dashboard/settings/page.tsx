@@ -56,7 +56,7 @@ export default function SettingsPage() {
             <h1 className="text-2xl md:text-4xl font-black tracking-tighter ">
               Settings<span className="text-green-500">.</span>
             </h1>
-            <p className="font-semibold mt-2">Personalize your AgriFlow experience.</p>
+            <p className="font-semibold text-gray-600 mt-2">Personalize your AgriFlow experience.</p>
           </header>
           <div className='flex gap-2'>
             <HiOutlineClock className="text-3xl mb-2 opacity-80" />
