@@ -1,12 +1,16 @@
 "use client"
 import React from 'react';
  import tomatolive from "../Images/tomato live.jpg"
+import Navbar from '../components/Navbar';
 
 
 const AboutPage: React.FC = () => {
   return (
+
+    <>
+    <Navbar/>
     <main className="bg-white text-gray-800 font-sans 
-    overflow-hidden">
+    overflow-hidden pt-20 p-4">
    {/* Hero Section */}
 <section className="relative p-6 px-10 bg-gradient-to-br from-green-50 via-emerald-50 to-white px-6 overflow-hidden">
   
@@ -272,6 +276,7 @@ const AboutPage: React.FC = () => {
 </section>
 
     </main>
+    </>
   );
 };
 

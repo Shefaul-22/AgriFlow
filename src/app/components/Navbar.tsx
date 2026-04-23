@@ -81,7 +81,7 @@ const Navbar = () => {
             title="Solutions"
             items={[
               { name: "Fertilizer", link: "/fertilizer" },
-              { name: "Crops & Diseases", link: "/crops" },
+              { name: "Crops & Diseases", link: "/crop-dieseases" },
               { name: "Live Crops", link: "/live" },
               { name: " Services", link: "/services" },
             ]}
@@ -90,7 +90,7 @@ const Navbar = () => {
             title="Resources"
             items={[
               { name: "How It Works", link: "/how-it-works" },
-              { name: " Agriculturists", link: "/experts" },
+              { name: " Agriculturists", link: "/agriculturist" },
             ]}
           />
           <Link href="/about" className="hover:text-green-500 transition">
