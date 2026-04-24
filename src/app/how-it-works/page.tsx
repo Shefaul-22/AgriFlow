@@ -1,8 +1,13 @@
 import React from 'react';
 import apple from "../Images/apple.png"
+import Navbar from '../components/Navbar';
 
 const HowItWorksPage: React.FC = () => {
   return (
+
+    <>
+    <Navbar/>
+
     <main className="bg-white text-gray-800 font-sans overflow-hidden">
 
  {/* 🔥 HERO */}
@@ -271,6 +276,7 @@ const HowItWorksPage: React.FC = () => {
 </section>
 
     </main>
+    </>
   );
 };
 
