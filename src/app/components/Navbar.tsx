@@ -6,12 +6,21 @@ import { useTheme } from "next-themes";
 import Logo from "./Logo";
 import Link from "next/link";
 
+// Added by shefaul
+import { useSession, signOut } from "next-auth/react";
+import Image from "next/image";
+
+
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [flashLine, setFlashLine] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  // Added by shefaul
+  const { data: session, status } = useSession();
 
   // Flash line logic thik rakhar jonno useRef proyojon
   const hasScrolledOnce = useRef(false);
@@ -50,11 +59,10 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${
-        scrolled
-          ? "backdrop-blur border-transparent" // Scroll korle purapuri faka
-          : " dark:bg-black/60 backdrop-blur-xl dark:border-gray-800" // Default glassmorphism
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${scrolled
+        ? "backdrop-blur border-transparent" // Scroll korle purapuri faka
+        : " dark:bg-black/60 backdrop-blur-xl dark:border-gray-800" // Default glassmorphism
+        }`}
     >
       {/* Interactive Flashing Green Line */}
       <motion.div
@@ -70,7 +78,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-6">
+        {/* <div className="hidden md:flex items-center gap-6">
           {mounted && (
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -101,6 +109,76 @@ const Navbar = () => {
           >
             Dashboard
           </Link>
+        </div> */}
+        {/* Added by shefaul */}
+        <div className="hidden md:flex items-center gap-6">
+
+          {
+            mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className={`p-2 rounded-xl text-xl transition-all hover:scale-110 ${scrolled ? "text-green-500" : "text-black dark:text-white"
+                  }`}
+              >
+                {theme === "dark" ? <HiSun /> : <HiMoon />}
+              </button>
+            )}
+
+          {
+            status === "loading" ? (
+              <span>Loading...</span>
+            ) : session?.user ? (
+              <>
+                {/* User */}
+                <div className="flex items-center gap-2">
+
+                  {/* Login user image here */}
+                  {
+                    session.user.image && (
+                      <Image
+                        src={session.user.image}
+                        alt="user"
+                        width={35}
+                        height={35}
+                        className="rounded-full"
+                      />
+                    )}
+                  <span className="font-medium">
+                    {session.user.name}
+                  </span>
+                </div>
+
+                {/* Logout */}
+                <button
+                  onClick={() => signOut()}
+                  className="px-5 py-2 text-sm rounded-full bg-red-500 text-white hover:bg-red-600"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className={`px-5 py-2 text-sm font-medium transition-colors ${scrolled
+                    ? "text-green-500 font-bold"
+                    : "text-black dark:text-gray-300"
+                    } hover:text-green-400`}
+                >
+                  Log In
+                </Link>
+
+                <Link
+                  href="/Dashboard"
+                  className={`px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 ${scrolled
+                    ? "bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white"
+                    : "bg-green-600 text-white hover:bg-green-700"
+                    }`}
+                >
+                  Dashboard
+                </Link>
+              </>
+            )}
         </div>
 
         {/* Mobile Toggle */}
@@ -124,7 +202,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
-        {isOpen && (
+        {/* {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -146,7 +224,65 @@ const Navbar = () => {
               Dashboard
             </Link>
           </motion.div>
-        )}
+        )} */}
+
+        {/* Added by shefaul */}
+        {
+
+          isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="absolute top-20 left-0 w-full bg-white dark:bg-zinc-950 border-b border-green-500/30 p-6 flex flex-col gap-4 md:hidden shadow-2xl overflow-hidden"
+            >
+              {session?.user ? (
+                <>
+                  <div className="flex flex-col items-center gap-2">
+                    {session.user.image && (
+                      <Image
+                        src={session.user.image}
+                        alt="user"
+                        width={50}
+                        height={50}
+                        className="rounded-full"
+                      />
+                    )}
+                    <p className="font-semibold">{session.user.name}</p>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setIsOpen(false);
+                    }}
+                    className="py-3 text-center bg-red-500 text-white rounded-xl"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="py-3 text-center border-2 border-green-600 font-medium text-green-600 rounded-xl"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Log In
+                  </Link>
+
+                  <Link
+                    href="/Dashboard"
+                    className="py-3 text-center font-medium bg-green-600 text-white rounded-xl"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                </>
+              )}
+            </motion.div>
+          )}
+
       </AnimatePresence>
     </nav>
   );
