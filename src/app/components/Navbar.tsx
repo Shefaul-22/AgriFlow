@@ -38,7 +38,7 @@ const Navbar = () => {
       if (offset > 10 && !hasScrolledOnce.current) {
         hasScrolledOnce.current = true;
         setFlashLine(true);
-        timeout = setTimeout(() => setFlashLine(false), 400);
+        timeout = setTimeout(() => setFlashLine(false), 300);
       } else if (offset <= 10) {
         hasScrolledOnce.current = false;
         setFlashLine(false);
@@ -72,9 +72,9 @@ const Navbar = () => {
       />
 
       <div className="max-w-full mx-auto px-6 md:px-15 h-20 flex items-center justify-between">
-        <div className="flex items-center">
+        <Link href="/" className="flex items-center">
           <Logo />
-        </div>
+        </Link>
 
         <div className="hidden md:flex items-center gap-8 font-medium">
           <Link href="/" className="hover:text-green-500 transition">
