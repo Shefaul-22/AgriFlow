@@ -1,13 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  MagnifyingGlassIcon, 
-  ShoppingCartIcon, 
-  MapPinIcon,
-  ShoppingBagIcon
-} from "@heroicons/react/24/outline";
+
 import Navbar from "../components/Navbar";
+import { MapPinIcon, ShoppingBagIcon, ShoppingCartIcon } from "lucide-react";
+import { HiMagnifyingGlassCircle } from "react-icons/hi2";
 
 type Product = {
   id: number;
@@ -172,7 +169,7 @@ export default function MarketplacePage() {
                 className="w-full pl-14 pr-6 py-5 rounded-[20px] border-none shadow-xl focus:ring-2 focus:ring-green-500 outline-none text-gray-700"
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <MagnifyingGlassIcon className="w-7 h-7 text-gray-400 absolute left-5 top-5" />
+              <HiMagnifyingGlassCircle className="w-7 h-7 text-gray-400 absolute left-5 top-5" />
             </div>
           </div>
 
