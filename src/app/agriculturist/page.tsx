@@ -19,7 +19,7 @@ const agriculturists: Agriculturist[] = [
     experience: "15 years",
     location: "Sylhet",
     phone: "+8801712345678",
-    description: "ধান ও সবজি রোগ নির্ণয় এবং আধুনিক কৃষি প্রযুক্তি ব্যবহারে অভিজ্ঞ।",
+    description: "Experienced in diagnosing rice and vegetable diseases and using modern agricultural technologies.",
   },
   {
     name: "Fatema Begum",
@@ -27,7 +27,7 @@ const agriculturists: Agriculturist[] = [
     experience: "10 years",
     location: "Dhaka",
     phone: "+8801812345678",
-    description: "জৈব কৃষি ও নিরাপদ খাদ্য উৎপাদনে বিশেষজ্ঞ, কৃষকদের প্রশিক্ষণ প্রদান করেন।",
+    description: "Specialist in organic farming and safe food production, provides training to farmers.",
   },
   {
     name: "Md. Rafiqul Islam",
@@ -35,7 +35,7 @@ const agriculturists: Agriculturist[] = [
     experience: "12 years",
     location: "Rajshahi",
     phone: "+8801912345678",
-    description: "মাটির গুণাগুণ বিশ্লেষণ এবং সঠিক সার ব্যবস্থাপনায় দক্ষ।",
+    description: "Skilled in soil analysis and proper fertilizer management.",
   },
   {
     name: "Shahidul Alam",
@@ -43,7 +43,7 @@ const agriculturists: Agriculturist[] = [
     experience: "8 years",
     location: "Chattogram",
     phone: "+8801612345678",
-    description: "ফল চাষ ও বাগান ব্যবস্থাপনায় দক্ষ, বিশেষ করে আম ও লিচু।",
+    description: "Expert in fruit cultivation and orchard management, especially mango and lychee.",
   },
 ];
 
@@ -63,7 +63,7 @@ export default function AgriculturistPage() {
           {agriculturists.map((agri, index) => (
             <div
               key={index}
-              /* dark:bg-slate-900 এবং dark:border-slate-800 ডার্ক মোড ফিক্স করবে */
+              /* dark:bg-slate-900 and dark:border-slate-800 will fix dark mode */
               className="bg-white dark:bg-slate-900 shadow-md rounded-2xl p-6 border border-green-100 dark:border-slate-800 hover:shadow-xl transition-all"
             >
               <h2 className="text-xl font-bold text-green-800 dark:text-green-400">

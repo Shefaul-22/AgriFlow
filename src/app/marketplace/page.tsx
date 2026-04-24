@@ -21,130 +21,125 @@ type Product = {
 };
 
 const products: Product[] = [
-  // Vegetables (সবজি)
   {
     id: 1,
-    name: "অর্গানিক টমেটো",
+    name: "Organic Tomato",
     category: "Vegetable",
     price: 60,
-    unit: "কেজি",
-    location: "সিলেট",
-    seller: "করিম মিয়া",
+    unit: "kg",
+    location: "Sylhet",
+    seller: "Karim Mia",
     image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=500&auto=format&fit=crop",
   },
   {
     id: 2,
-    name: "তাজা ফুলকপি",
+    name: "Fresh Cauliflower",
     category: "Vegetable",
     price: 40,
-    unit: "পিস",
-    location: "বগুড়া",
-    seller: "রহিম শেখ",
-    image: "https://images.unsplash.com/photo-1568584711075-3d021a7c3ecf?q=80&w=500&auto=format&fit=crop",
+    unit: "piece",
+    location: "Bogura",
+    seller: "Rahim Sheikh",
+    image: "https://images.unsplash.com/photo-1568584711271-6c929fb49b60?q=80&w=500&auto=format&fit=crop",
   },
   {
     id: 3,
-    name: "মিষ্টি কুমড়া",
+    name: "Sweet Pumpkin",
     category: "Vegetable",
     price: 30,
-    unit: "কেজি",
-    location: "যশোর",
-    seller: "আরিফ হোসেন",
-    image: "https://images.unsplash.com/photo-1506543730435-e2c1d4553a84?q=80&w=500&auto=format&fit=crop",
+    unit: "kg",
+    location: "Jashore",
+    seller: "Arif Hossain",
+    image: "https://images.unsplash.com/photo-1506504093444-245f7823555c?q=80&w=500&auto=format&fit=crop",
   },
   {
     id: 4,
-    name: "কাঁচা মরিচ",
+    name: "Green Chili",
     category: "Vegetable",
     price: 120,
-    unit: "কেজি",
-    location: "রংপুর",
-    seller: "জসিম উদ্দিন",
+    unit: "kg",
+    location: "Rangpur",
+    seller: "Jasim Uddin",
     image: "https://images.unsplash.com/photo-1588252303782-cb80119abd6d?q=80&w=500&auto=format&fit=crop",
   },
-
-  // Fruits (ফল)
   {
     id: 5,
-    name: "হিমসাগর আম",
+    name: "Himsagar Mango",
     category: "Fruit",
     price: 150,
-    unit: "কেজি",
-    location: "রাজশাহী",
-    seller: "আব্দুর রব",
+    unit: "kg",
+    location: "Rajshahi",
+    seller: "Abdur Rob",
     image: "https://images.unsplash.com/photo-1553279768-865429fa0078?q=80&w=500&auto=format&fit=crop",
   },
   {
     id: 6,
-    name: "লিচু (বোম্বাই)",
+    name: "Lychee (Bombay)",
     category: "Fruit",
     price: 400,
-    unit: "১০০ পিস",
-    location: "দিনাজপুর",
-    seller: "সাগর আলী",
-    image: "https://images.unsplash.com/photo-1601055283742-ce346fcc7f41?q=80&w=500&auto=format&fit=crop",
+    unit: "100 pcs",
+    location: "Dinajpur",
+    seller: "Sagor Ali",
+    image: "https://images.unsplash.com/photo-1610450519764-aba3d03ed9a6?q=80&w=500&auto=format&fit=crop",
   },
   {
     id: 7,
-    name: "সবরি কলা",
+    name: "Sabri Banana",
     category: "Fruit",
     price: 80,
-    unit: "ডজন",
-    location: "নরসিংদী",
-    seller: "সুমন মিয়া",
-    image: "https://images.unsplash.com/photo-1571771894821-ad99024177c8?q=80&w=500&auto=format&fit=crop",
+    unit: "dozen",
+    location: "Narsingdi",
+    seller: "Sumon Mia",
+    image: "https://images.unsplash.com/photo-1574226516831-e1dff420e12b?q=80&w=500&auto=format&fit=crop",
   },
   {
     id: 8,
-    name: "লাল মাল্টা",
+    name: "Red Malta",
     category: "Fruit",
     price: 220,
-    unit: "কেজি",
-    location: "সিলেট",
-    seller: "ফারুক আহমেদ",
+    unit: "kg",
+    location: "Sylhet",
+    seller: "Faruk Ahmed",
     image: "https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=500&auto=format&fit=crop",
   },
-
-  // Grains (শস্য)
   {
     id: 9,
-    name: "নাজিরশাইল চাল",
+    name: "Nazirshail Rice",
     category: "Grain",
     price: 75,
-    unit: "কেজি",
-    location: "নওগাঁ",
-    seller: "মোতালেব আলী",
+    unit: "kg",
+    location: "Naogaon",
+    seller: "Motaleb Ali",
     image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=500&auto=format&fit=crop",
   },
   {
     id: 10,
-    name: "লাল আটা",
+    name: "Red Flour",
     category: "Grain",
     price: 55,
-    unit: "কেজি",
-    location: "কুষ্টিয়া",
-    seller: "মকবুল হোসেন",
+    unit: "kg",
+    location: "Kushtia",
+    seller: "Mokbul Hossain",
     image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=500&auto=format&fit=crop",
   },
   {
     id: 11,
-    name: "মসুর ডাল",
+    name: "Lentils (Masoor Dal)",
     category: "Grain",
     price: 130,
-    unit: "কেজি",
-    location: "ফরিদপুর",
-    seller: "হাবিব ভাই",
-    image: "https://images.unsplash.com/photo-1585996769400-cc683b84120f?q=80&w=500&auto=format&fit=crop",
+    unit: "kg",
+    location: "Faridpur",
+    seller: "Habib Bhai",
+    image: "https://images.unsplash.com/photo-1545114197-013145464161?q=80&w=500&auto=format&fit=crop",
   },
   {
     id: 12,
-    name: "সরিষার দানা",
+    name: "Mustard Seeds",
     category: "Grain",
     price: 90,
-    unit: "কেজি",
-    location: "পাবনা",
-    seller: "আসলাম শেখ",
-    image: "https://images.unsplash.com/photo-1596450514735-3756b6200230?q=80&w=500&auto=format&fit=crop",
+    unit: "kg",
+    location: "Pabna",
+    seller: "Aslam Sheikh",
+    image: "https://images.unsplash.com/photo-1464306208223-e0b4495a5553?q=80&w=500&auto=format&fit=crop",
   },
 ];
 
@@ -164,17 +159,16 @@ export default function MarketplacePage() {
       <div className="min-h-screen bg-slate-50 pt-24 pb-20 px-4 md:px-10">
         <div className="max-w-7xl mx-auto">
           
-          {/* Hero Header & Search */}
           <div className="flex flex-col lg:flex-row justify-between items-center mb-12 gap-8">
             <div className="text-center lg:text-left">
-              <h1 className="text-4xl md:text-5xl font-black text-green-800">এগ্রি-মার্কেটপ্লেস</h1>
-              <p className="text-gray-500 mt-2 text-lg">সরাসরি কৃষকের মাঠ থেকে টাটকা ও নিরাপদ পণ্য</p>
+              <h1 className="text-4xl md:text-5xl font-black text-green-800">Agri Marketplace</h1>
+              <p className="text-gray-500 mt-2 text-lg">Fresh and safe products directly from farmers</p>
             </div>
             
             <div className="relative w-full md:w-[450px]">
               <input
                 type="text"
-                placeholder="পণ্য খুঁজুন (যেমন: আম, চাল, টমেটো...)"
+                placeholder="Search products (e.g: mango, rice, tomato...)"
                 className="w-full pl-14 pr-6 py-5 rounded-[20px] border-none shadow-xl focus:ring-2 focus:ring-green-500 outline-none text-gray-700"
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -182,7 +176,6 @@ export default function MarketplacePage() {
             </div>
           </div>
 
-          {/* Category Filter Bar */}
           <div className="flex overflow-x-auto gap-4 mb-10 pb-4 no-scrollbar">
             {["All", "Vegetable", "Fruit", "Grain"].map((cat) => (
               <button
@@ -194,63 +187,62 @@ export default function MarketplacePage() {
                     : "bg-white text-gray-500 hover:bg-green-50 border border-gray-100"
                 }`}
               >
-                {cat === "All" ? "সব পণ্য" : cat === "Vegetable" ? "সবজি" : cat === "Fruit" ? "ফল" : "শস্য"}
+                {cat === "All" ? "All Products" : cat === "Vegetable" ? "Vegetables" : cat === "Fruit" ? "Fruits" : "Grains"}
               </button>
             ))}
           </div>
 
-          {/* Marketplace Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredProducts.map((product) => (
               <div 
                 key={product.id} 
-                className="bg-white rounded-[35px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-gray-100 flex flex-col h-full"
+                className="bg-white rounded-[35px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-gray-100 flex flex-col h-[520px]"
               >
-                {/* Image Section */}
-                <div className="relative h-60 overflow-hidden">
+                <div className="relative h-60 min-h-[240px] overflow-hidden">
                   <img 
                     src={product.image} 
                     alt={product.name} 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "https://via.placeholder.com/500?text=Product+Image";
+                    }}
                   />
                   <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider text-green-700 shadow-sm">
-                    {product.category === "Vegetable" ? "সবজি" : product.category === "Fruit" ? "ফল" : "শস্য"}
+                    {product.category}
                   </div>
                 </div>
 
-                {/* Info Section */}
                 <div className="p-7 flex-1 flex flex-col">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xl font-bold text-gray-800 group-hover:text-green-700 transition-colors">
+                    <h3 className="text-xl font-bold text-gray-800 group-hover:text-green-700 transition-colors line-clamp-1">
                       {product.name}
                     </h3>
                     <div className="text-right">
                       <p className="text-green-700 font-black text-2xl">৳{product.price}</p>
-                      <p className="text-gray-400 text-[10px] font-bold">প্রতি {product.unit}</p>
+                      <p className="text-gray-400 text-[10px] font-bold whitespace-nowrap">per {product.unit}</p>
                     </div>
                   </div>
 
-                  <div className="space-y-2.5 mb-8 mt-4 text-gray-500 text-sm">
+                  <div className="space-y-2.5 mb-6 mt-4 text-gray-500 text-sm">
                     <div className="flex items-center">
                       <MapPinIcon className="w-4 h-4 mr-2 text-green-500" />
                       {product.location}
                     </div>
                     <div className="flex items-center">
                       <span className="w-4 h-4 mr-2 flex items-center justify-center bg-gray-100 rounded-full text-[10px]">👤</span>
-                      বিক্রেতা: <span className="font-semibold ml-1 text-gray-700">{product.seller}</span>
+                      Seller: <span className="font-semibold ml-1 text-gray-700">{product.seller}</span>
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
                   <div className="mt-auto space-y-3">
                     <button className="w-full bg-green-600 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-green-700 transition-all shadow-md active:scale-95 group/btn">
                       <ShoppingBagIcon className="w-5 h-5 group-hover/btn:animate-bounce" />
-                      সরাসরি অর্ডার করুন
+                      Order Now
                     </button>
                     
                     <button className="w-full bg-slate-50 text-gray-600 py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-100 transition-all text-sm">
                       <ShoppingCartIcon className="w-4 h-4" />
-                      কার্টে যোগ করুন
+                      Add to Cart
                     </button>
                   </div>
                 </div>
@@ -258,12 +250,11 @@ export default function MarketplacePage() {
             ))}
           </div>
 
-          {/* Empty Search Result */}
           {filteredProducts.length === 0 && (
             <div className="text-center py-24">
               <div className="text-8xl mb-6">🏜️</div>
-              <h3 className="text-2xl font-bold text-gray-400">দুঃখিত, কোনো পণ্য পাওয়া যায়নি!</h3>
-              <p className="text-gray-400 mt-2">অন্য কোনো নামে সার্চ করে দেখুন।</p>
+              <h3 className="text-2xl font-bold text-gray-400">Sorry, no products found!</h3>
+              <p className="text-gray-400 mt-2">Try searching with a different name.</p>
             </div>
           )}
         </div>

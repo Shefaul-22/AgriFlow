@@ -4,17 +4,16 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { StaticImageData } from "next/image";
 
-// ইমেজের পাথ আপনার প্রোজেক্ট অনুযায়ী ঠিক আছে ধরে নিচ্ছি
 import compost from "../Images/compost.png";
 import compostcreate from "../Images/compostcreate.png";
 import flower from "../Images/flower.jpg";
 
 export default function FertilizerPage() {
   const texts: string[] = [
-    "নাইট্রোজেন সার কীভাবে ব্যবহার করবেন",
-    "কোন ফসলের জন্য কোন সার ভালো",
-    "কম্পোস্ট তৈরির সহজ উপায়",
-    "ফসলের ফলন বাড়ানোর কৌশল",
+    "How to use nitrogen fertilizer",
+    "Which fertilizer is best for which crop",
+    "Easy way to make compost",
+    "Techniques to increase crop yield",
   ];
 
   const [index, setIndex] = useState<number>(0);
@@ -48,14 +47,15 @@ export default function FertilizerPage() {
           <div className="relative max-w-5xl mx-auto px-6 animate-fade-in">
             <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-6 py-2 rounded-full mb-6 border border-white/30">
               <span className="text-3xl">🌱</span>
-              <span className="font-medium tracking-wide">কৃষকদের জন্য সম্পূর্ণ গাইড</span>
+              <span className="font-medium tracking-wide">Complete Guide for Farmers</span>
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-slide-up">
-              সারের সম্পূর্ণ গাইড
+              Complete Fertilizer Guide
               <br />
-              <span className="text-emerald-400">সবজি ও ফসলের জন্য</span>
+              <span className="text-emerald-400">For Vegetables and Crops</span>
             </h1>
+
             <p className="text-xl md:text-2xl text-emerald-100 max-w-3xl mx-auto mt-6 h-10 transition-all duration-500">
               <span className="inline-block animate-fade-in-up">
                 {texts[index]}
@@ -68,27 +68,27 @@ export default function FertilizerPage() {
         <section className="py-20 px-6 bg-white dark:bg-slate-900">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-4 dark:text-white">
-              সারের প্রধান প্রকারভেদ
+              Main Types of Fertilizers
             </h2>
+
             <p className="text-center text-gray-600 dark:text-gray-400 mb-12">
-              ৬টি গুরুত্বপূর্ণ সার যা বাংলাদেশের কৃষকরা বেশি ব্যবহার করেন
+              6 important fertilizers commonly used by farmers in Bangladesh
             </p>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Fertilizer Card Component Logic */}
               {[
-                { emoji: "🟢", title: "নাইট্রোজেন সার (Urea)", desc: "পাতা সবুজ করে, দ্রুত বৃদ্ধি ঘটায়।", use: "পালং, ধান, গম, লেটুস" },
-                { emoji: "🟠", title: "ফসফরাস সার (TSP / SSP)", desc: "শিকড় মজবুত করে, ফুল-ফল বাড়ায়।", use: "টমেটো, আলু, বেগুন" },
-                { emoji: "🔵", title: "পটাশিয়াম সার (MOP)", desc: "রোগ প্রতিরোধ ক্ষমতা বাড়ায়, ফলের মান উন্নত করে।", use: "কলা, মরিচ, আম, লাউ" },
-                { emoji: "⚪", title: "DAP (Diammonium Phosphate)", desc: "নাইট্রোজেন + ফসফরাস একসাথে। চারা গজানোর জন্য ভালো।", use: "সবজি চারা, ধান, ভুট্টা" },
-                { emoji: "🟡", title: "TSP (Triple Super Phosphate)", desc: "উচ্চ ফসফরাস। শিকড় ও ফলন বাড়াতে কার্যকর।", use: "আলু, টমেটো, বেগুন, ফুলকপি" },
-                { emoji: "🔷", title: "MOP (Muriate of Potash)", desc: "পটাশিয়ামের প্রধান উৎস। মান উন্নত করে।", use: "লাউ, ঢেঁড়স, মরিচ, কলা" },
+                { emoji: "🟢", title: "Nitrogen Fertilizer (Urea)", desc: "Makes leaves green and promotes rapid growth.", use: "Spinach, rice, wheat, lettuce" },
+                { emoji: "🟠", title: "Phosphorus Fertilizer (TSP / SSP)", desc: "Strengthens roots and increases flowers and fruits.", use: "Tomato, potato, eggplant" },
+                { emoji: "🔵", title: "Potassium Fertilizer (MOP)", desc: "Improves disease resistance and fruit quality.", use: "Banana, chili, mango, gourd" },
+                { emoji: "⚪", title: "DAP (Diammonium Phosphate)", desc: "Nitrogen + Phosphorus together. Good for seedlings.", use: "Vegetable seedlings, rice, corn" },
+                { emoji: "🟡", title: "TSP (Triple Super Phosphate)", desc: "High phosphorus. Effective for root and yield growth.", use: "Potato, tomato, eggplant, cauliflower" },
+                { emoji: "🔷", title: "MOP (Muriate of Potash)", desc: "Main source of potassium. Improves quality.", use: "Gourd, okra, chili, banana" },
               ].map((item, idx) => (
                 <div key={idx} className="group bg-white dark:bg-slate-800 border border-emerald-100 dark:border-slate-700 hover:border-emerald-400 dark:hover:border-emerald-500 rounded-3xl p-8 transition-all hover:shadow-2xl hover:-translate-y-1">
                   <div className="text-5xl mb-6">{item.emoji}</div>
                   <h3 className="text-2xl font-semibold mb-3 dark:text-emerald-400">{item.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
-                  <p className="mt-4 text-emerald-700 dark:text-emerald-300 font-medium italic">উপযোগী: {item.use}</p>
+                  <p className="mt-4 text-emerald-700 dark:text-emerald-300 font-medium italic">Best for: {item.use}</p>
                 </div>
               ))}
             </div>
@@ -98,17 +98,22 @@ export default function FertilizerPage() {
         {/* VEGETABLE GUIDE SECTION */}
         <section className="py-20 bg-emerald-50 dark:bg-slate-800/50 px-6">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-4 dark:text-white">সবজির জন্য সেরা সারের পরামর্শ</h2>
-            <p className="text-center text-gray-600 dark:text-gray-400 mb-12">জনপ্রিয় সবজির জন্য কোন সার বেশি উপকারী</p>
+            <h2 className="text-4xl font-bold text-center mb-4 dark:text-white">
+              Best Fertilizer Guide for Vegetables
+            </h2>
+
+            <p className="text-center text-gray-600 dark:text-gray-400 mb-12">
+              Which fertilizer works best for popular vegetables
+            </p>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
-                { icon: "🍅", name: "টমেটো / বেগুন", tips: "TSP + MOP + সামান্য Urea। ফল ধরার সময় পটাশ বেশি দিন।" },
-                { icon: "🥬", name: "পালং শাক / লেটুস", tips: "Urea বা Nitrogen-rich সার। পাতা বড় করতে এটি সেরা।" },
-                { icon: "🥔", name: "আলু", tips: "TSP + MOP + DAP। শিকড় ও কন্দ বড় করতে ফসফরাস জরুরি।" },
-                { icon: "🍆", name: "লাউ / ঢেঁড়স / শিম", tips: "MOP + TSP। ফলন বেশি হতে পটাশিয়াম খুব জরুরি।" },
-                { icon: "🥦", name: "বাঁধাকপি / ফুলকপি", tips: "Balanced NPK। Nitrogen দিয়ে পাতা, Phosphorus দিয়ে মাথা।" },
-                { icon: "🌶️", name: "মরিচ / ধনিয়া", tips: "MOP + সামান্য TSP। পটাশিয়াম ফলের গুণ বাড়ায়।" },
+                { icon: "🍅", name: "Tomato / Eggplant", tips: "TSP + MOP + small amount of Urea. Increase potassium during fruiting." },
+                { icon: "🥬", name: "Spinach / Lettuce", tips: "Urea or nitrogen-rich fertilizer. Best for leafy growth." },
+                { icon: "🥔", name: "Potato", tips: "TSP + MOP + DAP. Phosphorus is essential for root and tuber growth." },
+                { icon: "🍆", name: "Gourd / Okra / Beans", tips: "MOP + TSP. Potassium is very important for high yield." },
+                { icon: "🥦", name: "Cabbage / Cauliflower", tips: "Balanced NPK. Nitrogen for leaves, phosphorus for head formation." },
+                { icon: "🌶️", name: "Chili / Coriander", tips: "MOP + small amount of TSP. Potassium improves fruit quality." },
               ].map((veg, i) => (
                 <div key={i} className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow dark:shadow-slate-900 hover:shadow-xl transition border border-transparent dark:border-slate-700">
                   <div className="text-4xl mb-4">{veg.icon}</div>
@@ -123,12 +128,14 @@ export default function FertilizerPage() {
         {/* COMPOST SECTION */}
         <section className="py-20 bg-white dark:bg-slate-900 px-6">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-6 dark:text-white">কম্পোস্ট সার তৈরির পদ্ধতি</h2>
+            <h2 className="text-4xl font-bold text-center mb-6 dark:text-white">
+              How to Make Compost Fertilizer
+            </h2>
+
             <p className="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
-              ঘরের সহজ উপকরণ ব্যবহার করে প্রাকৃতিক সার তৈরি করার সম্পূর্ণ প্রক্রিয়া
+              Complete process of making natural fertilizer using simple household materials
             </p>
 
-            {/* IMAGE 1 */}
             <div className="mb-12">
               <img
                 src={(compostcreate as StaticImageData).src}
@@ -137,30 +144,28 @@ export default function FertilizerPage() {
               />
             </div>
 
-            {/* Materials + Benefits */}
             <div className="grid md:grid-cols-2 gap-10 mb-16">
               <div className="bg-emerald-50 dark:bg-slate-800 p-8 rounded-3xl">
-                <h3 className="text-2xl font-semibold mb-4 dark:text-emerald-400">কি কি লাগবে</h3>
+                <h3 className="text-2xl font-semibold mb-4 dark:text-emerald-400">Required Materials</h3>
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• সবজির খোসা</li>
-                  <li>• শুকনা পাতা</li>
-                  <li>• গোবর</li>
-                  <li>• রান্নাঘরের বর্জ্য</li>
+                  <li>• Vegetable peels</li>
+                  <li>• Dry leaves</li>
+                  <li>• Cow dung</li>
+                  <li>• Kitchen waste</li>
                 </ul>
               </div>
 
               <div className="bg-emerald-50 dark:bg-slate-800 p-8 rounded-3xl">
-                <h3 className="text-2xl font-semibold mb-4 dark:text-emerald-400">উপকারিতা</h3>
+                <h3 className="text-2xl font-semibold mb-4 dark:text-emerald-400">Benefits</h3>
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>✓ মাটির উর্বরতা বৃদ্ধি করে</li>
-                  <li>✓ পানি ধরে রাখার ক্ষমতা বাড়ায়</li>
-                  <li>✓ সম্পূর্ণ প্রাকৃতিক ও নিরাপদ</li>
-                  <li>✓ রাসায়নিক সারের প্রয়োজন কমায়</li>
+                  <li>✓ Improves soil fertility</li>
+                  <li>✓ Increases water retention</li>
+                  <li>✓ Completely natural and safe</li>
+                  <li>✓ Reduces need for chemical fertilizers</li>
                 </ul>
               </div>
             </div>
 
-            {/* IMAGE 2 */}
             <div className="mb-16">
               <img
                 src={(compost as StaticImageData).src}
@@ -169,14 +174,13 @@ export default function FertilizerPage() {
               />
             </div>
 
-            {/* Step by Step */}
             <div className="max-w-4xl mx-auto space-y-6">
               {[
-                { step: "ধাপ ১: উপকরণ সংগ্রহ", desc: "রান্নাঘরের বর্জ্য, পাতা, খড় এবং গোবর সংগ্রহ করুন।" },
-                { step: "ধাপ ২: স্তর তৈরি", desc: "শুকনা ও ভেজা উপকরণ স্তরে স্তরে সাজান।" },
-                { step: "ধাপ ৩: মাটি ও পানি যোগ", desc: "হালকা মাটি দিন এবং আর্দ্র রাখুন।" },
-                { step: "ধাপ ৪: উল্টানো", desc: "প্রতি ৫-৭ দিনে একবার নেড়ে দিন যাতে বাতাস প্রবেশ করে।" },
-                { step: "ধাপ ৫: প্রস্তুত", desc: "৩-৬ সপ্তাহ পরে কালো, গন্ধহীন কম্পোস্ট তৈরি হবে।" },
+                { step: "Step 1: Collect Materials", desc: "Gather kitchen waste, leaves, straw, and cow dung." },
+                { step: "Step 2: Create Layers", desc: "Arrange dry and wet materials in layers." },
+                { step: "Step 3: Add Soil & Water", desc: "Add a little soil and keep it moist." },
+                { step: "Step 4: Turn the Pile", desc: "Turn it every 5–7 days to allow air circulation." },
+                { step: "Step 5: Ready", desc: "After 3–6 weeks, dark and odorless compost will be ready." },
               ].map((step, index) => (
                 <div key={index} className="p-6 border dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 shadow-sm">
                   <h3 className="font-semibold text-lg dark:text-emerald-400">{step.step}</h3>
