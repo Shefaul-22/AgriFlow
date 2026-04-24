@@ -151,6 +151,57 @@ const Navbar = () => {
               >
                 Log In
               </Link>
+            )}
+
+          {
+            status === "loading" ? (
+              <span>Loading...</span>
+            ) : session?.user ? (
+              <>
+                {/* User */}
+                <div className="flex items-center gap-2">
+
+                  {/* Login user image here */}
+                  {
+                    session.user.image && (
+                      <Image
+                        src={session.user.image}
+                        alt="user"
+                        width={35}
+                        height={35}
+                        className="rounded-full"
+                      />
+                    )}
+
+                  {/* <span className="font-medium">
+                    {session.user.name}
+                  </span> */}
+
+                  <span className="font-medium">
+                    {session.user.name || "User"}
+                  </span>
+
+                </div>
+
+                {/* Logout */}
+                <button
+                  onClick={() => signOut()}
+                  className="px-5 py-2 text-sm rounded-full bg-red-500 text-white hover:bg-red-600"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className={`px-5 py-2 text-sm font-medium transition-colors ${scrolled
+                    ? "text-green-500 font-bold"
+                    : "text-black dark:text-gray-300"
+                    } hover:text-green-400`}
+                >
+                  Log In
+                </Link>
 
               <Link
                 href="/Dashboard"
@@ -185,6 +236,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
+        {/* Added by shefaul */}
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -205,6 +257,12 @@ const Navbar = () => {
                     />
                   )}
                   <p className="font-semibold">{session.user.name}</p>
+
+                  {/* <p className="font-semibold">{session.user.name}</p> */}
+                  <p className="font-semibold">
+                    {session.user.name || "User"}
+                  </p>
+
                 </div>
 
                 <button
