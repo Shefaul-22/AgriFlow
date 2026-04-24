@@ -1,51 +1,86 @@
-// import { addUser } from "@/actions/server/userActions"; // File path check kore nio
-import { addUser } from "@/actions/server/userActions";
-import { prisma } from "@/lib/prisma";
+"use client"
 
-export default async function LoginPage() {
-    // Login page load hoyar somoy database theke user-der niye ashbe
-    const users = await prisma.user.findMany();
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import Swal from "sweetalert2"
+
+type LoginForm = {
+    email: string
+    password: string
+}
+
+export default function LoginPage() {
+    const router = useRouter()
+    const [loading, setLoading] = useState(false)
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginForm>()
+
+    const onSubmit = async (data: LoginForm) => {
+        try {
+            setLoading(true)
+
+            const res = await signIn("credentials", {
+                email: data.email,
+                password: data.password,
+                redirect: false,
+            })
+
+            if (res?.error) {
+                Swal.fire("Error", "Invalid email or password", "error")
+            } else {
+                Swal.fire({
+                    icon: "success",
+                    title: "Login successful 🎉",
+                    timer: 1500,
+                    showConfirmButton: false,
+                })
+
+                router.push("/")
+            }
+        } catch (error) {
+            Swal.fire("Error", "Something went wrong", "error")
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-10">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-                <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-                    Login & DB Test
-                </h1>
+        <div className="max-w-md mx-auto mt-10 p-6 shadow-lg rounded-xl">
+            <h2 className="text-2xl font-bold mb-4 text-center">
+                Login
+            </h2>
 
-                {/* User Add Form */}
-                <form action={addUser} className="mb-8">
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
-                    >
-                        Create New Test User
-                    </button>
-                </form>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-                {/* Database Stats */}
-                <div className="border-t pt-6">
-                    <h2 className="text-lg font-semibold mb-4 text-gray-700">
-                        Registered Users ({users.length})
-                    </h2>
-                    <div className="max-h-60 overflow-y-auto bg-gray-50 rounded p-4">
-                        {
-                            users.length === 0 ? (
-                                <p className="text-gray-500 text-sm">No users found in MySQL.</p>
-                            ) : (
-                                <ul className="space-y-2">
-                                    {users.map((user) => (
-                                        <li key={user.id} className="text-sm border-b pb-2 text-gray-600">
-                                            <span className="font-medium">{user.name}</span>
-                                            <br />
-                                            <span className="text-xs text-gray-400">{user.email}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                    </div>
-                </div>
-            </div>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    className="input input-bordered w-full"
+                    {...register("email", { required: "Email required" })}
+                />
+                {errors.email && <p>{errors.email.message}</p>}
+
+                <input
+                    type="password"
+                    placeholder="Password"
+                    className="input input-bordered w-full"
+                    {...register("password", { required: "Password required" })}
+                />
+                {errors.password && <p>{errors.password.message}</p>}
+
+                <button
+                    disabled={loading}
+                    className="btn btn-primary w-full"
+                >
+                    {loading ? "Logging in..." : "Login"}
+                </button>
+            </form>
         </div>
-    );
+    )
 }
