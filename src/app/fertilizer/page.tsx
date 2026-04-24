@@ -31,7 +31,7 @@ export default function FertilizerPage() {
     <>
       <Navbar />
 
-      <main className="bg-white dark:bg-slate-900 text-gray-800 dark:text-gray-100 font-sans transition-colors duration-300">
+      <main className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans transition-colors duration-300">
         
         {/* HERO SECTION */}
         <section
@@ -65,7 +65,7 @@ export default function FertilizerPage() {
         </section>
 
         {/* TYPES OF FERTILIZER */}
-        <section className="py-20 px-6 bg-white dark:bg-slate-900">
+        <section className="py-20 px-6 bg-white dark:bg-gray-900">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-4 dark:text-white">
               সারের প্রধান প্রকারভেদ
@@ -84,7 +84,7 @@ export default function FertilizerPage() {
                 { emoji: "🟡", title: "TSP (Triple Super Phosphate)", desc: "উচ্চ ফসফরাস। শিকড় ও ফলন বাড়াতে কার্যকর।", use: "আলু, টমেটো, বেগুন, ফুলকপি" },
                 { emoji: "🔷", title: "MOP (Muriate of Potash)", desc: "পটাশিয়ামের প্রধান উৎস। মান উন্নত করে।", use: "লাউ, ঢেঁড়স, মরিচ, কলা" },
               ].map((item, idx) => (
-                <div key={idx} className="group bg-white dark:bg-slate-800 border border-emerald-100 dark:border-slate-700 hover:border-emerald-400 dark:hover:border-emerald-500 rounded-3xl p-8 transition-all hover:shadow-2xl hover:-translate-y-1">
+                <div key={idx} className="group bg-white dark:bg-gray-800 border border-emerald-100 dark:border-gray-700 hover:border-emerald-400 dark:hover:border-emerald-500 rounded-3xl p-8 transition-all hover:shadow-2xl hover:-trangray-y-1">
                   <div className="text-5xl mb-6">{item.emoji}</div>
                   <h3 className="text-2xl font-semibold mb-3 dark:text-emerald-400">{item.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
@@ -96,7 +96,7 @@ export default function FertilizerPage() {
         </section>
 
         {/* VEGETABLE GUIDE SECTION */}
-        <section className="py-20 bg-emerald-50 dark:bg-slate-800/50 px-6">
+        <section className="py-20 bg-emerald-50 dark:bg-gray-800/50 px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-4 dark:text-white">সবজির জন্য সেরা সারের পরামর্শ</h2>
             <p className="text-center text-gray-600 dark:text-gray-400 mb-12">জনপ্রিয় সবজির জন্য কোন সার বেশি উপকারী</p>
@@ -110,7 +110,7 @@ export default function FertilizerPage() {
                 { icon: "🥦", name: "বাঁধাকপি / ফুলকপি", tips: "Balanced NPK। Nitrogen দিয়ে পাতা, Phosphorus দিয়ে মাথা।" },
                 { icon: "🌶️", name: "মরিচ / ধনিয়া", tips: "MOP + সামান্য TSP। পটাশিয়াম ফলের গুণ বাড়ায়।" },
               ].map((veg, i) => (
-                <div key={i} className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow dark:shadow-slate-900 hover:shadow-xl transition border border-transparent dark:border-slate-700">
+                <div key={i} className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow dark:shadow-gray-900 hover:shadow-xl transition border border-transparent dark:border-gray-700">
                   <div className="text-4xl mb-4">{veg.icon}</div>
                   <h3 className="font-semibold text-xl mb-2 dark:text-emerald-400">{veg.name}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{veg.tips}</p>
@@ -121,7 +121,7 @@ export default function FertilizerPage() {
         </section>
 
         {/* COMPOST SECTION */}
-        <section className="py-20 bg-white dark:bg-slate-900 px-6">
+        <section className="py-20 bg-white dark:bg-gray-900 px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-6 dark:text-white">কম্পোস্ট সার তৈরির পদ্ধতি</h2>
             <p className="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
@@ -133,13 +133,13 @@ export default function FertilizerPage() {
               <img
                 src={(compostcreate as StaticImageData).src}
                 alt="Compost Materials"
-                className="w-full max-w-3xl mx-auto rounded-2xl shadow-lg border dark:border-slate-700"
+                className="w-full max-w-3xl mx-auto rounded-2xl shadow-lg border dark:border-gray-700"
               />
             </div>
 
             {/* Materials + Benefits */}
             <div className="grid md:grid-cols-2 gap-10 mb-16">
-              <div className="bg-emerald-50 dark:bg-slate-800 p-8 rounded-3xl">
+              <div className="bg-emerald-50 dark:bg-gray-800 p-8 rounded-3xl">
                 <h3 className="text-2xl font-semibold mb-4 dark:text-emerald-400">কি কি লাগবে</h3>
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                   <li>• সবজির খোসা</li>
@@ -149,7 +149,7 @@ export default function FertilizerPage() {
                 </ul>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-slate-800 p-8 rounded-3xl">
+              <div className="bg-emerald-50 dark:bg-gray-800 p-8 rounded-3xl">
                 <h3 className="text-2xl font-semibold mb-4 dark:text-emerald-400">উপকারিতা</h3>
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                   <li>✓ মাটির উর্বরতা বৃদ্ধি করে</li>
@@ -165,7 +165,7 @@ export default function FertilizerPage() {
               <img
                 src={(compost as StaticImageData).src}
                 alt="Compost Process"
-                className="w-full max-w-3xl mx-auto rounded-2xl shadow-lg border dark:border-slate-700"
+                className="w-full max-w-3xl mx-auto rounded-2xl shadow-lg border dark:border-gray-700"
               />
             </div>
 
@@ -178,7 +178,7 @@ export default function FertilizerPage() {
                 { step: "ধাপ ৪: উল্টানো", desc: "প্রতি ৫-৭ দিনে একবার নেড়ে দিন যাতে বাতাস প্রবেশ করে।" },
                 { step: "ধাপ ৫: প্রস্তুত", desc: "৩-৬ সপ্তাহ পরে কালো, গন্ধহীন কম্পোস্ট তৈরি হবে।" },
               ].map((step, index) => (
-                <div key={index} className="p-6 border dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 shadow-sm">
+                <div key={index} className="p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 shadow-sm">
                   <h3 className="font-semibold text-lg dark:text-emerald-400">{step.step}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{step.desc}</p>
                 </div>

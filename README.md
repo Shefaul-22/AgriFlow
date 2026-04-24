@@ -126,7 +126,7 @@ AgriFlow includes an **AI-powered chatbot** that helps users get instant agricul
 * Product management (CRUD)
 * Order & payment system
 * Live streaming & bidding system
-* Analytics dashboard
+* Analytics Dashboard
 * Delivery tracking
 * 🤖 AI chatbot assistance
 

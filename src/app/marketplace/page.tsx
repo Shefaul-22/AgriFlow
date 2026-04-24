@@ -161,7 +161,7 @@ export default function MarketplacePage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-slate-50 pt-24 pb-20 px-4 md:px-10">
+      <div className="min-h-screen bg-gray-50 pt-24 pb-20 px-4 md:px-10">
         <div className="max-w-7xl mx-auto">
           
           {/* Hero Header & Search */}
@@ -248,7 +248,7 @@ export default function MarketplacePage() {
                       সরাসরি অর্ডার করুন
                     </button>
                     
-                    <button className="w-full bg-slate-50 text-gray-600 py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-100 transition-all text-sm">
+                    <button className="w-full bg-gray-50 text-gray-600 py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-100 transition-all text-sm">
                       <ShoppingCartIcon className="w-4 h-4" />
                       কার্টে যোগ করুন
                     </button>

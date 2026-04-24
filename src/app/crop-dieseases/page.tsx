@@ -157,7 +157,7 @@ export default function CropDiseasesPage() {
   return (
     <>
     <Navbar/>
-<div className="min-h-screen bg-slate-50 pt-24 pb-12 px-6 md:px-12">
+<div className="min-h-screen bg-gray-50 pt-24 pb-12 px-6 md:px-12">
       <div className="max-w-6xl mx-auto">
     
         <header className="text-center mb-12">

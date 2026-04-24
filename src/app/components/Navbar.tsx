@@ -6,6 +6,8 @@ import { useTheme } from "next-themes";
 import Logo from "@/app/components/Logo";
 import Link from "next/link";
 import Dropdown from "@/app/components/Dropdown";
+import {  IoHomeOutline } from "react-icons/io5";
+import { ShoppingCart, Info } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -136,12 +138,12 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.25 }}
-            className="absolute top-21 bg-gray-600/90 right-2 w-[85%] max-w-sm rounded-2xl  backdrop-blur-xl border border-green-500/20 p-6 flex flex-col gap-5 md:hidden shadow-2xl"
+            className="absolute top-21 bg-green-50/90 right-2 w-[85%] max-w-sm rounded-2xl  backdrop-blur-xl border-2 border-green-500/20 p-6 flex flex-col gap-5 md:hidden shadow-2xl"
           >
             <div className="flex flex-col gap-3">
-              <Link href="/" onClick={() => setIsOpen(false)} className="font-bold text-lg">Home</Link>
-              <Link href="/marketplace" onClick={() => setIsOpen(false)} className="font-bold text-lg">Marketplace</Link>
-              <Link href="/about" onClick={() => setIsOpen(false)} className="font-bold text-lg">About</Link>
+              <Link href="/" onClick={() => setIsOpen(false)} className="font-bold text-lg  hover:text-green-600 flex items-center gap-2"> <IoHomeOutline className='text-green-600 h-5 '/> Home</Link>
+              <Link href="/marketplace" onClick={() => setIsOpen(false)} className="font-bold text-lg  hover:text-green-600 flex items-center gap-2"> <ShoppingCart className="text-green-600 h-5 "/> Marketplace</Link>
+              <Link href="/about" onClick={() => setIsOpen(false)} className="font-bold text-lg  hover:text-green-600 flex items-center gap-2"> <Info className="text-green-600 h-5 "/> About</Link>
             </div>
             <hr className="border-gray-300 " />
             <div className="flex flex-col gap-2">
