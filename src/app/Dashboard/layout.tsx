@@ -5,19 +5,44 @@ import { usePathname } from 'next/navigation';
 import { CiBoxList } from "react-icons/ci";
 import { RiMentalHealthLine } from "react-icons/ri"
 import { MdOutlineInventory2, MdOutlineAnalytics } from "react-icons/md";
-import { IoSettingsOutline, IoHomeOutline } from "react-icons/io5";
+import { IoSettingsOutline, IoHomeOutline, IoBagAddOutline, IoListOutline } from "react-icons/io5";
 import Logo from '@/app/components/Logo';
 import { RiLiveLine } from "react-icons/ri";
 
-const sidebarLinks = [
-  { name: 'Home', href: '/', icon: IoHomeOutline },
-  { name: 'Dashboard', href: '/Dashboard', icon: CiBoxList },
-  { name: 'Health', href: '/Dashboard/crop-health', icon: RiMentalHealthLine },
-  { name: 'Inventory', href: '/Dashboard/inventory', icon: MdOutlineInventory2 },
-  { name: 'Analytics', href: '/Dashboard/analytics', icon: MdOutlineAnalytics },
-  { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
- { name: 'Live Farm', href: '/Dashboard/live', icon: RiLiveLine  },
-];
+const role = "farmer"; 
+
+const sidebarConfig = {
+  farmer: [
+    { name: 'Home', href: '/', icon: IoHomeOutline },
+    { name: 'Overview', href: '/Dashboard/farmer', icon: CiBoxList },
+    { name: 'Add Product', href: '/Dashboard/farmer/add-product', icon: IoBagAddOutline },
+    { name: 'My Products', href: '/Dashboard/farmer/my-products', icon: IoListOutline },
+    { name: 'Health', href: '/Dashboard/crop-health', icon: RiMentalHealthLine },
+    { name: 'Live Farm', href: '/Dashboard/live', icon: RiLiveLine },
+    { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
+  ],
+
+  admin: [
+    { name: 'Home', href: '/', icon: IoHomeOutline },
+    { name: 'Overview', href: '/Dashboard/admin', icon: CiBoxList },
+    { name: 'Analytics', href: '/Dashboard/analytics', icon: MdOutlineAnalytics },
+    { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
+  ],
+
+  deliveryPartner: [
+    { name: 'Home', href: '/', icon: IoHomeOutline },
+    { name: 'Overview', href: '/Dashboard/delivery-partner', icon: CiBoxList },
+    { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
+  ],
+
+  buyer: [
+    { name: 'Home', href: '/', icon: IoHomeOutline },
+    { name: 'Overview', href: '/Dashboard/buyer', icon: CiBoxList },
+    { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
+  ],
+};
+
+const sidebarLinks = sidebarConfig[role];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -36,7 +61,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <nav className="flex-1 space-y-1">
           {sidebarLinks.map((link) => {
             const Icon = link.icon;
-            const isActive = pathname === link.href;
+            const isActive = link.href === '/' 
+              ? pathname === '/' 
+              : (pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href + '/')));
             return (
               <Link
                 key={link.name}

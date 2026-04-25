@@ -12,6 +12,12 @@ const config: Config = {
       colors: {
         "deep-green": "#00A859",
       },
+      width: {
+        "97.5": "390px",
+      },
+      height: {
+        "155": "620px",
+      },
     },
   },
   plugins: [],
