@@ -18,6 +18,7 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+<<<<<<< Updated upstream
   const [scrollProgress, setScrollProgress] = useState(0); 
 
   const { scrollY } = useScroll();
@@ -29,6 +30,40 @@ const Navbar = () => {
 
   useEffect(() => {
     setMounted(true);
+=======
+  const[flashLine,setFlashLine] = useState(false)
+
+  const hasScrolledOnce = useRef(false);
+
+  useEffect(() => {
+    setMounted(true);
+    let timeout;
+
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      // Background fix: 50px niche namle transparent hobe
+      if (offset > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+      // Flash line logic fix: Ekbar trigger hobe
+      if (offset > 10 && !hasScrolledOnce.current) {
+        hasScrolledOnce.current = true;
+        setFlashLine(true);
+        timeout = setTimeout(() => setFlashLine(false), 600);
+      } else if (offset <= 10) {
+        hasScrolledOnce.current = false;
+        setFlashLine(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timeout);
+    };
+>>>>>>> Stashed changes
   }, []);
 
   return (

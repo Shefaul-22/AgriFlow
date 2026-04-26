@@ -4,12 +4,16 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CiBoxList } from "react-icons/ci";
 import { RiMentalHealthLine } from "react-icons/ri"
-import { MdOutlineInventory2, MdOutlineAnalytics } from "react-icons/md";
+import { MdOutlineBookmarkBorder , MdOutlineNotificationsActive ,MdOutlineAnalytics , MdOutlineAddShoppingCart,MdOutlineAssignment} from "react-icons/md";
 import { IoSettingsOutline, IoHomeOutline, IoBagAddOutline, IoListOutline } from "react-icons/io5";
 import Logo from '@/app/components/Logo';
+import { FaUserCog } from "react-icons/fa";
 import { RiLiveLine } from "react-icons/ri";
+import { GrDeliver } from "react-icons/gr";
+import { BiDna } from "react-icons/bi";
+import { TiFlowSwitch } from "react-icons/ti";
 
-const role = "farmer"; 
+const role = "buyer"; 
 
 const sidebarConfig = {
   farmer: [
@@ -25,19 +29,28 @@ const sidebarConfig = {
   admin: [
     { name: 'Home', href: '/', icon: IoHomeOutline },
     { name: 'Overview', href: '/Dashboard/admin', icon: CiBoxList },
-    { name: 'Analytics', href: '/Dashboard/analytics', icon: MdOutlineAnalytics },
+    { name: 'Manage Users', href: '/Dashboard/admin/manage-users', icon: FaUserCog },
+    { name: 'Manage Deliveries', href: '/Dashboard/admin/delivery-manage', icon: GrDeliver },
+    { name: 'Manage Marketplace', href: '/Dashboard/admin/manage-marketplace', icon: MdOutlineAddShoppingCart },
+    { name: 'Analytics', href: '/Dashboard/admin/analytics', icon: MdOutlineAnalytics },
     { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
   ],
 
   deliveryPartner: [
     { name: 'Home', href: '/', icon: IoHomeOutline },
     { name: 'Overview', href: '/Dashboard/delivery-partner', icon: CiBoxList },
+  { name: 'Assigned', href: '/Dashboard/delivery-partner/assigned', icon: MdOutlineAssignment },
+  { name: 'Active', href: '/Dashboard/delivery-partner/active-delivery', icon: MdOutlineNotificationsActive },
+  { name: 'Workflow', href: '/Dashboard/delivery-partner/delivery-workflow', icon: TiFlowSwitch },
     { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
   ],
 
   buyer: [
     { name: 'Home', href: '/', icon: IoHomeOutline },
     { name: 'Overview', href: '/Dashboard/buyer', icon: CiBoxList },
+    { name: 'Live Bidding', href: '/Dashboard/buyer/live-bidding', icon: BiDna },
+    { name: 'Cart', href: '/Dashboard/buyer/cart', icon: MdOutlineBookmarkBorder  },
+    { name: 'My Orders', href: '/Dashboard/buyer/my-orders', icon: MdOutlineAddShoppingCart },
     { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
   ],
 };
