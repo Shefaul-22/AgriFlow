@@ -78,7 +78,7 @@ export default function LoginPage() {
                     disabled={loading}
                     className="btn btn-primary w-full"
                 >
-                    {loading ? "Logging in..." : "Login"}
+                    {loading ? "Logging in.." : "Login"}
                 </button>
             </form>
         </div>

@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import Script from "next/script";
-import QueryProvider from "@/app/Dashboard/QueryProvider";
+// import Script from "next/script";
 import Providers from "@/providers/Providers";
-import GoogleTranslate from "@/app/components/GoogleTranslate/GoogleTranslate";
+import GoogleTranslate from "./components/GoogleTranslate/GoogleTranslate";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,33 +33,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* Shob provider-ke ekta sequence-e shajano hoyeche */}
-        <QueryProvider>
-          <Providers>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
-            </ThemeProvider>
-          </Providers>
-        </QueryProvider>
-
-        {/* Google Translate Config */}
-        <Script id="google-translate-config" strategy="afterInteractive">
-          {`
-            window.googleTranslateElementInit = function() {
-              new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,bn,es,zh-CN,ar,fr', 
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-              }, 'google_translate_element');
-            }
-          `}
-        </Script>
-        
-        <Script
-          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
-        />
+          <QueryProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+          </ThemeProvider>
+        </Providers>
+        {/* Google Translate Scripts */}
+        <GoogleTranslate></GoogleTranslate>
       </body>
     </html>
   );

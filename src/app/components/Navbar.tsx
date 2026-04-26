@@ -22,19 +22,9 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const { data: session, status } = useSession();
-  const pathname = usePathname();
-  const { scrollY } = useScroll();
 
-  // Scroll logic combined (Progress bar + Background change)
-  useMotionValueEvent(scrollY, "change", (v) => {
-    setScrolled(v > 60);
-    if (typeof window !== "undefined") {
-      const max = document.body.scrollHeight - window.innerHeight;
-      setScrollProgress(max > 0 ? (v / max) * 100 : 0);
-    }
-  });
+  // Flash line logic thik rakhar jonno useRef proyojon
+  const hasScrolledOnce = useRef(false);
 
   // Close menu on route change
   useEffect(() => {
@@ -43,6 +33,34 @@ const Navbar = () => {
 
   useEffect(() => {
     setMounted(true);
+    let timeout;
+
+    const handleScroll = () => {
+      const offset = window.scrollY;
+
+      // Background fix: 50px niche namle transparent hobe
+      if (offset > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+
+      // Flash line logic fix: Ekbar trigger hobe
+      if (offset > 10 && !hasScrolledOnce.current) {
+        hasScrolledOnce.current = true;
+        setFlashLine(true);
+        timeout = setTimeout(() => setFlashLine(false), 600);
+      } else if (offset <= 10) {
+        hasScrolledOnce.current = false;
+        setFlashLine(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timeout);
+    };
   }, []);
 
   if (!mounted) return null;
@@ -51,14 +69,15 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${
         scrolled
-          ? " backdrop-blur-md shadow-sm"
-          : "bg-transparent bg-white/50  backdrop-blur-xl border-b border-gray-100 dark:border-gray-800"
+          ? "backdrop-blur border-transparent" // Scroll korle purapuri faka
+          : "dark:bg-black/60 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800" // Default glassmorphism
       }`}
     >
       {/* Interactive Scroll Progress Line */}
       <motion.div
-        animate={{ width: `${scrollProgress}%` }}
-        transition={{ type: "spring", stiffness: 100, damping: 30 }}
+        initial={{ width: "0%", opacity: 0 }}
+        animate={flashLine ? { width: "100%", opacity: 1 } : { width: "100%", opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
         className="absolute bottom-0 left-0 h-[2px] bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.8)]"
       />
 
@@ -98,54 +117,36 @@ const Navbar = () => {
 
         {/* Desktop Right Side */}
         <div className="hidden md:flex items-center gap-6">
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-2 rounded-xl text-xl transition-all hover:scale-110 text-black dark:text-white"
-          >
-            {theme === "dark" ? <HiSun /> : <HiMoon />}
-          </button>
-
-          {status === "loading" ? (
-            <span className="text-xs">Loading...</span>
-          ) : session?.user ? (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                {session.user.image && (
-                  <Image
-                    src={session.user.image}
-                    alt="user"
-                    width={35}
-                    height={35}
-                    className="rounded-full border border-green-500"
-                  />
-                )}
-                <span className="font-medium text-sm">
-                  {session.user.name || "User"}
-                </span>
-              </div>
-              <button
-                onClick={() => signOut()}
-                className="px-4 py-1.5 text-xs rounded-full bg-red-500 text-white hover:bg-red-600 transition"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-4">
-              <Link
-                href="/login"
-                className="text-sm font-medium hover:text-green-500"
-              >
-                Log In
-              </Link>
-              <Link
-                href="/Dashboard"
-                className="px-6 py-2.5 text-sm font-medium rounded-full bg-green-600 text-white hover:bg-green-700 transition"
-              >
-                Dashboard
-              </Link>
-            </div>
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className={`p-2 rounded-xl text-xl transition-all hover:scale-110 ${
+                scrolled ? "text-green-500" : "text-black dark:text-white"
+              }`}
+            >
+              {theme === "dark" ? <HiSun /> : <HiMoon />}
+            </button>
           )}
+
+          <Link
+            href="/login"
+            className={`px-5 py-2 text-sm font-medium transition-colors ${
+              scrolled ? "text-green-500 font-bold" : "text-black dark:text-gray-300"
+            } hover:text-green-400`}
+          >
+            Log In
+          </Link>
+
+          <Link
+            href="/Dashboard"
+            className={`px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 ${
+              scrolled
+                ? "bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white shadow-lg shadow-green-500/10"
+                : "bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-500/20"
+            }`}
+          >
+            Dashboard
+          </Link>
         </div>
 
         {/* Mobile Buttons */}
