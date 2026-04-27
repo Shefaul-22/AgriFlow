@@ -1,12 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { HiMenuAlt3, HiX, HiMoon, HiSun } from "react-icons/hi";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useMotionValueEvent,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import Logo from "@/app/components/Logo";
 import Link from "next/link";
@@ -14,16 +9,18 @@ import { usePathname } from "next/navigation";
 import Dropdown from "@/app/components/Dropdown";
 import { IoHomeOutline } from "react-icons/io5";
 import { ShoppingCart, Info } from "lucide-react";
-import { useSession, signOut } from "next-auth/react";
-import Image from "next/image";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  
+  // FIXED ERROR 1: flashLine state declare kora hoyeche
+  const [flashLine, setFlashLine] = useState(false);
 
-  // Flash line logic thik rakhar jonno useRef proyojon
+  // Flash line logic control
   const hasScrolledOnce = useRef(false);
 
   // Close menu on route change
@@ -38,18 +35,18 @@ const Navbar = () => {
     const handleScroll = () => {
       const offset = window.scrollY;
 
-      // Background fix: 50px niche namle transparent hobe
+      // Background logic
       if (offset > 50) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
 
-      // Flash line logic fix: Ekbar trigger hobe
+      // FIXED ERROR 2: Flash line logic properly handled inside useEffect
       if (offset > 10 && !hasScrolledOnce.current) {
         hasScrolledOnce.current = true;
         setFlashLine(true);
-        timeout = setTimeout(() => setFlashLine(false), 600);
+        timeout = setTimeout(() => setFlashLine(false), 400);
       } else if (offset <= 10) {
         hasScrolledOnce.current = false;
         setFlashLine(false);
@@ -63,14 +60,15 @@ const Navbar = () => {
     };
   }, []);
 
+  // Prevent hydration mismatch
   if (!mounted) return null;
 
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${
         scrolled
-          ? "backdrop-blur border-transparent" // Scroll korle purapuri faka
-          : "dark:bg-black/60 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800" // Default glassmorphism
+          ? "backdrop-blur-md bg-white/10 dark:bg-black/20 border-transparent" 
+          : "dark:bg-black/60 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800"
       }`}
     >
       {/* Interactive Scroll Progress Line */}
@@ -82,18 +80,14 @@ const Navbar = () => {
       />
 
       <div className="max-w-full mx-auto px-6 md:px-15 h-20 flex items-center justify-between">
-        <div className="flex items-center">
+        <Link href="/" className="flex items-center">
           <Logo />
-        </div>
+        </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8 font-medium">
-          <Link href="/" className="hover:text-green-500 transition">
-            Home
-          </Link>
-          <Link href="/marketplace" className="hover:text-green-500 transition">
-            Marketplace
-          </Link>
+          <Link href="/" className="hover:text-green-500 transition">Home</Link>
+          <Link href="/marketplace" className="hover:text-green-500 transition">Marketplace</Link>
           <Dropdown
             title="Solutions"
             items={[
@@ -110,23 +104,19 @@ const Navbar = () => {
               { name: "Agriculturists", link: "/agriculturist" },
             ]}
           />
-          <Link href="/about" className="hover:text-green-500 transition">
-            About
-          </Link>
+          <Link href="/about" className="hover:text-green-500 transition">About</Link>
         </div>
 
         {/* Desktop Right Side */}
         <div className="hidden md:flex items-center gap-6">
-          {mounted && (
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className={`p-2 rounded-xl text-xl transition-all hover:scale-110 ${
-                scrolled ? "text-green-500" : "text-black dark:text-white"
-              }`}
-            >
-              {theme === "dark" ? <HiSun /> : <HiMoon />}
-            </button>
-          )}
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className={`p-2 rounded-xl text-xl transition-all hover:scale-110 ${
+              scrolled ? "text-green-500" : "text-black dark:text-white"
+            }`}
+          >
+            {theme === "dark" ? <HiSun /> : <HiMoon />}
+          </button>
 
           <Link
             href="/login"
@@ -173,104 +163,37 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-20 text-black right-0 w-full bg-green-100/95 rounded-b-2xl shadow-xl border-b border-gray-100 dark:border-zinc-800 p-6 flex flex-col gap-4 md:hidden"
+            className="absolute top-20 text-black right-0 w-full bg-green-100/95 dark:bg-zinc-900/95 dark:text-white rounded-b-2xl shadow-xl border-b border-gray-100 dark:border-zinc-800 p-6 flex flex-col gap-4 md:hidden"
           >
             <div className="flex flex-col gap-3">
-              <Link
-                href="/"
-                onClick={() => setIsOpen(false)}
-                className="font-bold text-lg  hover:text-green-600 flex items-center gap-2"
-              >
-                {" "}
-                <IoHomeOutline className="text-green-600 h-5 " /> Home
+              <Link href="/" onClick={() => setIsOpen(false)} className="font-bold text-lg hover:text-green-600 flex items-center gap-2">
+                <IoHomeOutline className="text-green-600 h-5" /> Home
               </Link>
-              <Link
-                href="/marketplace"
-                onClick={() => setIsOpen(false)}
-                className="font-bold text-lg  hover:text-green-600 flex items-center gap-2"
-              >
-                {" "}
-                <ShoppingCart className="text-green-600 h-5 " /> Marketplace
+              <Link href="/marketplace" onClick={() => setIsOpen(false)} className="font-bold text-lg hover:text-green-600 flex items-center gap-2">
+                <ShoppingCart className="text-green-600 h-5" /> Marketplace
               </Link>
-              <Link
-                href="/about"
-                onClick={() => setIsOpen(false)}
-                className="font-bold text-lg  hover:text-green-600 flex items-center gap-2"
-              >
-                {" "}
-                <Info className="text-green-600 h-5 " /> About
+              <Link href="/about" onClick={() => setIsOpen(false)} className="font-bold text-lg hover:text-green-600 flex items-center gap-2">
+                <Info className="text-green-600 h-5" /> About
               </Link>
             </div>
 
-            <hr className="border-gray-300 " />
+            <hr className="border-gray-300 dark:border-zinc-700" />
 
             <div className="flex flex-col gap-2">
-              <p className="text-xs uppercase font-semibold">Solutions</p>
-              <Link
-                href="/fertilizer"
-                onClick={() => setIsOpen(false)}
-                className="font-semibold text-lg hover:text-green-600"
-              >
-                Fertilizer
-              </Link>
-              <Link
-                href="/crops"
-                onClick={() => setIsOpen(false)}
-                className="font-semibold text-lg hover:text-green-600"
-              >
-                Crops & Diseases
-              </Link>
-              <Link
-                href="/live"
-                onClick={() => setIsOpen(false)}
-                className="font-semibold text-lg hover:text-green-600"
-              >
-                Live Crops
-              </Link>
-              <Link
-                href="/services"
-                onClick={() => setIsOpen(false)}
-                className="font-semibold text-lg hover:text-green-600"
-              >
-                Services
-              </Link>
+              <p className="text-xs uppercase font-semibold text-gray-500">Solutions</p>
+              <Link href="/fertilizer" onClick={() => setIsOpen(false)} className="font-semibold text-lg hover:text-green-600">Fertilizer</Link>
+              <Link href="/crop-dieseases" onClick={() => setIsOpen(false)} className="font-semibold text-lg hover:text-green-600">Crops & Diseases</Link>
+              <Link href="/live" onClick={() => setIsOpen(false)} className="font-semibold text-lg hover:text-green-600">Live Crops</Link>
+              <Link href="/services" onClick={() => setIsOpen(false)} className="font-semibold text-lg hover:text-green-600">Services</Link>
             </div>
 
-            <hr className="border-gray-300" />
-
-            <div className="flex flex-col gap-2">
-              <p className="text-xs uppercase font-semibold">Resources</p>
-              <Link
-                href="/how-it-works"
-                onClick={() => setIsOpen(false)}
-                className="text-lg font-semibold"
-              >
-                How It Works
-              </Link>
-              <Link
-                href="/experts"
-                onClick={() => setIsOpen(false)}
-                className="text-lg font-semibold"
-              >
-                Agriculturists
-              </Link>
-            </div>
-
-            <hr className="border-gray-300" />
+            <hr className="border-gray-300 dark:border-zinc-700" />
 
             <div className="flex flex-col gap-3 mt-2">
-              <Link
-                href="/login"
-                className="py-3 text-center border-2 border-green-600 font-medium text-green-600 rounded-xl"
-                onClick={() => setIsOpen(false)}
-              >
+              <Link href="/login" onClick={() => setIsOpen(false)} className="py-3 text-center border-2 border-green-600 font-medium text-green-600 rounded-xl">
                 Log In
               </Link>
-              <Link
-                href="/Dashboard"
-                className="py-3 text-center font-medium bg-green-600 text-white rounded-xl"
-                onClick={() => setIsOpen(false)}
-              >
+              <Link href="/Dashboard" onClick={() => setIsOpen(false)} className="py-3 text-center font-medium bg-green-600 text-white rounded-xl">
                 Dashboard
               </Link>
             </div>

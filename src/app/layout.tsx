@@ -3,8 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 // import Script from "next/script";
-import Providers from "@/providers/Providers";
+
 import GoogleTranslate from "./components/GoogleTranslate/GoogleTranslate";
+import QueryProvider from "./Dashboard/QueryProvider";
+import Providers from "@/providers/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +39,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
           </ThemeProvider>
-        </Providers>
+          <Providers/>
+        </QueryProvider>
         {/* Google Translate Scripts */}
         <GoogleTranslate></GoogleTranslate>
       </body>
