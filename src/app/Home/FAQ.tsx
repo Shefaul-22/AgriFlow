@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
-const FAQ = async () => {
+const FAQ =  () => {
 
 
     return (
         <div>
-            <div className="collapse collapse-plus bg-base-100 border border-base-300">
+            <h1>FAQ handling:</h1>
+            <div className="collapse collapse-plus bg-red-500 p-5 text-white border border-base-300 ">
                 <input type="radio" name="my-accordion-3" defaultChecked />
                 <div className="collapse-title font-semibold">How do I create an account?</div>
                 <div className="collapse-content text-sm">Click the "Sign Up" button in the top right corner and follow the registration process.</div>

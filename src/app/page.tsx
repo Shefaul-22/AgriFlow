@@ -6,6 +6,7 @@ import CTA from "@/app/Home/CTA";
 import Footer from "@/app/components/Footer";
 import Navbar from "./components/Navbar";
 import Chatbot from "./components/Chatbot";
+import FAQ from "./Home/FAQ";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
           <State />
           <Features />
           <CTA />
+          <FAQ/>
         </div>
       </main>
       <Footer />

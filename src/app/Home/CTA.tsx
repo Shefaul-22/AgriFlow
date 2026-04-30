@@ -3,7 +3,8 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Button from "@/app/components/Button";
-import FAQ from "./FAQ";
+
+
 
 const CTA = () => {
   const container = useRef(null);
@@ -82,7 +83,6 @@ const CTA = () => {
             <Button text="Watch Demo" variant="outline" className="text-white border-white hover:bg-white/10 px-10 py-4 font-bold" />
           </div>
         </div>
-        <FAQ/>
       </div>
     </section>
   );
