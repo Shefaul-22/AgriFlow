@@ -30,7 +30,7 @@ export default function PremiumServicesPage() {
   <>
    <Navbar/>
 
-    <div className="min-h-screen bg-slate-50 pt-16 pb-20">
+    <div className="min-h-screen bg-gray-50 pt-16 pb-20">
       {/* Hero Header */}
       <div className="bg-green-700 pt-24 pb-32 px-6 text-center text-white">
         <h1 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4">AgriFlow Premium</h1>

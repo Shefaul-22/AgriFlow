@@ -73,7 +73,7 @@ const Features = () => {
              <HiOutlinePresentationChartLine className="text-4xl text-blue-600 dark:text-blue-400 mb-6" />
              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Real-time Terroir</h3>
              <p className="text-blue-800/70  text-md">
-               Live sensory data streaming directly from fields to buyer dashboards for unprecedented transparency.
+               Live sensory data streaming directly from fields to buyer Dashboards for unprecedented transparency.
              </p>
           </motion.div>
 

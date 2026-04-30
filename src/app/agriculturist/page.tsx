@@ -53,7 +53,7 @@ export default function AgriculturistPage() {
       <Navbar />
     
       <div className="min-h-screen bg-green-50
-       dark:bg-slate-950 pt-28 pb-16 px-8 md:px-16 transition-colors duration-300">
+       dark:bg-gray-950 pt-28 pb-16 px-8 md:px-16 transition-colors duration-300">
         
         <h1 className="text-3xl md:text-5xl font-bold text-center text-green-700 dark:text-green-500 mb-10">
           👨‍🌾 Expert Agriculturists
@@ -63,8 +63,8 @@ export default function AgriculturistPage() {
           {agriculturists.map((agri, index) => (
             <div
               key={index}
-              /* dark:bg-slate-900 and dark:border-slate-800 will fix dark mode */
-              className="bg-white dark:bg-slate-900 shadow-md rounded-2xl p-6 border border-green-100 dark:border-slate-800 hover:shadow-xl transition-all"
+              /* dark:bg-gray-900 এবং dark:border-gray-800 ডার্ক মোড ফিক্স করবে */
+              className="bg-white dark:bg-gray-900 shadow-md rounded-2xl p-6 border border-green-100 dark:border-gray-800 hover:shadow-xl transition-all"
             >
               <h2 className="text-xl font-bold text-green-800 dark:text-green-400">
                 {agri.name}

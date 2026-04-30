@@ -1,13 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  MagnifyingGlassIcon, 
-  ShoppingCartIcon, 
-  MapPinIcon,
-  ShoppingBagIcon
-} from "@heroicons/react/24/outline";
+
 import Navbar from "../components/Navbar";
+import { MapPinIcon, ShoppingBagIcon, ShoppingCartIcon } from "lucide-react";
+import { HiMagnifyingGlassCircle } from "react-icons/hi2";
 
 type Product = {
   id: number;
@@ -156,7 +153,7 @@ export default function MarketplacePage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-slate-50 pt-24 pb-20 px-4 md:px-10">
+      <div className="min-h-screen bg-gray-50 pt-24 pb-20 px-4 md:px-10">
         <div className="max-w-7xl mx-auto">
           
           <div className="flex flex-col lg:flex-row justify-between items-center mb-12 gap-8">
@@ -172,7 +169,7 @@ export default function MarketplacePage() {
                 className="w-full pl-14 pr-6 py-5 rounded-[20px] border-none shadow-xl focus:ring-2 focus:ring-green-500 outline-none text-gray-700"
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <MagnifyingGlassIcon className="w-7 h-7 text-gray-400 absolute left-5 top-5" />
+              <HiMagnifyingGlassCircle className="w-7 h-7 text-gray-400 absolute left-5 top-5" />
             </div>
           </div>
 
@@ -240,7 +237,7 @@ export default function MarketplacePage() {
                       Order Now
                     </button>
                     
-                    <button className="w-full bg-slate-50 text-gray-600 py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-100 transition-all text-sm">
+                    <button className="w-full bg-gray-50 text-gray-600 py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-100 transition-all text-sm">
                       <ShoppingCartIcon className="w-4 h-4" />
                       Add to Cart
                     </button>

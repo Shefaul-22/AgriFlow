@@ -150,14 +150,14 @@ const Hero = () => {
             className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] text-white hover:text-black backdrop-blur-md transition-all group"
             aria-label="Previous slide"
           >
-            <FaChevronLeft className="group-hover:-translate-x-0.5 transition-transform" />
+            <FaChevronLeft className="group-hover:-trangray-x-0.5 transition-transform" />
           </button>
           <button
             onClick={nextSlide}
             className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#CCFF00] border border-white/20 hover:border-[#CCFF00] text-white hover:text-black backdrop-blur-md transition-all group"
             aria-label="Next slide"
           >
-            <FaChevronRight className="group-hover:translate-x-0.5 transition-transform" />
+            <FaChevronRight className="group-hover:trangray-x-0.5 transition-transform" />
           </button>
         </div>
       </div>

@@ -30,7 +30,7 @@ export default function FertilizerPage() {
     <>
       <Navbar />
 
-      <main className="bg-white dark:bg-slate-900 text-gray-800 dark:text-gray-100 font-sans transition-colors duration-300">
+      <main className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans transition-colors duration-300">
         
         {/* HERO SECTION */}
         <section
@@ -65,7 +65,7 @@ export default function FertilizerPage() {
         </section>
 
         {/* TYPES OF FERTILIZER */}
-        <section className="py-20 px-6 bg-white dark:bg-slate-900">
+        <section className="py-20 px-6 bg-white dark:bg-gray-900">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-4 dark:text-white">
               Main Types of Fertilizers
@@ -84,7 +84,7 @@ export default function FertilizerPage() {
                 { emoji: "🟡", title: "TSP (Triple Super Phosphate)", desc: "High phosphorus. Effective for root and yield growth.", use: "Potato, tomato, eggplant, cauliflower" },
                 { emoji: "🔷", title: "MOP (Muriate of Potash)", desc: "Main source of potassium. Improves quality.", use: "Gourd, okra, chili, banana" },
               ].map((item, idx) => (
-                <div key={idx} className="group bg-white dark:bg-slate-800 border border-emerald-100 dark:border-slate-700 hover:border-emerald-400 dark:hover:border-emerald-500 rounded-3xl p-8 transition-all hover:shadow-2xl hover:-translate-y-1">
+                <div key={idx} className="group bg-white dark:bg-gray-800 border border-emerald-100 dark:border-gray-700 hover:border-emerald-400 dark:hover:border-emerald-500 rounded-3xl p-8 transition-all hover:shadow-2xl hover:-trangray-y-1">
                   <div className="text-5xl mb-6">{item.emoji}</div>
                   <h3 className="text-2xl font-semibold mb-3 dark:text-emerald-400">{item.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
@@ -96,7 +96,7 @@ export default function FertilizerPage() {
         </section>
 
         {/* VEGETABLE GUIDE SECTION */}
-        <section className="py-20 bg-emerald-50 dark:bg-slate-800/50 px-6">
+        <section className="py-20 bg-emerald-50 dark:bg-gray-800/50 px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-4 dark:text-white">
               Best Fertilizer Guide for Vegetables
@@ -115,7 +115,7 @@ export default function FertilizerPage() {
                 { icon: "🥦", name: "Cabbage / Cauliflower", tips: "Balanced NPK. Nitrogen for leaves, phosphorus for head formation." },
                 { icon: "🌶️", name: "Chili / Coriander", tips: "MOP + small amount of TSP. Potassium improves fruit quality." },
               ].map((veg, i) => (
-                <div key={i} className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow dark:shadow-slate-900 hover:shadow-xl transition border border-transparent dark:border-slate-700">
+                <div key={i} className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow dark:shadow-gray-900 hover:shadow-xl transition border border-transparent dark:border-gray-700">
                   <div className="text-4xl mb-4">{veg.icon}</div>
                   <h3 className="font-semibold text-xl mb-2 dark:text-emerald-400">{veg.name}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{veg.tips}</p>
@@ -126,7 +126,7 @@ export default function FertilizerPage() {
         </section>
 
         {/* COMPOST SECTION */}
-        <section className="py-20 bg-white dark:bg-slate-900 px-6">
+        <section className="py-20 bg-white dark:bg-gray-900 px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-6 dark:text-white">
               How to Make Compost Fertilizer
@@ -140,13 +140,13 @@ export default function FertilizerPage() {
               <img
                 src={(compostcreate as StaticImageData).src}
                 alt="Compost Materials"
-                className="w-full max-w-3xl mx-auto rounded-2xl shadow-lg border dark:border-slate-700"
+                className="w-full max-w-3xl mx-auto rounded-2xl shadow-lg border dark:border-gray-700"
               />
             </div>
 
             <div className="grid md:grid-cols-2 gap-10 mb-16">
-              <div className="bg-emerald-50 dark:bg-slate-800 p-8 rounded-3xl">
-                <h3 className="text-2xl font-semibold mb-4 dark:text-emerald-400">Required Materials</h3>
+              <div className="bg-emerald-50 dark:bg-gray-800 p-8 rounded-3xl">
+                <h3 className="text-2xl font-semibold mb-4 dark:text-emerald-400">কি কি লাগবে</h3>
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                   <li>• Vegetable peels</li>
                   <li>• Dry leaves</li>
@@ -155,8 +155,8 @@ export default function FertilizerPage() {
                 </ul>
               </div>
 
-              <div className="bg-emerald-50 dark:bg-slate-800 p-8 rounded-3xl">
-                <h3 className="text-2xl font-semibold mb-4 dark:text-emerald-400">Benefits</h3>
+              <div className="bg-emerald-50 dark:bg-gray-800 p-8 rounded-3xl">
+                <h3 className="text-2xl font-semibold mb-4 dark:text-emerald-400">উপকারিতা</h3>
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                   <li>✓ Improves soil fertility</li>
                   <li>✓ Increases water retention</li>
@@ -170,7 +170,7 @@ export default function FertilizerPage() {
               <img
                 src={(compost as StaticImageData).src}
                 alt="Compost Process"
-                className="w-full max-w-3xl mx-auto rounded-2xl shadow-lg border dark:border-slate-700"
+                className="w-full max-w-3xl mx-auto rounded-2xl shadow-lg border dark:border-gray-700"
               />
             </div>
 
@@ -182,7 +182,7 @@ export default function FertilizerPage() {
                 { step: "Step 4: Turn the Pile", desc: "Turn it every 5–7 days to allow air circulation." },
                 { step: "Step 5: Ready", desc: "After 3–6 weeks, dark and odorless compost will be ready." },
               ].map((step, index) => (
-                <div key={index} className="p-6 border dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 shadow-sm">
+                <div key={index} className="p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 shadow-sm">
                   <h3 className="font-semibold text-lg dark:text-emerald-400">{step.step}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{step.desc}</p>
                 </div>

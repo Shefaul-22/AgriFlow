@@ -76,7 +76,7 @@ const HowItWorksPage: React.FC = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Step 1: Farmer */}
-            <div className="group bg-white border border-green-100 hover:border-green-300 p-10 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+            <div className="group bg-white border border-green-100 hover:border-green-300 p-10 rounded-3xl transition-all hover:-trangray-y-2 duration-300">
               <div className="text-6xl mb-6 transition-transform group-hover:scale-110">👨‍🌾</div>
               <div className="text-green-600 font-semibold text-sm tracking-widest mb-2">STEP 01</div>
               <h3 className="text-2xl font-bold mb-4">Farmer Lists Product</h3>
@@ -87,7 +87,7 @@ const HowItWorksPage: React.FC = () => {
             </div>
 
             {/* Step 2: Buyer */}
-            <div className="group bg-white border border-green-100 hover:border-green-300 p-10 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+            <div className="group bg-white border border-green-100 hover:border-green-300 p-10 rounded-3xl transition-all hover:-trangray-y-2 duration-300">
               <div className="text-6xl mb-6 transition-transform group-hover:scale-110">🛒</div>
               <div className="text-green-600 font-semibold text-sm tracking-widest mb-2">STEP 02</div>
               <h3 className="text-2xl font-bold mb-4">Buyer Explores & Buys</h3>
@@ -98,7 +98,7 @@ const HowItWorksPage: React.FC = () => {
             </div>
 
             {/* Step 3: Delivery */}
-            <div className="group bg-white border border-green-100 hover:border-green-300 p-10 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+            <div className="group bg-white border border-green-100 hover:border-green-300 p-10 rounded-3xl transition-all hover:-trangray-y-2 duration-300">
               <div className="text-6xl mb-6 transition-transform group-hover:scale-110">🚚</div>
               <div className="text-green-600 font-semibold text-sm tracking-widest mb-2">STEP 03</div>
               <h3 className="text-2xl font-bold mb-4">Safe Delivery</h3>
@@ -195,7 +195,7 @@ const HowItWorksPage: React.FC = () => {
         </div>
       </section>
 {/* 📞 LAST SECTION - Redesigned */}
-<section className="py-24 px-6 bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900 text-white relative overflow-hidden">
+<section className="py-24 px-6 bg-gradient-to-br from-gray-900 via-blue-900 to-emerald-900 text-white relative overflow-hidden">
 
   {/* Glow Background */}
   <div className="absolute top-0 left-0 w-72 h-72 bg-blue-500/20 blur-3xl rounded-full"></div>

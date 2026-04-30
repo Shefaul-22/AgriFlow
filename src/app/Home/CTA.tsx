@@ -66,7 +66,7 @@ const CTA = () => {
 
         {/* Content */}
         <div className="relative z-10 px-4 sm:px-6">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+          <h2 className="text-3xl capitalize sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Ready to transform your <br className="hidden sm:inline"/> 
             agricultural future?
           </h2>

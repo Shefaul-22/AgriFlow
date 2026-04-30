@@ -1,83 +1,150 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaCommentDots, FaTimes, FaRobot, FaUserTie, FaPaperPlane, FaChevronLeft } from "react-icons/fa";
+import {
+  FaCommentDots,
+  FaTimes,
+  FaRobot,
+  FaUserTie,
+  FaPaperPlane,
+  FaChevronLeft,
+  FaLeaf,
+} from "react-icons/fa";
 
-type Mode = "AI" | "Consultant" | null;
-
+// ─── Types ────────────────────────────────────────────────────────────────────
 interface Message {
   id: number;
   text: string;
-  sender: "user" | "ai" | "consultant";
+  sender: "user" | "ai";
 }
 
+type ChatMode = "AI" | "Consultant" | null;
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+/** Converts **bold**, *italic*, and - bullet lines into simple JSX */
+function formatAIText(text: string) {
+  const lines = text.split("\n");
+  return lines.map((line, i) => {
+    const trimmed = line.trim();
+    // Bullet points
+    if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+      return (
+        <div key={i} className="flex gap-2 mt-1">
+          <span className="text-green-500 mt-0.5">•</span>
+          <span>{trimmed.slice(2)}</span>
+        </div>
+      );
+    }
+    // Numbered list
+    if (/^\d+\.\s/.test(trimmed)) {
+      return (
+        <div key={i} className="flex gap-2 mt-1">
+          <span className="text-green-500 font-semibold">{trimmed.match(/^\d+/)?.[0]}.</span>
+          <span>{trimmed.replace(/^\d+\.\s/, "")}</span>
+        </div>
+      );
+    }
+    // Bold headers (lines ending with ":")
+    if (trimmed.endsWith(":") && trimmed.length < 60) {
+      return (
+        <p key={i} className="font-semibold text-gray-900 mt-2">
+          {trimmed}
+        </p>
+      );
+    }
+    // Empty line
+    if (!trimmed) return <div key={i} className="h-1" />;
+    return <p key={i} className="mt-1">{trimmed}</p>;
+  });
+}
+
+// ─── Typing Dots ─────────────────────────────────────────────────────────────
+function TypingDots() {
+  return (
+    <div className="flex items-center gap-1 px-3 py-2">
+      {[0, 1, 2].map((i) => (
+        <motion.span
+          key={i}
+          className="w-2 h-2 bg-green-400 rounded-full block"
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [mode, setMode] = useState<Mode>(null);
+  const [mode, setMode] = useState<ChatMode>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping, isOpen, mode]);
+    if (isOpen) scrollToBottom();
+  }, [messages, isTyping, isOpen]);
+
+  // Auto-focus input when mode is selected
+  useEffect(() => {
+    if (mode) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [mode]);
+
+  const selectMode = (selectedMode: ChatMode) => {
+    const greeting =
+      selectedMode === "AI"
+        ? "👋 Hi! I'm AgriFlow AI. Ask me anything about farming, crops, soil health, or pest control!"
+        : "👋 Hello! I'm your AgriFlow Consultant. I'll ask a few questions to give you tailored agricultural advice. What crop or issue are you dealing with?";
+    setMode(selectedMode);
+    setMessages([{ id: Date.now(), text: greeting, sender: "ai" }]);
+    setError(null);
+  };
 
   const handleSend = async () => {
-    if (isTyping) return;
-    if (!input.trim()) return;
+    if (isTyping || !input.trim() || !mode) return;
 
     setError(null);
-    const newMessage: Message = { id: Date.now(), text: input, sender: "user" };
-    setMessages((prev) => [...prev, newMessage]);
+    const userMessage: Message = { id: Date.now(), text: input.trim(), sender: "user" };
+    const updatedMessages = [...messages, userMessage];
+
+    setMessages(updatedMessages);
     setInput("");
     setIsTyping(true);
 
     try {
-      if (!mode) return;
-
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           mode,
-          // Snapshot the conversation we intend to send for this request to avoid
-          // stale state if other updates happen while the request is in-flight.
-          messages: [...messages, newMessage].map((m) => ({
-            text: m.text,
-            sender: m.sender,
-          })),
+          messages: updatedMessages.map(({ text, sender }) => ({ text, sender })),
         }),
       });
 
-      const data = (await res.json().catch(() => ({}))) as { reply?: string; error?: string; hint?: string };
+      const data = await res.json();
+
       if (!res.ok) {
-        throw new Error([data.error, data.hint].filter(Boolean).join(" "));
+        throw new Error(data.error || "Failed to get a response.");
       }
 
-      const replyText = (data.reply || "").trim();
-      if (!replyText) throw new Error("Empty reply.");
-
       setMessages((prev) => [
         ...prev,
-        { id: Date.now() + 1, text: replyText, sender: mode === "AI" ? "ai" : "consultant" },
+        { id: Date.now() + 1, text: data.reply, sender: "ai" },
       ]);
-    } catch (e) {
-      const message = e instanceof Error ? e.message : "Something went wrong.";
-      setError(message);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 1,
-          text: "Sorry—something went wrong on my side. Please try again.",
-          sender: mode === "AI" ? "ai" : "consultant",
-        },
-      ]);
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Something went wrong.";
+      console.error("Chat Error:", msg);
+      setError(msg);
     } finally {
       setIsTyping(false);
     }
@@ -87,11 +154,12 @@ const Chatbot = () => {
     setMode(null);
     setMessages([]);
     setError(null);
+    setInput("");
   };
 
   return (
     <>
-      {/* Floating Chat Button */}
+      {/* ── Floating Toggle Button ── */}
       <AnimatePresence>
         {!isOpen && (
           <motion.button
@@ -99,172 +167,165 @@ const Chatbot = () => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 p-4 bg-gradient-to-r from-[#CCFF00] to-green-500 text-black rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center group"
+            className="fixed bottom-6 right-6 z-50 p-4 bg-linear-to-br from-[#CCFF00] to-green-500 text-black rounded-full shadow-2xl"
+            aria-label="Open Chat"
           >
-            <FaCommentDots size={28} className="group-hover:animate-pulse" />
+            <FaCommentDots size={26} />
           </motion.button>
         )}
       </AnimatePresence>
 
-      {/* Chat Window */}
+      {/* ── Chat Window ── */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="fixed bottom-6 right-6 z-50 w-[90vw] sm:w-[380px] h-[600px] max-h-[80vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-gray-100"
+            exit={{ opacity: 0, y: 30, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300, damping: 28 }}
+            className="fixed bottom-6 right-6 z-50 w-[92vw] sm:w-97.5 h-155 max-h-[85vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-gray-200"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-green-900 to-green-800 text-white p-4 flex items-center justify-between shadow-md z-10 relative">
+            <div className="bg-linear-to-r from-green-900 to-green-700 text-white px-4 py-3 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
                 {mode && (
-                  <button onClick={resetChat} className="p-1 hover:bg-white/20 rounded-full transition-colors">
-                    <FaChevronLeft size={16} />
+                  <button
+                    onClick={resetChat}
+                    className="p-1.5 hover:bg-white/20 rounded-full transition-colors"
+                    aria-label="Back"
+                  >
+                    <FaChevronLeft size={14} />
                   </button>
                 )}
-                <div className="flex flex-col">
-                  <span className="font-bold text-lg tracking-wide">AgriFlow Support</span>
-                  <span className="text-xs text-[#CCFF00] flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse"></span>
-                    {mode ? `${mode} Session` : 'Online'}
-                  </span>
+                <div className="w-8 h-8 bg-[#CCFF00] rounded-full flex items-center justify-center shrink-0">
+                  <FaLeaf className="text-green-900" size={14} />
+                </div>
+                <div>
+                  <p className="font-bold text-sm leading-tight">AgriFlow Support</p>
+                  <p className="text-[10px] text-[#CCFF00] leading-tight">
+                    {mode ? `${mode} Mode • Active` : "Online • Ready to help"}
+                  </p>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+                className="p-1.5 hover:bg-white/20 rounded-full transition-colors"
+                aria-label="Close Chat"
               >
-                <FaTimes size={18} />
+                <FaTimes size={16} />
               </button>
             </div>
 
-            {/* Content Area */}
-            <div className="flex-1 overflow-y-auto bg-gray-50 flex flex-col relative">
+            {/* Body */}
+            <div className="flex-1 overflow-y-auto bg-gray-50 p-4 space-y-3">
               {!mode ? (
-                // Mode Selection Screen
-                <div className="flex-1 flex flex-col items-center justify-center p-6 space-y-6">
-                  <div className="text-center mb-4">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">How can we help?</h3>
-                    <p className="text-gray-500 text-sm">Choose who you would like to talk to today.</p>
+                /* ── Mode Selection Screen ── */
+                <div className="h-full flex flex-col items-center justify-center gap-4 px-2">
+                  <div className="text-center">
+                    <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <FaLeaf className="text-green-600" size={24} />
+                    </div>
+                    <h3 className="font-bold text-gray-800 text-base">How can we help you?</h3>
+                    <p className="text-xs text-gray-500 mt-1">Choose a support type to get started</p>
                   </div>
 
-                  <motion.button
-                    whileHover={{ scale: 1.02, translateY: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => {
-                      setMode("AI");
-                      setMessages([{ id: Date.now(), text: "Hi! I'm your AI Farming Assistant. I can help with crop predictions, real-time intelligence, and more. What's on your mind?", sender: "ai" }]);
-                    }}
-                    className="w-full bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 hover:border-[#CCFF00] hover:shadow-md transition-all group"
+                  <button
+                    onClick={() => selectMode("AI")}
+                    className="w-full bg-white p-4 rounded-2xl border-2 border-transparent hover:border-[#CCFF00] hover:shadow-md transition-all flex items-center gap-3 group"
                   >
-                    <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                      <FaRobot size={24} />
+                    <div className="w-10 h-10 bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center transition-colors shrink-0">
+                      <FaRobot className="text-blue-500" size={20} />
                     </div>
                     <div className="text-left">
-                      <h4 className="font-bold text-gray-800">AI Assistant</h4>
-                      <p className="text-xs text-gray-500">Instant answers 24/7</p>
+                      <p className="font-bold text-sm text-gray-800">AI Assistant</p>
+                      <p className="text-xs text-gray-500">Instant answers powered by Gemini AI</p>
                     </div>
-                  </motion.button>
+                  </button>
 
-                  <motion.button
-                    whileHover={{ scale: 1.02, translateY: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => {
-                      setMode("Consultant");
-                      setMessages([{ id: Date.now(), text: "Welcome! A live agricultural consultant will join shortly. Please describe your issue.", sender: "consultant" }]);
-                    }}
-                    className="w-full bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 hover:border-green-500 hover:shadow-md transition-all group"
+                  <button
+                    onClick={() => selectMode("Consultant")}
+                    className="w-full bg-white p-4 rounded-2xl border-2 border-transparent hover:border-green-400 hover:shadow-md transition-all flex items-center gap-3 group"
                   >
-                    <div className="w-12 h-12 rounded-full bg-green-50 text-green-600 flex items-center justify-center group-hover:bg-green-600 group-hover:text-white transition-colors">
-                      <FaUserTie size={24} />
+                    <div className="w-10 h-10 bg-green-50 group-hover:bg-green-100 rounded-xl flex items-center justify-center transition-colors shrink-0">
+                      <FaUserTie className="text-green-600" size={20} />
                     </div>
                     <div className="text-left">
-                      <h4 className="font-bold text-gray-800">Live Consultant</h4>
-                      <p className="text-xs text-gray-500">Expert farming advice</p>
+                      <p className="font-bold text-sm text-gray-800">AI Consultant</p>
+                      <p className="text-xs text-gray-500">In-depth agricultural consultation</p>
                     </div>
-                  </motion.button>
+                  </button>
                 </div>
               ) : (
-                // Chat Interface
-                <div className="flex-1 flex flex-col p-4 gap-4">
-                  {error && (
-                    <div className="text-xs text-red-700 bg-red-50 border border-red-200 rounded-xl px-3 py-2">
-                      {error}
-                    </div>
-                  )}
+                /* ── Chat Messages ── */
+                <>
                   {messages.map((msg) => (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                    <div
                       key={msg.id}
                       className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
                     >
-                      <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${
-                        msg.sender === "user" 
-                          ? "bg-green-600 text-white rounded-br-none" 
-                          : "bg-white border border-gray-200 text-gray-800 rounded-bl-none shadow-sm"
-                      }`}>
-                        {msg.text}
+                      <div
+                        className={`max-w-[82%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                          msg.sender === "user"
+                            ? "bg-green-600 text-white rounded-br-sm"
+                            : "bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm"
+                        }`}
+                      >
+                        {msg.sender === "ai" ? formatAIText(msg.text) : msg.text}
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
-                  
+
+                  {/* Typing indicator */}
                   {isTyping && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="flex justify-start"
-                    >
-                      <div className="bg-white border border-gray-200 text-gray-800 p-3 rounded-2xl rounded-bl-none shadow-sm flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <div className="flex justify-start">
+                      <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm shadow-sm">
+                        <TypingDots />
                       </div>
-                    </motion.div>
+                    </div>
                   )}
+
+                  {/* Error message */}
+                  {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-600 text-xs rounded-xl p-3 text-center">
+                      ⚠️ {error}
+                    </div>
+                  )}
+
                   <div ref={messagesEndRef} />
-                </div>
+                </>
               )}
             </div>
 
             {/* Input Area */}
-            <AnimatePresence>
-              {mode && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-white border-t border-gray-100"
+            {mode && (
+              <div className="p-3 bg-white border-t border-gray-100 flex gap-2 items-center shrink-0">
+                <input
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSend();
+                    }
+                  }}
+                  placeholder="Type your message..."
+                  disabled={isTyping}
+                  className="flex-1 bg-gray-100 text-sm rounded-full px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-400 disabled:opacity-60 transition-all"
+                />
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  onClick={handleSend}
+                  disabled={isTyping || !input.trim()}
+                  className="p-3 bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-full transition-colors shrink-0"
+                  aria-label="Send message"
                 >
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key !== "Enter") return;
-                        if (e.nativeEvent.isComposing) return;
-                        e.preventDefault();
-                        if (isTyping) return;
-                        handleSend();
-                      }}
-                      placeholder="Type your message..."
-                      className="flex-1 bg-gray-100 text-sm text-gray-800 rounded-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all"
-                    />
-                    <button
-                      onClick={handleSend}
-                      disabled={!input.trim() || isTyping}
-                      className="p-3 bg-green-600 text-[#CCFF00] rounded-full disabled:opacity-50 hover:bg-green-700 transition-colors"
-                    >
-                      <FaPaperPlane size={16} />
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  <FaPaperPlane size={14} />
+                </motion.button>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

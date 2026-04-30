@@ -172,17 +172,18 @@ export default function CropDiseasesPage() {
 
   return (
     <>
-      <Navbar />
-      <div className="min-h-screen bg-slate-50 pt-24 pb-12 px-6 md:px-12">
-        <div className="max-w-6xl mx-auto">
-          <header className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-extrabold text-green-800 mb-4">
-              Agri-Care
-            </h1>
-            <p className="text-gray-600 text-lg italic">
-              Proper solutions for diseases of vegetables, fruits, and crops
-            </p>
-          </header>
+    <Navbar/>
+<div className="min-h-screen bg-gray-50 pt-24 pb-12 px-6 md:px-12">
+      <div className="max-w-6xl mx-auto">
+    
+        <header className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-green-800 mb-4">
+         Agri-Care 
+          </h1>
+          <p className="text-gray-600 text-lg italic">
+            সবজি, ফল ও ফসলের রোগ এবং প্রতিকারের সঠিক সমাধান
+          </p>
+        </header>
 
           {/* Search & Filter */}
           <div className="bg-white p-4 rounded-3xl shadow-lg mb-10 flex flex-col md:flex-row gap-4 border border-green-100">

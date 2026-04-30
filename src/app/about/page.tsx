@@ -121,7 +121,7 @@ const AboutPage: React.FC = () => {
             ].map((item, index) => (
               <div 
                 key={index}
-                className="group p-10 bg-white border border-green-100 hover:border-green-300 rounded-3xl transition-all hover:-translate-y-3"
+                className="group p-10 bg-white border border-green-100 hover:border-green-300 rounded-3xl transition-all hover:-trangray-y-3"
               >
                 <div className="text-7xl font-bold text-green-600 mb-4">{item.number}</div>
                 <div className="text-2xl font-semibold text-gray-800 mb-1">{item.label}</div>

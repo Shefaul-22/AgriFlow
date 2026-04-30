@@ -21,8 +21,8 @@ const Dropdown = ({ title, items }: any) => {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 15, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            initial={{ opacity: 0, y: 15, scale: 1 }}
+            animate={{ opacity: 1, y: 0, scale: 1.06 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
             className="absolute left-0 mt-4 w-56 rounded-2xl bg-gray-600/90 shadow-xl border border-gray-200 dark:border-zinc-800 p-2"

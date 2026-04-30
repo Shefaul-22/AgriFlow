@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import Script from "next/script";
-import Providers from "./providers";
+// import Script from "next/script";
+
+import GoogleTranslate from "./components/GoogleTranslate/GoogleTranslate";
+import QueryProvider from "./Dashboard/QueryProvider";
+import Providers from "@/providers/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,37 +35,15 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-          
-          <Providers>
+          <QueryProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
-          </Providers>
-        
-
+          </ThemeProvider>
+          <Providers/>
+        </QueryProvider>
         {/* Google Translate Scripts */}
-        <Script id="google-translate-config" strategy="afterInteractive">
-          {`
-            function googleTranslateElementInit() {
-              if (window.google && google.translate) {
-                new google.translate.TranslateElement(
-                  {
-                    pageLanguage: 'en',
-                    includedLanguages: 'en,bn,es,zh-CN,ar,fr',
-                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                    autoDisplay: false
-                  },
-                  'google_translate_element'
-                );
-              }
-            }
-          `}
-      </Script>
-
-        <Script
-          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive" 
-        />
+        <GoogleTranslate></GoogleTranslate>
       </body>
     </html>
   );
 }
-

@@ -4,20 +4,58 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CiBoxList } from "react-icons/ci";
 import { RiMentalHealthLine } from "react-icons/ri"
-import { MdOutlineInventory2, MdOutlineAnalytics } from "react-icons/md";
-import { IoSettingsOutline, IoHomeOutline } from "react-icons/io5";
+import { MdOutlineBookmarkBorder , MdOutlineNotificationsActive ,MdOutlineAnalytics , MdOutlineAddShoppingCart,MdOutlineAssignment} from "react-icons/md";
+import { IoSettingsOutline, IoHomeOutline, IoBagAddOutline, IoListOutline } from "react-icons/io5";
 import Logo from '@/app/components/Logo';
+import { FaUserCog } from "react-icons/fa";
 import { RiLiveLine } from "react-icons/ri";
+import { GrDeliver } from "react-icons/gr";
+import { BiDna } from "react-icons/bi";
+import { TiFlowSwitch } from "react-icons/ti";
 
-const sidebarLinks = [
-  { name: 'Home', href: '/', icon: IoHomeOutline },
-  { name: 'Dashboard', href: '/Dashboard', icon: CiBoxList },
-  { name: 'Health', href: '/Dashboard/crop-health', icon: RiMentalHealthLine },
-  { name: 'Inventory', href: '/Dashboard/inventory', icon: MdOutlineInventory2 },
-  { name: 'Analytics', href: '/Dashboard/analytics', icon: MdOutlineAnalytics },
-  { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
- { name: 'Live Farm', href: '/Dashboard/live', icon: RiLiveLine  },
-];
+const role = "buyer"; 
+
+const sidebarConfig = {
+  farmer: [
+    { name: 'Home', href: '/', icon: IoHomeOutline },
+    { name: 'Overview', href: '/Dashboard/farmer', icon: CiBoxList },
+    { name: 'Add Product', href: '/Dashboard/farmer/add-product', icon: IoBagAddOutline },
+    { name: 'My Products', href: '/Dashboard/farmer/my-products', icon: IoListOutline },
+    { name: 'Health', href: '/Dashboard/crop-health', icon: RiMentalHealthLine },
+    { name: 'Live Farm', href: '/Dashboard/live', icon: RiLiveLine },
+    { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
+  ],
+
+  admin: [
+    { name: 'Home', href: '/', icon: IoHomeOutline },
+    { name: 'Overview', href: '/Dashboard/admin', icon: CiBoxList },
+    { name: 'Manage Users', href: '/Dashboard/admin/manage-users', icon: FaUserCog },
+    { name: 'Manage Deliveries', href: '/Dashboard/admin/delivery-manage', icon: GrDeliver },
+    { name: 'Manage Marketplace', href: '/Dashboard/admin/manage-marketplace', icon: MdOutlineAddShoppingCart },
+    { name: 'Analytics', href: '/Dashboard/admin/analytics', icon: MdOutlineAnalytics },
+    { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
+  ],
+
+  deliveryPartner: [
+    { name: 'Home', href: '/', icon: IoHomeOutline },
+    { name: 'Overview', href: '/Dashboard/delivery-partner', icon: CiBoxList },
+  { name: 'Assigned', href: '/Dashboard/delivery-partner/assigned', icon: MdOutlineAssignment },
+  { name: 'Active', href: '/Dashboard/delivery-partner/active-delivery', icon: MdOutlineNotificationsActive },
+  { name: 'Workflow', href: '/Dashboard/delivery-partner/delivery-workflow', icon: TiFlowSwitch },
+    { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
+  ],
+
+  buyer: [
+    { name: 'Home', href: '/', icon: IoHomeOutline },
+    { name: 'Overview', href: '/Dashboard/buyer', icon: CiBoxList },
+    { name: 'Live Bidding', href: '/Dashboard/buyer/live-bidding', icon: BiDna },
+    { name: 'Cart', href: '/Dashboard/buyer/cart', icon: MdOutlineBookmarkBorder  },
+    { name: 'My Orders', href: '/Dashboard/buyer/my-orders', icon: MdOutlineAddShoppingCart },
+    { name: 'Settings', href: '/Dashboard/settings', icon: IoSettingsOutline },
+  ],
+};
+
+const sidebarLinks = sidebarConfig[role];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -36,7 +74,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <nav className="flex-1 space-y-1">
           {sidebarLinks.map((link) => {
             const Icon = link.icon;
-            const isActive = pathname === link.href;
+            const isActive = link.href === '/' 
+              ? pathname === '/' 
+              : (pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href + '/')));
             return (
               <Link
                 key={link.name}
