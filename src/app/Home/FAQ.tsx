@@ -117,8 +117,8 @@ const FAQ = () => {
                 <div className="collapse-content text-sm">Role changes depend on platform policy. If allowed: “You can request a role change in account settings or contact support.” If not allowed, explain the procedure for creating a new account or contacting admins.</div>
             </div>
 
-           {/* Technical Issues */}
-           <h2 className="text-xl font-semibold mt-5">Technical Issues</h2>
+            {/* Technical Issues */}
+            <h2 className="text-xl font-semibold mt-5">Technical Issues</h2>
             <div className="collapse collapse-plus bg-base-100 border border-base-300 mb-2">
                 <input type="checkbox" name="my-accordion-3" defaultChecked />
                 <div className="collapse-title font-semibold">I'm having trouble logging in. What should I do?</div>
@@ -133,6 +133,24 @@ const FAQ = () => {
                 <input type="checkbox" name="my-accordion-3" defaultChecked />
                 <div className="collapse-title font-semibold">What browsers are supported?</div>
                 <div className="collapse-content text-sm">If not specified, use a typical answer: “Latest versions of Chrome, Firefox, Edge, and Safari are supported.” Adjust to actual tested browsers.</div>
+            </div>
+
+            {/* Admin & Marketplace management */}
+            <h2 className="text-xl font-semibold mt-5">Admin & Marketplace management</h2>
+            <div className="collapse collapse-plus bg-base-100 border border-base-300 mb-2">
+                <input type="checkbox" name="my-accordion-3" defaultChecked />
+                <div className="collapse-title font-semibold">How do I access the admin dashboard?</div>
+                <div className="collapse-content text-sm">Admins can log in and access the Admin Dashboard link in the main navigation (requires admin credentials/role).</div>
+            </div>
+            <div className="collapse collapse-plus bg-base-100 border border-base-300 mb-2">
+                <input type="checkbox" name="my-accordion-3" defaultChecked />
+                <div className="collapse-title font-semibold">How do I manage users and delete inactive accounts?</div>
+                <div className="collapse-content text-sm">Use the Admin Users panel to search, change roles, or delete users. Deletion should follow your retention and compliance rules.</div>
+            </div>
+            <div className="collapse collapse-plus bg-base-100 border border-base-300 mb-2">
+                <input type="checkbox" name="my-accordion-3" defaultChecked />
+                <div className="collapse-title font-semibold">How do I view platform analytics?</div>
+                <div className="collapse-content text-sm">Use the Admin Analytics panel to view platform metrics and performance data. Admins can access analytics dashboards (buying/selling data, delivery process metrics) from the admin area to monitor activity.</div>
             </div>
         </div>
     );
