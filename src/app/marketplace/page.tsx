@@ -70,9 +70,9 @@ export default function MarketplacePage() {
       <>
         <Navbar />
 
-        {/* <div className="min-h-screen flex items-center justify-center text-3xl font-bold text-green-700">
+        <div className="min-h-screen flex items-center justify-center text-3xl font-bold text-green-700">
           Loading Products...
-        </div> */}
+        </div>
       </>
     );
   }
