@@ -13,6 +13,47 @@ model User {
   name      String?
   password  String   //  ADD THIS for pass
   image     String?
+
+  role      UserRole @default(BUYER)
+
+  deliveries Delivery[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+
+enum UserRole {
+  ADMIN
+  FARMER
+  BUYER
+  DELIVERY_PARTNER
+}
+
+enum DeliveryStatus {
+  ASSIGNED
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED
+}
+
+model Delivery {
+  id         Int            @id @default(autoincrement())
+
+  trackingId String         @unique
+
+  customer   String
+  address    String
+  phone      String
+  items      String
+
+  reward     Float
+
+  status     DeliveryStatus @default(ASSIGNED)
+
+  riderId    Int?
+  rider      User?          @relation(fields: [riderId], references: [id])
+
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
 }
