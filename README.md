@@ -130,3 +130,164 @@ AgriFlow includes an **AI-powered chatbot** that helps users get instant agricul
 * Delivery tracking
 * 🤖 AI chatbot assistance
 
+## 🎨 Project Structure
+
+```bash
+client
+├─ eslint.config.mjs
+├─ next.config.ts
+├─ package-lock.json
+├─ package.json
+├─ postcss.config.mjs
+├─ prisma
+│  ├─ migrations
+│  │  ├─ 20260513104140_init
+│  │  │  └─ migration.sql
+│  │  └─ migration_lock.toml
+│  └─ schema.prisma
+├─ README.md
+├─ src
+│  ├─ actions
+│  │  └─ server
+│  │     └─ userActions.ts
+│  ├─ app
+│  │  ├─ about
+│  │  │  └─ page.tsx
+│  │  ├─ agriculturist
+│  │  │  └─ page.tsx
+│  │  ├─ api
+│  │  │  ├─ auth
+│  │  │  │  └─ [...nextauth]
+│  │  │  │     └─ route.ts
+│  │  │  ├─ chat
+│  │  │  │  └─ route.ts
+│  │  │  ├─ delivery
+│  │  │  │  ├─ accept
+│  │  │  │  │  └─ route.ts
+│  │  │  │  ├─ active
+│  │  │  │  │  └─ route.ts
+│  │  │  │  ├─ assigned
+│  │  │  │  │  └─ route.ts
+│  │  │  │  └─ complete
+│  │  │  ├─ register
+│  │  │  │  └─ route.ts
+│  │  │  └─ socket
+│  │  │     └─ route.ts
+│  │  ├─ components
+│  │  │  ├─ Button.tsx
+│  │  │  ├─ Chatbot.tsx
+│  │  │  ├─ Dropdown.tsx
+│  │  │  ├─ Footer.tsx
+│  │  │  ├─ GoogleTranslate
+│  │  │  │  └─ GoogleTranslate.tsx
+│  │  │  ├─ live
+│  │  │  │  ├─ ChatBox.tsx
+│  │  │  │  ├─ FarmInfo.tsx
+│  │  │  │  ├─ LiveRoom.tsx
+│  │  │  │  ├─ LiveSidebar.tsx
+│  │  │  │  └─ VideoPlayer.tsx
+│  │  │  ├─ Logo.tsx
+│  │  │  └─ Navbar.tsx
+│  │  ├─ crop-dieseases
+│  │  │  └─ page.tsx
+│  │  ├─ Dashboard
+│  │  │  ├─ admin
+│  │  │  │  ├─ analytics
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  ├─ delivery-manage
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  ├─ manage-marketplace
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  ├─ manage-users
+│  │  │  │  │  └─ page.jsx
+│  │  │  │  └─ page.tsx
+│  │  │  ├─ buyer
+│  │  │  │  ├─ cart
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  ├─ live-bidding
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  ├─ my-orders
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  └─ page.tsx
+│  │  │  ├─ crop-health
+│  │  │  │  └─ page.tsx
+│  │  │  ├─ delivery-partner
+│  │  │  │  ├─ active-delivery
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  ├─ assigned
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  ├─ delivery-workflow
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  └─ page.tsx
+│  │  │  ├─ farmer
+│  │  │  │  ├─ add-product
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  ├─ my-products
+│  │  │  │  │  └─ page.tsx
+│  │  │  │  └─ page.tsx
+│  │  │  ├─ inventory
+│  │  │  │  └─ page.tsx
+│  │  │  ├─ layout.tsx
+│  │  │  ├─ live
+│  │  │  │  ├─ page.tsx
+│  │  │  │  └─ [room]
+│  │  │  │     └─ page.tsx
+│  │  │  ├─ page.tsx
+│  │  │  ├─ QueryProvider.tsx
+│  │  │  └─ settings
+│  │  │     └─ page.tsx
+│  │  ├─ fertilizer
+│  │  │  └─ page.tsx
+│  │  ├─ globals.css
+│  │  ├─ Home
+│  │  │  ├─ CTA.tsx
+│  │  │  ├─ FAQ.tsx
+│  │  │  ├─ Features.tsx
+│  │  │  ├─ Hero.tsx
+│  │  │  └─ State.tsx
+│  │  ├─ how-it-works
+│  │  │  └─ page.tsx
+│  │  ├─ icon.png
+│  │  ├─ Images
+│  │  │  ├─ apple.png
+│  │  │  ├─ compost.png
+│  │  │  ├─ compostcreate.png
+│  │  │  ├─ Crop-Analysis.png
+│  │  │  ├─ fertilixer.jpg
+│  │  │  ├─ flower.jpg
+│  │  │  ├─ Map.png
+│  │  │  └─ tomato live.jpg
+│  │  ├─ layout.tsx
+│  │  ├─ lib
+│  │  │  ├─ socket.ts
+│  │  │  └─ webrtc.ts
+│  │  ├─ live
+│  │  │  ├─ page.tsx
+│  │  │  └─ [room]
+│  │  │     └─ page.tsx
+│  │  ├─ login
+│  │  │  └─ page.tsx
+│  │  ├─ marketplace
+│  │  │  ├─ page.tsx
+│  │  │  └─ [id]
+│  │  │     └─ page.jsx
+│  │  ├─ page.tsx
+│  │  ├─ providers.tsx
+│  │  ├─ register
+│  │  │  └─ page.tsx
+│  │  ├─ server
+│  │  │  └─ socket-server.js
+│  │  ├─ services
+│  │  │  └─ page.tsx
+│  │  └─ test
+│  │     └─ page.tsx
+│  ├─ lib
+│  │  └─ prisma.ts
+│  └─ providers
+│     └─ Providers.tsx
+├─ tailwind.config.ts
+├─ tsconfig.json
+└─ types
+   └─ next-auth.d.ts
+
+```
