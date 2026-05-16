@@ -1,38 +1,37 @@
-import { prisma } from "@/lib/prisma";
+"use client";
+import { IoReceiptOutline, IoCalendarOutline, IoLocationOutline } from "react-icons/io5";
 
-export default async function OrdersPage() {
-  const orders = await prisma.order.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+export default function MyOrders () {
+  const orders = [
+    { id: "#ORD-772", date: "22 April 2026", status: "Delivered", total: "৳4,200", items: 3 },
+    { id: "#ORD-901", date: "Today", status: "On the way", total: "৳1,500", items: 1 },
+  ];
 
   return (
-    <div className="min-h-screen p-10 bg-gray-50">
-      <h1 className="text-3xl font-bold mb-6">My Orders</h1>
-
-      <div className="grid gap-6">
-        {orders.map((order) => (
-          <div
-            key={order.id}
-            className="bg-white p-5 rounded-2xl shadow flex gap-4"
-          >
-            <img
-              src={order.image}
-              className="w-24 h-24 object-cover rounded-xl"
-            />
-
-            <div>
-              <h2 className="text-xl font-bold">{order.productName}</h2>
-
-              <p>Seller: {order.seller}</p>
-              <p>Quantity: {order.quantity}</p>
-              <p>Total: ৳{order.totalPrice}</p>
-              <p className="text-gray-500">
-                {new Date(order.createdAt).toLocaleString()}
-              </p>
+    <div className="max-w-5xl mx-auto p-6">
+      <h2 className="text-4xl text-green-500 font-black mb-8 flex items-center gap-3"><IoReceiptOutline/> My Orders</h2>
+      <div className="space-y-4">
+        {orders.map(order => (
+          <div key={order.id} className="bg-white p-6 rounded-[2rem] border border-gray-100 flex flex-col md:flex-row justify-between items-center gap-6 group hover:border-green-200 transition-all">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center text-2xl font-black text-green-600">📦</div>
+              <div>
+                <h4 className="font-black text-gray-800">{order.id}</h4>
+                <p className="text-xs text-gray-400 font-bold flex items-center gap-1"><IoCalendarOutline/> {order.date}</p>
+              </div>
+            </div>
+            <div className="flex gap-10 items-center">
+               <div className="text-right">
+                  <p className="text-[10px] font-black text-gray-300 uppercase">Items: {order.items}</p>
+                  <p className="font-black text-xl text-gray-800">{order.total}</p>
+               </div>
+               <span className={`px-4 py-2 rounded-xl text-xs font-black ${order.status === 'Delivered' ? 'bg-green-50 text-green-600' : 'bg-blue-50 text-blue-600 animate-pulse'}`}>
+                 {order.status}
+               </span>
             </div>
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
