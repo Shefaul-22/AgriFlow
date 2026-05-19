@@ -119,7 +119,6 @@ export default function LivePage() {
         </div>
       </div>
 
-     <Footer/>
 
     </div>
   );

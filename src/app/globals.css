@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 :root {
   /* Light Mode */
@@ -25,10 +26,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, sans-serif;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
-/* গুগল ট্রান্সলেট ড্রপডাউন রেসপন্সিভ করার জন্য */
 #google_translate_element {
   width: 100% ;
   display: block !important;
@@ -42,7 +42,7 @@ body {
   gap: 8px !important;
 }
 
-/* আসল ড্রপডাউন বক্সটি */
+/* original dropdown box*/
 .goog-te-combo {
   width: 100% !important;
   max-width: 100% !important;
@@ -75,3 +75,9 @@ body {
     font-size: 16px !important; 
   }
 }
+
+.bg-\[url\(\'\'\)\] {
+    background-image: none !important;
+}
+
+@import "leaflet/dist/leaflet.css";

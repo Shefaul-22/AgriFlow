@@ -6,17 +6,29 @@ import CTA from "@/app/Home/CTA";
 import Footer from "@/app/components/Footer";
 import Navbar from "./components/Navbar";
 import Chatbot from "./components/Chatbot";
+import FAQ from "./Home/FAQ";
+import DiseaseScannerCTA from "./Home/DiseaseScannerCTA";
+import SuccessStories from "./Home/SuccessStories";
+import ImpactStats from './Home/ImpactStats';
+import AppPromo from './Home/AppPromo';
+import Pricing from './Home/Pricing';
 
 export default function Home() {
   return (
-    <div className="min-h-screen font-sans flex flex-col relative">
+    <div className="overflow-x-hidden min-h-screen font-sans flex flex-col relative">
       <Navbar />
       <main className="flex-grow">
         <Hero />
-        <div className="max-w-7xl mx-auto">
+        <div>
           <State />
           <Features />
+          <AppPromo/>
+          <DiseaseScannerCTA></DiseaseScannerCTA>
+          <SuccessStories></SuccessStories>
+          <Pricing></Pricing>
           <CTA />
+          <ImpactStats></ImpactStats>
+          <FAQ/>
         </div>
       </main>
       <Footer />
