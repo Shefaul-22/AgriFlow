@@ -1,36 +1,132 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 🌱 AgriFlow – Smart Agriculture Marketplace Platform
 
-First, run the development server:
+AgriFlow is a modern agriculture-based web platform built with **Next.js (TypeScript)**. It connects **farmers, buyers, and delivery partners** in one ecosystem to simplify crop selling, buying, and live trading.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🌐 Public Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* 🏠 Home
+* 🛒 Marketplace
+* ℹ️ About
+* 🌾 Fertilizer Info
+* 🌱 Crops & Diseases
+* ⚙️ How It Works
+* 🧑‍🌾 Services
+* 📡 Live Crops
+* 👨‍🔬 Agriculturists
+* 🤖 AI Chatbot (Smart Assistant)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🤖 AI Chatbot – Smart Farming Assistant
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+AgriFlow includes an **AI-powered chatbot** that helps users get instant agriculture-related information and platform guidance.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 💬 Capabilities
 
-## Deploy on Vercel
+* 🌾 Crop information & farming tips
+* 🐛 Disease identification (based on symptoms)
+* 🌱 Fertilizer suggestions
+* 💰 Market price guidance
+* 🛍️ Help with buying & orders
+* 🚚 Delivery assistance
+* 📡 Live selling & bidding guidance
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🧠 Smart Role-Based Support
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* 👨‍🌾 **Farmer:** রোগ, ফসলের সমস্যা, সমাধান
+* 🛍️ **Buyer:** দাম, product info, order help
+* 🚚 **Delivery Partner:** delivery status, নির্দেশনা
+
+### ⚙️ Chatbot Tech
+
+* AI API: OpenAI
+* API Route: `/api/chat`
+* Model: GPT-based assistant
+* UI: Floating chat widget (bottom-right)
+
+---
+
+## 🔐 User Roles & Dashboards
+
+### 👨‍💼 Admin
+
+* Manage users (delete users, change roles)
+* Manage marketplace (delete products)
+* View analytics:
+
+  * Crop buying
+  * Selling data
+  * Delivery process
+* Full system control
+
+---
+
+### 👨‍🌾 Farmer
+
+* Add products to marketplace with full details
+* Manage products:
+
+  * View all (My Products)
+  * Update
+  * Delete
+* Go live:
+
+  * Show crops in real-time
+  * Sell crops via live session
+
+---
+
+### 🛍️ Buyer
+
+* Browse marketplace products
+* Purchase via secure payment system
+* View all orders in **My Orders**
+* Participate in **Live Bidding**
+* Buy crops from live sessions
+
+---
+
+### 🚚 Delivery Partner
+
+* Receive assigned orders
+* Deliver products to buyers
+* Manage delivery workflow
+
+---
+
+## 📡 Live Features
+
+* Real-time crop showcasing
+* Live selling system
+* Live bidding functionality
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend:** Next.js (TypeScript)
+* **Styling:** Tailwind CSS
+* **Backend:** API Routes / Server-side logic
+* **Database:** MySQL & Prisma
+* **Authentication:** Role-based system
+* **Version Control:** Git & GitHub
+* **AI Integration:** OpenAI API
+
+---
+
+## 📦 Core Functionalities
+
+* Role-based authentication & authorization
+* Marketplace system
+* Product management (CRUD)
+* Order & payment system
+* Live streaming & bidding system
+* Analytics Dashboard
+* Delivery tracking
+* 🤖 AI chatbot assistance
+

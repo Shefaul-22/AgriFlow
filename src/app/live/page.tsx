@@ -13,7 +13,7 @@ export default function LivePage() {
         </h1>
 
         <p className="mt-4 text-lg text-gray-600">
-          Show and sell your fresh products directly to buyers & dealers in real-time.
+          Show and sell your fresh products directly to buyers & delivaryPartners in real-time.
           Get instant demand, fair price, and global visibility 🚀
         </p>
 

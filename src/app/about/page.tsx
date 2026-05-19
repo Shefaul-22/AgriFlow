@@ -1,12 +1,16 @@
 "use client"
 import React from 'react';
  import tomatolive from "../Images/tomato live.jpg"
+import Navbar from '../components/Navbar';
 
 
 const AboutPage: React.FC = () => {
   return (
+
+    <>
+    <Navbar/>
     <main className="bg-white text-gray-800 font-sans 
-    overflow-hidden">
+    overflow-hidden pt-20 p-4">
    {/* Hero Section */}
 <section className="relative p-6 px-10 bg-gradient-to-br from-green-50 via-emerald-50 to-white px-6 overflow-hidden">
   
@@ -117,7 +121,7 @@ const AboutPage: React.FC = () => {
             ].map((item, index) => (
               <div 
                 key={index}
-                className="group p-10 bg-white border border-green-100 hover:border-green-300 rounded-3xl transition-all hover:-translate-y-3"
+                className="group p-10 bg-white border border-green-100 hover:border-green-300 rounded-3xl transition-all hover:-trangray-y-3"
               >
                 <div className="text-7xl font-bold text-green-600 mb-4">{item.number}</div>
                 <div className="text-2xl font-semibold text-gray-800 mb-1">{item.label}</div>
@@ -272,6 +276,7 @@ const AboutPage: React.FC = () => {
 </section>
 
     </main>
+    </>
   );
 };
 
