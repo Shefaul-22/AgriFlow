@@ -57,3 +57,35 @@ model Delivery {
   createdAt  DateTime       @default(now())
   updatedAt  DateTime       @updatedAt
 }
+
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String
+  category    String
+  price       Float
+  unit        String
+  location    String
+  seller      String
+  image       String
+
+  description String
+  stock       Int
+  delivery    String
+  quality     String
+}
+
+model Order {
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  productName String
+  delivery    String
+  image       String
+  price       Float
+  quantity    Int
+  totalPrice  Float
+  seller      String
+  userEmail   String?
+   status      String   @default("Pending")
+  createdAt   DateTime @default(now())
+}
