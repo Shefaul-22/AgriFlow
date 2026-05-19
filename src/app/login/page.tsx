@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Swal from "sweetalert2"
@@ -79,6 +80,17 @@ export default function LoginPage() {
                     className="btn btn-primary w-full"
                 >
                     {loading ? "Logging in.." : "Login"}
+                </button>
+
+
+
+
+                <button
+                    type="button"
+                    onClick={() => signIn("google", { callbackUrl: "/" })}
+                    className="btn w-full bg-white text-black border"
+                >
+                    Continue with Google
                 </button>
             </form>
         </div>

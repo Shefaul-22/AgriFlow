@@ -3,6 +3,9 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
+
+import { signIn } from "next-auth/react"
+
 import axios from "axios"
 import Swal from "sweetalert2"
 
@@ -170,6 +173,17 @@ export default function RegisterPage() {
 
         <button className="btn btn-primary w-full">
           Register
+        </button>
+
+
+
+
+        <button
+          type="button"
+          onClick={() => signIn("google", { callbackUrl: "/" })}
+          className="btn w-full bg-white text-black border"
+        >
+          Continue with Google
         </button>
       </form>
     </div>
