@@ -14,7 +14,6 @@ import {
 
 import { notFound } from "next/navigation";
 import Link from "next/link";
-
 type Props = {
   params: Promise<{
     id: string;
@@ -27,15 +26,23 @@ export default async function ProductDetailsPage({
 
   const { id } = await params;
 
+  const productId = parseInt(id);
+
+  if (isNaN(productId)) {
+    return notFound();
+  }
+
   const product = await prisma.product.findUnique({
     where: {
-      id: Number(id),
+      id: productId,
     },
   });
 
   if (!product) {
     return notFound();
   }
+
+
 
   return (
     <>

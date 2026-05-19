@@ -34,9 +34,9 @@ const productId = Number(body.productId);
       },
     ],
     mode: "payment",
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success?productId=${productId}&qty=${quantity}`,
+    success_url: `${process.env.NEXTAUTH_URL}/success?productId=${productId}&qty=${quantity}`,
     
-    cancel_url:`${process.env.NEXT_PUBLIC_BASE_URL}/cancel`,
+    cancel_url:`${process.env.NEXTAUTH_URL}/cancel`,
   });
 
   return NextResponse.json({ url: session.url });

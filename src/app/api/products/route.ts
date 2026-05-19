@@ -17,26 +17,51 @@ export async function GET() {
   }
 }
 
+
+
  //add productroute
- export async function POST(req: Request) {
+export async function POST(req: Request) {
   try {
     const formData = await req.formData();
 
+    // image file
     const file = formData.get("image") as File;
 
-    // image convert
+    if (!file) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Image is required",
+        },
+        { status: 400 }
+      );
+    }
+
+    // convert image
     const bytes = await file.arrayBuffer();
 
     const buffer = Buffer.from(bytes);
 
     // unique filename
     const fileName =
-      Date.now() + "-" + file.name;
+      Date.now() +
+      "-" +
+      file.name.replaceAll(" ", "-");
 
-    // upload path
-    const uploadPath = path.join(
+    // upload directory
+    const uploadDir = path.join(
       process.cwd(),
-      "public/uploads",
+      "public/uploads"
+    );
+
+    // create folder if not exists
+    await fs.mkdir(uploadDir, {
+      recursive: true,
+    });
+
+    // final path
+    const uploadPath = path.join(
+      uploadDir,
       fileName
     );
 
@@ -54,39 +79,55 @@ export async function GET() {
           category: String(
             formData.get("category")
           ),
+
           price: parseFloat(
             String(formData.get("price"))
           ),
+
           unit: String(formData.get("unit")),
+
           location: String(
             formData.get("location")
           ),
+
           seller: String(
             formData.get("seller")
           ),
+
           image: imageUrl,
+
           description: String(
             formData.get("description")
           ),
+
           stock: parseInt(
             String(formData.get("stock"))
           ),
+
           delivery: String(
             formData.get("delivery")
           ),
+
           quality: String(
             formData.get("quality")
           ),
         },
       });
 
-    return NextResponse.json(product);
+    return NextResponse.json({
+      success: true,
+      product,
+    });
   } catch (error) {
-    console.log(error);
+    console.log("PRODUCT ERROR:", error);
 
     return NextResponse.json(
-      { error: "Failed to add product" },
+      {
+        success: false,
+        message: "Failed to add product",
+      },
       { status: 500 }
     );
   }
 }
+
