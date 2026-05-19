@@ -79,3 +79,5 @@ body {
 .bg-\[url\(\'\'\)\] {
     background-image: none !important;
 }
+
+@import "leaflet/dist/leaflet.css";
