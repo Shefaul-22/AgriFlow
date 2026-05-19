@@ -1,14 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-// DELETE PRODUCT
+// DELETE
 export async function DELETE(
   req: Request,
-  {
-    params,
-  }: {
-    params: Promise<{ id: string }>;
-  }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
@@ -20,64 +16,49 @@ export async function DELETE(
     });
 
     return NextResponse.json({
-      message:
-        "Product deleted successfully",
+      success: true,
+      message: "Deleted successfully",
     });
   } catch (error) {
-    console.log(error);
-
-    return NextResponse.json(
-      {
-        error: "Delete failed",
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      success: false,
+      message: "Delete failed",
+    });
   }
 }
 
-// UPDATE PRODUCT
+// PATCH
 export async function PATCH(
   req: Request,
-  {
-    params,
-  }: {
-    params: Promise<{ id: string }>;
-  }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
 
     const body = await req.json();
 
-    const updatedProduct =
-      await prisma.product.update({
-        where: {
-          id: Number(id),
-        },
-
-        data: {
-          name: body.name,
-          price: parseFloat(body.price),
-          stock: parseInt(body.stock),
-          unit: body.unit,
-          description:
-            body.description,
-        },
-      });
+    const updated = await prisma.product.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        name: body.name,
+        price: Number(body.price),
+        stock: Number(body.stock),
+        unit: body.unit,
+        description: body.description,
+      },
+    });
 
     return NextResponse.json({
-      message:
-        "Product updated successfully",
-      updatedProduct,
+      success: true,
+      message: "Updated successfully",
+      updated,
     });
   } catch (error) {
-    console.log(error);
-
-    return NextResponse.json(
-      {
-        error: "Update failed",
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      success: false,
+      message: "Update failed",
+    });
   }
 }

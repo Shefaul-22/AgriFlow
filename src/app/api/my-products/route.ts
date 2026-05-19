@@ -1,18 +1,35 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 
-
 export async function GET() {
-  const session = await getServerSession();
+  try {
+    const session = await getServerSession();
 
-  const sellerName = session?.user?.name;
+    const sellerName = session?.user?.name;
 
-  const products =
-    await prisma.product.findMany({
+    if (!sellerName) {
+      return Response.json({
+        success: false,
+        products: [],
+        message: "No session found",
+      });
+    }
+
+    const products = await prisma.product.findMany({
       where: {
-        seller: sellerName || "",
+        seller: sellerName, // MUST match DB exactly
       },
     });
 
-  return Response.json(products);
+    return Response.json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    return Response.json({
+      success: false,
+      products: [],
+      message: "Server error",
+    });
+  }
 }
