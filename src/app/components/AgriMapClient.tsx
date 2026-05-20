@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 
 import "leaflet/dist/leaflet.css";
 
+// from src/data
 import {
   DISTRICTS_DATA,
   CATEGORY_COLORS,
