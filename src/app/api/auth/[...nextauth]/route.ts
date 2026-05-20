@@ -17,6 +17,10 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+
+      // FIX OAuthAccountNotLinked
+      allowDangerousEmailAccountLinking: true,
+
     }),
 
     // =========================
@@ -53,6 +57,9 @@ const handler = NextAuth({
           email: user.email,
           name: user.name,
           image: user.image,
+          role: user.role,
+
+
         }
       },
     }),
@@ -60,7 +67,7 @@ const handler = NextAuth({
 
   //  REQUIRED WITH PRISMA ADAPTER
   session: {
-    strategy: "database",
+    strategy: "jwt",
   },
 
   pages: {
@@ -68,19 +75,47 @@ const handler = NextAuth({
   },
 
   callbacks: {
-    //  JWT SAFE
+    // JWT
+
     async jwt({ token, user }) {
-      if (user?.id) {
+
+      if (user) {
         token.id = user.id
+        token.role = user?.role
       }
+
       return token
     },
 
-    //  SESSION SAFE (FIXED CRASH ISSUE)
+
+
+    // async jwt({ token, user }) {
+
+    //   // first login
+    //   if (user) {
+    //     token.id = user.id
+
+    //     // role comes from db
+    //     const dbUser = await prisma.user.findUnique({
+    //       where: {
+    //         email: user.email!,
+    //       },
+    //     })
+
+    //     token.role = dbUser?.role ?? "user"
+    //   }
+
+    //   return token
+    // },
+
+    // SESSION
     async session({ session, token }) {
-      if (session?.user && token?.id) {
+
+      if (session.user) {
         session.user.id = token.id as string
+        session.user.role = token?.role as string
       }
+
       return session
     },
   },

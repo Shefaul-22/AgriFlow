@@ -18,12 +18,16 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [flashLine, setFlashLine] = useState(false);
+  
 
   // session variable define kora holo (NextAuth use korle useSession theke asbe)
   const session = null; 
   const signOut = () => {}; 
 
+  // 🎯 এই লাইনটি মিসিং ছিল, এটি যোগ করুন:
+  const [flashLine, setFlashLine] = useState(false); 
+
+  // Flash line logic thik rakhar jonno useRef proyojon
   const hasScrolledOnce = useRef(false);
 
   useEffect(() => {
@@ -32,7 +36,7 @@ const Navbar = () => {
 
   useEffect(() => {
     setMounted(true);
-    let timeout;
+    let timeout: NodeJS.Timeout; // টাইপস্ক্রিপ্ট সেফটি
 
     const handleScroll = () => {
       const offset = window.scrollY;
