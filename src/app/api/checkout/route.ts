@@ -2,21 +2,23 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-06-20",
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: Request) {
   const body = await req.json();
-const productId = Number(body.productId);
+
+  const productId = Number(body.productId);
   const quantity = Number(body.quantity || 1);
 
   const product = await prisma.product.findUnique({
-    where: { id: Number(body.productId) },
+    where: { id: productId },
   });
 
   if (!product) {
-    return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    return NextResponse.json(
+      { error: "Product not found" },
+      { status: 404 }
+    );
   }
 
   const session = await stripe.checkout.sessions.create({
@@ -35,8 +37,7 @@ const productId = Number(body.productId);
     ],
     mode: "payment",
     success_url: `${process.env.NEXTAUTH_URL}/success?productId=${productId}&qty=${quantity}`,
-    
-    cancel_url:`${process.env.NEXTAUTH_URL}/cancel`,
+    cancel_url: `${process.env.NEXTAUTH_URL}/cancel`,
   });
 
   return NextResponse.json({ url: session.url });

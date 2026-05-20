@@ -33,14 +33,14 @@
     "react-leaflet": "^5.0.0",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3",
-    "sweetalert2": "^11.26.24",
-    "swiper": "^12.1.4",
     "stripe": "^22.1.1",
-    "sweetalert2": "^11.26.24"
+    "sweetalert2": "^11.26.24",
+    "swiper": "^12.1.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^6.0.0",
+    "@types/leaflet": "^1.9.21",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

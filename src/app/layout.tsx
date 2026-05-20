@@ -2,20 +2,24 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-// import Script from "next/script";
 
 import GoogleTranslate from "./components/GoogleTranslate/GoogleTranslate";
 import QueryProvider from "./Dashboard/QueryProvider";
 import Providers from "./providers";
 
+// ✅ FIX: safe font config (prevents build fetch crash)
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -25,9 +29,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html
       lang="en"
@@ -42,8 +46,8 @@ export default function RootLayout({
             </ThemeProvider>
           </QueryProvider>
         </Providers>
-        {/* Google Translate Scripts */}
-        <GoogleTranslate></GoogleTranslate>
+
+        <GoogleTranslate />
       </body>
     </html>
   );
