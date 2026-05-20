@@ -6,11 +6,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import Logo from "@/app/components/Logo";
 import Link from "next/link";
-import Image from "next/image"; // Image import kora hoyeche
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Dropdown from "@/app/components/Dropdown";
 import { IoHomeOutline } from "react-icons/io5";
-import { ShoppingCart, Info } from "lucide-react";
+import { ShoppingCart, Info, LogOut } from "lucide-react";
+
+// ✅ NEXTAUTH
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -18,16 +21,15 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  
 
-  // session variable define kora holo (NextAuth use korle useSession theke asbe)
-  const session = null; 
-  const signOut = () => {}; 
+  // ✅ SESSION
+  const { data: session } = useSession();
 
-  // 🎯 এই লাইনটি মিসিং ছিল, এটি যোগ করুন:
-  const [flashLine, setFlashLine] = useState(false); 
+  // ✅ PROFILE DROPDOWN
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-  // Flash line logic thik rakhar jonno useRef proyojon
+  const [flashLine, setFlashLine] = useState(false);
+
   const hasScrolledOnce = useRef(false);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const Navbar = () => {
 
   useEffect(() => {
     setMounted(true);
-    let timeout: NodeJS.Timeout; // টাইপস্ক্রিপ্ট সেফটি
+    let timeout: NodeJS.Timeout;
 
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -63,15 +65,18 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled
           ? "backdrop-blur-md bg-white/10 dark:bg-black/20 border-transparent"
           : "dark:bg-black/60 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800"
-      }`}
+        }`}
     >
       <motion.div
         initial={{ width: "0%", opacity: 0 }}
-        animate={flashLine ? { width: "100%", opacity: 1 } : { width: "100%", opacity: 0 }}
+        animate={
+          flashLine
+            ? { width: "100%", opacity: 1 }
+            : { width: "100%", opacity: 0 }
+        }
         transition={{ duration: 0.5, ease: "easeInOut" }}
         className="absolute bottom-0 left-0 h-[2px] bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.8)]"
       />
@@ -83,8 +88,20 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8 font-medium">
-          <Link href="/" className="text-yellow-500 font-semibold hover:text-green-500 hover:underline transition">Home</Link>
-          <Link href="/marketplace" className="text-yellow-500 font-semibold hover:text-green-500 hover:underline transition">Marketplace</Link>
+          <Link
+            href="/"
+            className="text-yellow-500 font-semibold hover:text-green-500 hover:underline transition"
+          >
+            Home
+          </Link>
+
+          <Link
+            href="/marketplace"
+            className="text-yellow-500 font-semibold hover:text-green-500 hover:underline transition"
+          >
+            Marketplace
+          </Link>
+
           <Dropdown
             title="Solutions"
             items={[
@@ -94,6 +111,7 @@ const Navbar = () => {
               { name: "Services", link: "/services" },
             ]}
           />
+
           <Dropdown
             title="Resources"
             items={[
@@ -101,66 +119,128 @@ const Navbar = () => {
               { name: "Agriculturists", link: "/agriculturist" },
             ]}
           />
-          <Link href="/about" className="text-yellow-500 font-semibold hover:text-green-500 transition">About</Link>
+
+          <Link
+            href="/about"
+            className="text-yellow-500 font-semibold hover:text-green-500 transition"
+          >
+            About
+          </Link>
         </div>
 
-        {/* Desktop Right Side - Fixed Logic */}
-        <div className="hidden md:flex items-center gap-6">
+        {/* RIGHT SIDE */}
+        <div className="hidden md:flex items-center gap-6 relative">
+          {/* THEME */}
           <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className={`p-2 rounded-xl text-xl transition-all hover:scale-110 ${
-              scrolled ? "text-green-500" : "text-black dark:text-white"
-            }`}
+            onClick={() =>
+              setTheme(theme === "dark" ? "light" : "dark")
+            }
+            className={`p-2 rounded-xl text-xl transition-all hover:scale-110 ${scrolled
+                ? "text-green-500"
+                : "text-black dark:text-white"
+              }`}
           >
             {theme === "dark" ? <HiSun /> : <HiMoon />}
           </button>
 
+          {/* ✅ USER LOGGED IN */}
           {session ? (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                {session.user?.image && (
-                  <Image
-                    src={session.user.image}
-                    alt="user"
-                    width={32}
-                    height={32}
-                    className="rounded-full"
-                  />
-                )}
-                <span className="hidden lg:block dark:text-white">
-                  {session.user?.name || "User"}
-                </span>
-              </div>
+            <div className="relative">
               <button
-                onClick={() => signOut()}
-                className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600"
+                onClick={() =>
+                  setShowProfileMenu(!showProfileMenu)
+                }
+                className="flex items-center gap-2"
               >
-                Logout
+                <Image
+                  src={
+                    session.user?.image ||
+                    "https://i.ibb.co/4pDNDk1/avatar.png"
+                  }
+                  alt="profile"
+                  width={36}
+                  height={30}
+                  className="rounded-full border-2 border-green-500 object-cover"
+                />
               </button>
+
+              {/* DROPDOWN */}
+              <AnimatePresence>
+                {showProfileMenu && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute right-0 mt-4 w-60 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-zinc-700 overflow-hidden"
+                  >
+                    <div className="p-4 border-b border-gray-200 dark:border-zinc-700">
+                      <h3 className="font-bold dark:text-white">
+                        {session.user?.name}
+                      </h3>
+
+                      <p className="text-sm text-gray-500 truncate">
+                        {session.user?.email}
+                      </p>
+                    </div>
+
+                    <div className="p-2">
+                      <Link
+                        href="/dashboard"
+                        className="flex items-center gap-2 px-4 py-3 rounded-xl hover:bg-green-100 dark:hover:bg-zinc-800 transition"
+                      >
+                        Dashboard
+                      </Link>
+
+                      <button
+                        onClick={() =>
+                          signOut({
+                            callbackUrl: "/",
+                          })
+                        }
+                        className="w-full flex items-center gap-2 px-4 py-3 rounded-xl text-red-500 hover:bg-red-100 dark:hover:bg-zinc-800 transition"
+                      >
+                        <LogOut size={18} />
+                        Logout
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ) : (
             <Link
               href="/login"
-              className={`px-5 py-2 text-sm font-medium transition-colors ${
-                scrolled ? "text-green-500 font-bold" : "text-black dark:text-gray-300"
-              } hover:text-green-400`}
+              className={`px-5 py-2 text-sm font-medium transition-colors ${scrolled
+                  ? "text-green-500 font-bold"
+                  : "text-black dark:text-gray-300"
+                } hover:text-green-400`}
             >
               Log In
             </Link>
           )}
         </div>
 
-        {/* Mobile Buttons */}
+        {/* MOBILE */}
         <div className="md:hidden flex items-center gap-4">
-          <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="text-xl">
+          <button
+            onClick={() =>
+              setTheme(theme === "dark" ? "light" : "dark")
+            }
+            className="text-xl"
+          >
             {theme === "dark" ? <HiSun /> : <HiMoon />}
           </button>
-          <button onClick={() => setIsOpen(!isOpen)} className="text-2xl text-green-600">
+
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-2xl text-green-600"
+          >
             {isOpen ? <HiX /> : <HiMenuAlt3 />}
           </button>
         </div>
       </div>
 
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -170,24 +250,67 @@ const Navbar = () => {
             className="absolute top-20 text-black right-0 w-full bg-green-100/95 dark:bg-zinc-900/95 dark:text-white rounded-b-2xl shadow-xl border-b border-gray-100 dark:border-zinc-800 p-6 flex flex-col gap-4 md:hidden"
           >
             <div className="flex flex-col gap-3">
-              <Link href="/" onClick={() => setIsOpen(false)} className="font-bold text-lg hover:text-green-600 flex items-center gap-2">
-                <IoHomeOutline className="text-green-600 h-5" /> Home
+              <Link
+                href="/"
+                onClick={() => setIsOpen(false)}
+                className="font-bold text-lg hover:text-green-600 flex items-center gap-2"
+              >
+                <IoHomeOutline className="text-green-600 h-5" />
+                Home
               </Link>
-              <Link href="/marketplace" onClick={() => setIsOpen(false)} className="font-bold text-lg hover:text-green-600 flex items-center gap-2">
-                <ShoppingCart className="text-green-600 h-5" /> Marketplace
+
+              <Link
+                href="/marketplace"
+                onClick={() => setIsOpen(false)}
+                className="font-bold text-lg hover:text-green-600 flex items-center gap-2"
+              >
+                <ShoppingCart className="text-green-600 h-5" />
+                Marketplace
               </Link>
-              <Link href="/about" onClick={() => setIsOpen(false)} className="font-bold text-lg hover:text-green-600 flex items-center gap-2">
-                <Info className="text-green-600 h-5" /> About
+
+              <Link
+                href="/about"
+                onClick={() => setIsOpen(false)}
+                className="font-bold text-lg hover:text-green-600 flex items-center gap-2"
+              >
+                <Info className="text-green-600 h-5" />
+                About
               </Link>
             </div>
+
             <hr className="border-gray-300 dark:border-zinc-700" />
+
             <div className="flex flex-col gap-3 mt-2">
-              <Link href="/login" onClick={() => setIsOpen(false)} className="py-3 text-center border-2 border-green-600 font-medium text-green-600 rounded-xl">
-                Log In
-              </Link>
-              <Link href="/Dashboard" onClick={() => setIsOpen(false)} className="py-3 text-center font-medium bg-green-600 text-white rounded-xl">
-                Dashboard
-              </Link>
+              {session ? (
+                <>
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setIsOpen(false)}
+                    className="py-3 text-center font-medium bg-green-600 text-white rounded-xl"
+                  >
+                    Dashboard
+                  </Link>
+
+                  <button
+                    onClick={() =>
+                      signOut({
+                        callbackUrl: "/",
+                      })
+                    }
+                    className="py-3 text-center border-2 border-red-500 text-red-500 rounded-xl"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="py-3 text-center border-2 border-green-600 font-medium text-green-600 rounded-xl"
+                >
+                  Log In
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
