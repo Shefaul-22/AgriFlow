@@ -6,7 +6,7 @@ import { ThemeProvider } from "next-themes";
 
 import GoogleTranslate from "./components/GoogleTranslate/GoogleTranslate";
 import QueryProvider from "./Dashboard/QueryProvider";
-import Providers from "@/providers/Providers";
+import Providers from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,12 +35,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <Providers>
           <QueryProvider>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-          </ThemeProvider>
-          <Providers/>
-        </QueryProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+            </ThemeProvider>
+          </QueryProvider>
+        </Providers>
         {/* Google Translate Scripts */}
         <GoogleTranslate></GoogleTranslate>
       </body>

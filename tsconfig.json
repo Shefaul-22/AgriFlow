@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+   
     "target": "ES2017",
     "lib": [
       "dom",
@@ -17,10 +18,13 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+
     "typeRoots": [
       "./node_modules/@types",
       "./types"
     ],
+
+    
     "plugins": [
       {
         "name": "next"
