@@ -199,7 +199,7 @@ client
 │  │  │  │  ├─ manage-marketplace
 │  │  │  │  │  └─ page.tsx
 │  │  │  │  ├─ manage-users
-│  │  │  │  │  └─ page.jsx
+│  │  │  │  │  └─ page.tsx
 │  │  │  │  └─ page.tsx
 │  │  │  ├─ buyer
 │  │  │  │  ├─ cart
@@ -270,7 +270,7 @@ client
 │  │  ├─ marketplace
 │  │  │  ├─ page.tsx
 │  │  │  └─ [id]
-│  │  │     └─ page.jsx
+│  │  │     └─ page.tsx
 │  │  ├─ page.tsx
 │  │  ├─ providers.tsx
 │  │  ├─ register

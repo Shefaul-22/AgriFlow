@@ -14,15 +14,26 @@ import Image from "next/image";
 import Map from "@/app/Images/Map.png";
 
 /* ─── tiny helpers ─── */
-const TAG = ({ color = "green", children }) => {
+const TAG = ({
+  color = "green",
+  children,
+}: {
+  color?: "green" | "blue" | "amber";
+  children: React.ReactNode;
+}) => {
   const palettes = {
-    green: "bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 border-green-100 dark:border-green-800",
-    blue:  "bg-blue-50  dark:bg-blue-900/30  text-blue-700  dark:text-blue-400  border-blue-100  dark:border-blue-800",
-    amber: "bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-100 dark:border-amber-800",
+    green:
+      "bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 border-green-100 dark:border-green-800",
+    blue:
+      "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-100 dark:border-blue-800",
+    amber:
+      "bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-100 dark:border-amber-800",
   };
+
   return (
-    <span className={`inline-flex items-center rounded-full border px-3.5 py-0.5
-                      text-[10px] font-bold uppercase tracking-wider ${palettes[color]}`}>
+    <span
+      className={`inline-flex items-center rounded-full border px-3.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${palettes[color]}`}
+    >
       {children}
     </span>
   );
@@ -38,8 +49,15 @@ const LearnLink = ({ href = "#", className = "" }) => (
   </Link>
 );
 
-/* ─── card motion wrapper ─── */
-const Card = ({ children, className = "", ...rest }) => (
+const Card = ({
+  children,
+  className = "",
+  ...rest
+}: {
+  children: React.ReactNode;
+  className?: string;
+  [key: string]: any;
+}) => (
   <motion.div
     initial={{ opacity: 0, y: 16 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -52,13 +70,9 @@ const Card = ({ children, className = "", ...rest }) => (
     {children}
   </motion.div>
 );
-
-/* ════════════════════════════════════════
-    FEATURES SECTION
-═══════════════════════════════════════ */
 export default function Features() {
   return (
-  <section className="w-full px-6 md:px-15 py-15 transition-colors duration-300">
+    <section className="w-full px-6 md:px-15 py-15 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* ── Section Header ── */}
@@ -118,16 +132,16 @@ export default function Features() {
                 AI algorithms analyze soil data, climate history, and global market trends to match
                 crops with the most profitable buyers — instantly, at scale.
               </p>
-             
-            <div className="flex flex-wrap gap-2.5">
-              <TAG color="green">Optimized Logistics</TAG>
-              <TAG color="blue">Real-time Demand</TAG>
-              <TAG color="amber">AI-Powered</TAG>
-            </div>
+
+              <div className="flex flex-wrap gap-2.5">
+                <TAG color="green">Optimized Logistics</TAG>
+                <TAG color="blue">Real-time Demand</TAG>
+                <TAG color="amber">AI-Powered</TAG>
+              </div>
             </div>
 
-             <img src="https://i.postimg.cc/z3Z0PDpr/20260519-2049-image.png"  alt=""  className="object-cover rounded-2xl md:h-60 w-full"
-              />
+            <img src="https://i.postimg.cc/z3Z0PDpr/20260519-2049-image.png" alt="" className="object-cover rounded-2xl md:h-60 w-full"
+            />
           </Card>
 
           {/* ── Card 2: Smart Contracts (1 Column) ── */}

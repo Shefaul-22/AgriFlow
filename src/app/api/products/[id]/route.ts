@@ -3,15 +3,15 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+
   const product = await prisma.product.findUnique({
     where: {
-      id: Number(params.id),
+      id: Number(id),
     },
   });
 
   return NextResponse.json(product);
 }
-
- 

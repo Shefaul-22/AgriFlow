@@ -7,33 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-enum Role {
-  user
-  admin
-  seller
-  farmer
-}
-
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  password  String   //  ADD THIS for pass
-  image     String?
-
-  role      UserRole @default(BUYER)
-
-  deliveries Delivery[]
-
-  role          Role     @default(user)
-
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-
 enum UserRole {
   ADMIN
   FARMER
@@ -48,30 +21,89 @@ enum DeliveryStatus {
   CANCELLED
 }
 
-model Delivery {
-  id         Int            @id @default(autoincrement())
+model User {
+  id String @id @default(cuid())
 
-  trackingId String         @unique
+  email    String  @unique
+  name     String?
+  password String?
+  image    String?
 
-  customer   String
-  address    String
-  phone      String
-  items      String
+  role UserRole @default(BUYER)
 
-  reward     Float
+  deliveries Delivery[]
+  orders     Order[]
 
-  status     DeliveryStatus @default(ASSIGNED)
+  // NEXTAUTH
+  accounts Account[]
+  sessions Session[]
 
-  riderId    Int?
-  rider      User?          @relation(fields: [riderId], references: [id])
+  emailVerified DateTime?
 
-  createdAt  DateTime       @default(now())
-  updatedAt  DateTime       @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
+model Account {
+  id Int @id @default(autoincrement())
+
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+
+  refresh_token String? @db.Text
+  access_token  String? @db.Text
+  expires_at    Int?
+  token_type    String?
+  scope         String?
+  id_token      String? @db.Text
+  session_state String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id Int @id @default(autoincrement())
+
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Delivery {
+  id         Int    @id @default(autoincrement())
+  trackingId String @unique
+
+  customer String
+  address  String
+  phone    String
+  items    String
+  reward   Float
+
+  status DeliveryStatus @default(ASSIGNED)
+
+  riderId String?
+  rider   User?   @relation(fields: [riderId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 model Product {
-  id          Int     @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   name        String
   category    String
   price       Float
@@ -79,7 +111,6 @@ model Product {
   location    String
   seller      String
   image       String
-
   description String
   stock       Int
   delivery    String
@@ -87,7 +118,7 @@ model Product {
 }
 
 model Order {
-  id          Int      @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   productId   Int
   productName String
   delivery    String
@@ -96,7 +127,10 @@ model Order {
   quantity    Int
   totalPrice  Float
   seller      String
-  userEmail   String?
-   status      String   @default("Pending")
-  createdAt   DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  status    String   @default("Pending")
+  createdAt DateTime @default(now())
 }

@@ -2,8 +2,12 @@
 
 import { useRef, useEffect } from "react";
 
-export default function VideoPlayer({ stream }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+type VideoPlayerProps = {
+  stream?: MediaStream | null;
+};
+
+export default function VideoPlayer({ stream }: VideoPlayerProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     if (stream && videoRef.current) {

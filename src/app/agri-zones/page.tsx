@@ -300,11 +300,6 @@ export default function AgriMapPage() {
             </span>
           </div>
 
-          {/*
-            KEY FIX: map-block wrapper uses `touch-action: pan-x pan-y` on the outer div
-            but the inner Leaflet container gets `touch-action: none` via CSS above.
-            The `onWheel` stopPropagation prevents page scroll when hovering the map.
-          */}
           <div
             className="map-block overflow-hidden rounded-2xl border-2 border-green-200
                        shadow-[0_6px_36px_rgba(20,83,45,.12)]"
