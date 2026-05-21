@@ -1,39 +1,48 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   IoPeopleOutline, IoSearchOutline, IoTrashOutline, 
-  IoCreateOutline, IoShieldCheckmarkOutline,
-  IoPersonCircleOutline, IoCloseOutline
+  IoCreateOutline, IoPersonCircleOutline, IoCloseOutline
 } from "react-icons/io5";
 
-const ManageUsers = () => {
-  const [users, setUsers] = useState([
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+}
+
+const ManageUsers: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([
     { id: 1, name: "Shefaul Islam", email: "shefaul@agriflow.com", role: "Admin", status: "Active" },
     { id: 2, name: "Rahat Khan", email: "rahat@farm.com", role: "Farmer", status: "Active" },
     { id: 3, name: "Anika Ahmed", email: "anika@buyer.com", role: "Buyer", status: "Pending" },
     { id: 4, name: "Karim Uddin", email: "karim@agri.com", role: "Farmer", status: "Active" },
   ]);
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [editingUser, setEditingUser] = useState(null); // এডিট করার জন্য স্টেট
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [editingUser, setEditingUser] = useState<User | null>(null);
 
-  // সার্চ লজিক
+  // Search logic filter string comparisons
   const filteredUsers = users.filter(user => 
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const deleteUser = (id) => {
+  const deleteUser = (id: number): void => {
     if(window.confirm("Are you sure you want to delete this user?")) {
       setUsers(users.filter(user => user.id !== id));
     }
   };
 
-  const handleUpdateUser = (e) => {
+  const handleUpdateUser = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const updatedData = Object.fromEntries(formData.entries());
+    if (!editingUser) return;
+
+    const formData = new FormData(e.currentTarget);
+    const updatedData = Object.fromEntries(formData.entries()) as Partial<Omit<User, 'id' | 'status'>>;
     
     setUsers(users.map(u => u.id === editingUser.id ? { ...u, ...updatedData } : u));
     setEditingUser(null);
@@ -57,7 +66,7 @@ const ManageUsers = () => {
             <input 
               type="text" 
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
               placeholder="Search by name or email..." 
               className="pl-12 pr-6 py-4 bg-white border border-gray-100 rounded-2xl w-full md:w-80 outline-none focus:ring-2 focus:ring-green-500 shadow-sm transition-all font-medium"
             />
@@ -88,7 +97,9 @@ const ManageUsers = () => {
                     >
                       <td className="px-8 py-6">
                         <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center text-green-600"><IoPersonCircleOutline size={30} /></div>
+                          <div className="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center text-green-600">
+                            <IoPersonCircleOutline size={30} />
+                          </div>
                           <div>
                             <h4 className="font-bold text-gray-800">{user.name}</h4>
                             <p className="text-xs font-medium text-gray-400">{user.email}</p>
@@ -96,12 +107,18 @@ const ManageUsers = () => {
                         </div>
                       </td>
                       <td className="px-8 py-6">
-                        <span className="px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest bg-gray-100 text-gray-600 border border-gray-200">{user.role}</span>
+                        <span className="px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest bg-gray-100 text-gray-600 border border-gray-200">
+                          {user.role}
+                        </span>
                       </td>
                       <td className="px-8 py-6 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <button onClick={() => setEditingUser(user)} className="p-2 hover:bg-white rounded-xl hover:text-green-600 transition-all border border-transparent hover:border-gray-100"><IoCreateOutline size={20} /></button>
-                          <button onClick={() => deleteUser(user.id)} className="p-2 hover:bg-rose-50 rounded-xl text-gray-400 hover:text-rose-600 transition-all"><IoTrashOutline size={20} /></button>
+                          <button onClick={() => setEditingUser(user)} className="p-2 hover:bg-white rounded-xl hover:text-green-600 transition-all border border-transparent hover:border-gray-100">
+                            <IoCreateOutline size={20} />
+                          </button>
+                          <button onClick={() => deleteUser(user.id)} className="p-2 hover:bg-rose-50 rounded-xl text-gray-400 hover:text-rose-600 transition-all">
+                            <IoTrashOutline size={20} />
+                          </button>
                         </div>
                       </td>
                     </motion.tr>
@@ -130,7 +147,9 @@ const ManageUsers = () => {
             >
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-2xl font-black text-gray-800">Edit User</h3>
-                <button onClick={() => setEditingUser(null)} className="p-2 hover:bg-gray-100 rounded-full transition-colors"><IoCloseOutline size={24} /></button>
+                <button onClick={() => setEditingUser(null)} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                  <IoCloseOutline size={24} />
+                </button>
               </div>
 
               <form onSubmit={handleUpdateUser} className="space-y-5">
@@ -147,7 +166,9 @@ const ManageUsers = () => {
                     <option>Buyer</option>
                   </select>
                 </div>
-                <button type="submit" className="w-full bg-green-600 text-white font-black py-4 rounded-2xl shadow-xl shadow-green-200 hover:bg-green-700 transition-all active:scale-95">Update Permissions</button>
+                <button type="submit" className="w-full bg-green-600 text-white font-black py-4 rounded-2xl shadow-xl shadow-green-200 hover:bg-green-700 transition-all active:scale-95">
+                  Update Permissions
+                </button>
               </form>
             </motion.div>
           </div>

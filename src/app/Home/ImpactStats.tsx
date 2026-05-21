@@ -2,17 +2,28 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
-export default function ImpactStats() {
-  const containerRef = useRef(null);
+interface StatItem {
+  id: number;
+  value: string;
+  label: string;
+  sub: string;
+  svgPath: string;
+}
+
+export default function ImpactStats(): React.JSX.Element {
+  const containerRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
-    gsap.fromTo(
-      ".stat-metric-card",
-      { opacity: 0, scale: 0.92, y: 20 },
-      { opacity: 1, scale: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power3.out" }
-    );
+    if (containerRef.current) {
+      gsap.fromTo(
+        containerRef.current.querySelectorAll(".stat-metric-card"),
+        { opacity: 0, scale: 0.92, y: 20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power3.out" }
+      );
+    }
   }, []);
 
-  const stats = [
+  const stats: StatItem[] = [
     { 
       id: 1, 
       value: "10K+", 

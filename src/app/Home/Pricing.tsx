@@ -3,24 +3,35 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
+import type { Swiper as SwiperType } from 'swiper';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 
+interface PricingTier {
+  name: string;
+  price: string;
+  desc: string;
+  features: string[];
+  btnText: string;
+}
+
 export default function Pricing() {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLHeadingElement | null>(null);
   // একটিভ স্লাইড ট্র্যাক করার জন্য স্টেট
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState<number>(1);
 
   useEffect(() => {
-    gsap.fromTo(
-      containerRef.current,
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
-    );
+    if (containerRef.current) {
+      gsap.fromTo(
+        containerRef.current,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+      );
+    }
   }, []);
 
-  const tiers = [
+  const tiers: PricingTier[] = [
     {
       name: "Starter Layer",
       price: "Free",
