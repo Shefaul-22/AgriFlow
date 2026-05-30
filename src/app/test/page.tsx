@@ -26,7 +26,7 @@ export default async function TestPage() {
 
     const users = await prisma.user.findMany()
 
-    console.log("Users:", users)
+    // console.log("Users:", users)
 
     return (
         <div>
