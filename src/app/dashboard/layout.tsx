@@ -13,10 +13,10 @@ import { GrDeliver } from "react-icons/gr";
 import { BiDna } from "react-icons/bi";
 import { TiFlowSwitch } from "react-icons/ti";
 
-const role = "buyer"; 
+const role = "BUYER"; 
 
 const sidebarConfig = {
-  farmer: [
+  FARMER: [
     { name: 'Home', href: '/', icon: IoHomeOutline },
     { name: 'Overview', href: '/dashboard/farmer', icon: CiBoxList },
     { name: 'Add Product', href: '/dashboard/farmer/add-product', icon: IoBagAddOutline },
@@ -26,7 +26,7 @@ const sidebarConfig = {
     { name: 'Settings', href: '/dashboard/settings', icon: IoSettingsOutline },
   ],
 
-  admin: [
+  ADMIN: [
     { name: 'Home', href: '/', icon: IoHomeOutline },
     { name: 'Overview', href: '/dashboard/admin', icon: CiBoxList },
     { name: 'Manage Users', href: '/dashboard/admin/manage-users', icon: FaUserCog },
@@ -36,7 +36,7 @@ const sidebarConfig = {
     { name: 'Settings', href: '/dashboard/settings', icon: IoSettingsOutline },
   ],
 
-  deliveryPartner: [
+  DELIVERY_PARTNER: [
     { name: 'Home', href: '/', icon: IoHomeOutline },
     { name: 'Overview', href: '/dashboard/delivery-partner', icon: CiBoxList },
   { name: 'Assigned', href: '/dashboard/delivery-partner/assigned', icon: MdOutlineAssignment },
@@ -45,7 +45,7 @@ const sidebarConfig = {
     { name: 'Settings', href: '/dashboard/settings', icon: IoSettingsOutline },
   ],
 
-  buyer: [
+  BUYER: [
     { name: 'Home', href: '/', icon: IoHomeOutline },
     { name: 'Overview', href: '/dashboard/buyer', icon: CiBoxList },
     { name: 'Live Bidding', href: '/dashboard/buyer/live-bidding', icon: BiDna },
