@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
 import GoogleTranslate from "./components/GoogleTranslate/GoogleTranslate";
-import QueryProvider from "./Dashboard/QueryProvider";
+import QueryProvider from "./dashboard/QueryProvider";
 import Providers from "./providers";
 
 // ✅ FIX: safe font config (prevents build fetch crash)

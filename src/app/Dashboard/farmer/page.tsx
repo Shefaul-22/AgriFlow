@@ -66,7 +66,7 @@ export default function FarmerPage() {
               Boost sales by 40%.
             </p>
             <Link
-              href="/Dashboard/live"
+              href="/dashboard/live"
               className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-2xl font-black text-sm hover:bg-emerald-500 hover:text-white transition-all active:scale-95 shadow-xl"
             >
               GO LIVE NOW <HiOutlineArrowTrendingUp />
@@ -177,7 +177,7 @@ export default function FarmerPage() {
               inventory to keep selling.
             </p>
             <Link
-              href="/Dashboard/farmer/my-products"
+              href="/dashboard/farmer/my-products"
               className="px-6 py-3 bg-emerald-500 hover:bg-emerald-400 rounded-xl font-bold text-xs transition-all inline-block"
             >
               Update Products

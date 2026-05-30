@@ -41,7 +41,7 @@ export default function AdminPage() {
           </p>
         </div>
         <div className="flex gap-3">
-          <Link href='/Dashboard/settings' className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center border border-zinc-200 dark:border-zinc-700 active:scale-95 transition-all hover:bg-zinc-200 dark:hover:bg-zinc-700">
+          <Link href='/dashboard/settings' className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center border border-zinc-200 dark:border-zinc-700 active:scale-95 transition-all hover:bg-zinc-200 dark:hover:bg-zinc-700">
             <IoSettingsOutline className="text-zinc-500 dark:text-zinc-400 animate-spin-slow" />
           </Link>
         </div>
@@ -75,13 +75,13 @@ export default function AdminPage() {
             </p>
             <div className="flex gap-4 pt-2">
               <Link
-                href="/Dashboard/admin/manage-users"
+                href="/dashboard/admin/manage-users"
                 className="inline-flex items-center gap-3 bg-white text-indigo-600 px-8 py-4 rounded-2xl font-black text-sm hover:shadow-xl transition-all active:scale-95"
               >
                 MANAGE USERS <HiOutlineUsers />
               </Link>
               <Link
-                href="/Dashboard/admin/analytics"
+                href="/dashboard/admin/analytics"
                 className="inline-flex items-center gap-3 bg-indigo-900/30 text-white border border-indigo-400/30 px-8 py-4 rounded-2xl font-black text-sm hover:bg-indigo-500/50 transition-all active:scale-95 backdrop-blur-sm"
               >
                 VIEW ANALYTICS

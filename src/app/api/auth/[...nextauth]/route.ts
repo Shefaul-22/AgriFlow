@@ -74,53 +74,82 @@ const handler = NextAuth({
     signIn: "/login",
   },
 
-  callbacks: {
-    // JWT
+  // callbacks: {
+  //   // JWT
 
+  //   async jwt({ token, user }) {
+
+  //     if (user) {
+  //       token.id = user.id
+  //       token.role = user?.role
+  //     }
+
+  //     return token
+  //   },
+
+
+
+  //   // async jwt({ token, user }) {
+
+  //   //   // first login
+  //   //   if (user) {
+  //   //     token.id = user.id
+
+  //   //     // role comes from db
+  //   //     const dbUser = await prisma.user.findUnique({
+  //   //       where: {
+  //   //         email: user.email!,
+  //   //       },
+  //   //     })
+
+  //   //     token.role = dbUser?.role ?? "user"
+  //   //   }
+
+  //   //   return token
+  //   // },
+
+  //   // SESSION
+  //   async session({ session, token }) {
+
+  //     if (session.user) {
+  //       session.user.id = token.id as string
+  //       // session.user.role = token?.role as string
+  //       session.user.role = (token.role ?? "BUYER") as string
+  //     }
+
+  //     return session
+  //   },
+  // },
+
+  callbacks: {
     async jwt({ token, user }) {
 
-      if (user) {
-        token.id = user.id
-        token.role = user?.role
+      if (user?.email) {
+        const dbUser = await prisma.user.findUnique({
+          where: {
+            email: user.email,
+          },
+        })
+
+        if (dbUser) {
+          token.id = dbUser.id
+          token.role = dbUser.role
+        }
       }
 
       return token
     },
 
-
-
-    // async jwt({ token, user }) {
-
-    //   // first login
-    //   if (user) {
-    //     token.id = user.id
-
-    //     // role comes from db
-    //     const dbUser = await prisma.user.findUnique({
-    //       where: {
-    //         email: user.email!,
-    //       },
-    //     })
-
-    //     token.role = dbUser?.role ?? "user"
-    //   }
-
-    //   return token
-    // },
-
-    // SESSION
     async session({ session, token }) {
 
       if (session.user) {
         session.user.id = token.id as string
-        // session.user.role = token?.role as string
-        session.user.role = (token.role ?? "BUYER") as string
+        session.user.role = token.role as string
       }
 
       return session
     },
   },
-
   secret: process.env.NEXTAUTH_SECRET,
 })
 

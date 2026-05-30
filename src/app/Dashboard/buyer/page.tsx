@@ -59,7 +59,7 @@ export default function BuyerPage() {
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-black text-gray-800 tracking-tight">Recent Orders</h2>
-              <Link href='/Dashboard/buyer/my-orders' className="text-emerald-600 font-bold text-sm flex items-center gap-1 hover:underline">View All <IoChevronForwardOutline /></Link>
+              <Link href='/dashboard/buyer/my-orders' className="text-emerald-600 font-bold text-sm flex items-center gap-1 hover:underline">View All <IoChevronForwardOutline /></Link>
             </div>
 
             {[1, 2].map((order) => (
