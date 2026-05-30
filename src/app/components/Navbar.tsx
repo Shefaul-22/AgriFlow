@@ -188,7 +188,7 @@ const Navbar = () => {
                         href="/dashboard"
                         className="flex items-center gap-2 px-4 py-3 rounded-xl hover:bg-green-100 dark:hover:bg-zinc-800 transition"
                       >
-                        Dashboard
+                        dashboard
                       </Link>
 
                       <button
@@ -288,7 +288,7 @@ const Navbar = () => {
                     onClick={() => setIsOpen(false)}
                     className="py-3 text-center font-medium bg-green-600 text-white rounded-xl"
                   >
-                    Dashboard
+                    dashboard
                   </Link>
 
                   <button

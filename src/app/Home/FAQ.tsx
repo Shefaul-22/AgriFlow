@@ -140,7 +140,7 @@ const FAQ = () => {
             <div className="collapse collapse-plus bg-base-100 border border-base-300 mb-2">
                 <input type="checkbox" name="my-accordion-3" defaultChecked />
                 <div className="collapse-title font-semibold">How do I access the admin dashboard?</div>
-                <div className="collapse-content text-sm">Admins can log in and access the Admin Dashboard link in the main navigation (requires admin credentials/role).</div>
+                <div className="collapse-content text-sm">Admins can log in and access the Admin dashboard link in the main navigation (requires admin credentials/role).</div>
             </div>
             <div className="collapse collapse-plus bg-base-100 border border-base-300 mb-2">
                 <input type="checkbox" name="my-accordion-3" defaultChecked />

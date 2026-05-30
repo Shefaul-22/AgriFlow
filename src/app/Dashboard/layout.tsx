@@ -57,7 +57,7 @@ const sidebarConfig = {
 
 const sidebarLinks = sidebarConfig[role];
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function dashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (

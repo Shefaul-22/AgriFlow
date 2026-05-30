@@ -51,7 +51,7 @@ AgriFlow includes an **AI-powered chatbot** that helps users get instant agricul
 
 ---
 
-## 🔐 User Roles & Dashboards
+## 🔐 User Roles & dashboards
 
 ### 👨‍💼 Admin
 
@@ -126,7 +126,7 @@ AgriFlow includes an **AI-powered chatbot** that helps users get instant agricul
 * Product management (CRUD)
 * Order & payment system
 * Live streaming & bidding system
-* Analytics Dashboard
+* Analytics dashboard
 * Delivery tracking
 * 🤖 AI chatbot assistance
 
@@ -190,7 +190,7 @@ client
 │  │  │  └─ Navbar.tsx
 │  │  ├─ crop-dieseases
 │  │  │  └─ page.tsx
-│  │  ├─ Dashboard
+│  │  ├─ dashboard
 │  │  │  ├─ admin
 │  │  │  │  ├─ analytics
 │  │  │  │  │  └─ page.tsx

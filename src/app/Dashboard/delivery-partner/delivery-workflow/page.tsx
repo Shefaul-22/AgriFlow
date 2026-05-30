@@ -23,7 +23,7 @@ type Task = {
   img: string;
 };
 
-export default function RiderDashboard() {
+export default function Riderdashboard() {
   const [tasks, setTasks] = useState<Task[]>([
     {
       id: "DLV-101",

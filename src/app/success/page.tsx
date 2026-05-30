@@ -142,7 +142,7 @@ export default async function SuccessPage({ searchParams }: Props) {
         </div>
 
         <Link
-          href="/Dashboard/buyer/my-orders"
+          href="/dashboard/buyer/my-orders"
           className="mt-8 inline-block w-full bg-green-600 hover:bg-green-700 transition text-white font-bold py-4 rounded-2xl"
         >
           Go To My Orders
