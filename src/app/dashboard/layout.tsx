@@ -1,90 +1,129 @@
 "use client";
-import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 import { CiBoxList } from "react-icons/ci";
-import { RiMentalHealthLine } from "react-icons/ri"
-import { MdOutlineBookmarkBorder , MdOutlineNotificationsActive ,MdOutlineAnalytics , MdOutlineAddShoppingCart,MdOutlineAssignment} from "react-icons/md";
-import { IoSettingsOutline, IoHomeOutline, IoBagAddOutline, IoListOutline } from "react-icons/io5";
-import Logo from '@/app/components/Logo';
+import { RiMentalHealthLine, RiLiveLine } from "react-icons/ri";
+import {
+  MdOutlineBookmarkBorder,
+  MdOutlineNotificationsActive,
+  MdOutlineAnalytics,
+  MdOutlineAddShoppingCart,
+  MdOutlineAssignment,
+} from "react-icons/md";
+import {
+  IoSettingsOutline,
+  IoHomeOutline,
+  IoBagAddOutline,
+  IoListOutline,
+} from "react-icons/io5";
+
+import Logo from "@/app/components/Logo";
 import { FaUserCog } from "react-icons/fa";
-import { RiLiveLine } from "react-icons/ri";
 import { GrDeliver } from "react-icons/gr";
 import { BiDna } from "react-icons/bi";
 import { TiFlowSwitch } from "react-icons/ti";
 
-const role = "BUYER"; 
+/* ---------- TYPES ---------- */
+type Role = "ADMIN" | "FARMER" | "DELIVERY_PARTNER" | "BUYER";
 
-const sidebarConfig = {
+type SidebarItem = {
+  name: string;
+  href: string;
+  icon: React.ElementType;
+};
+
+const sidebarConfig: Record<Role, SidebarItem[]> = {
   FARMER: [
-    { name: 'Home', href: '/', icon: IoHomeOutline },
-    { name: 'Overview', href: '/dashboard/farmer', icon: CiBoxList },
-    { name: 'Add Product', href: '/dashboard/farmer/add-product', icon: IoBagAddOutline },
-    { name: 'My Products', href: '/dashboard/farmer/my-products', icon: IoListOutline },
-    { name: 'Health', href: '/dashboard/crop-health', icon: RiMentalHealthLine },
-    { name: 'Live Farm', href: '/dashboard/live', icon: RiLiveLine },
-    { name: 'Settings', href: '/dashboard/settings', icon: IoSettingsOutline },
+    { name: "Home", href: "/", icon: IoHomeOutline },
+    { name: "Overview", href: "/dashboard/farmer", icon: CiBoxList },
+    { name: "Add Product", href: "/dashboard/farmer/add-product", icon: IoBagAddOutline },
+    { name: "My Products", href: "/dashboard/farmer/my-products", icon: IoListOutline },
+    { name: "Health", href: "/dashboard/crop-health", icon: RiMentalHealthLine },
+    { name: "Live Farm", href: "/dashboard/live", icon: RiLiveLine },
+    { name: "Settings", href: "/dashboard/settings", icon: IoSettingsOutline },
   ],
 
   ADMIN: [
-    { name: 'Home', href: '/', icon: IoHomeOutline },
-    { name: 'Overview', href: '/dashboard/admin', icon: CiBoxList },
-    { name: 'Manage Users', href: '/dashboard/admin/manage-users', icon: FaUserCog },
-    { name: 'Manage Deliveries', href: '/dashboard/admin/delivery-manage', icon: GrDeliver },
-    { name: 'Manage Marketplace', href: '/dashboard/admin/manage-marketplace', icon: MdOutlineAddShoppingCart },
-    { name: 'Analytics', href: '/dashboard/admin/analytics', icon: MdOutlineAnalytics },
-    { name: 'Settings', href: '/dashboard/settings', icon: IoSettingsOutline },
+    { name: "Home", href: "/", icon: IoHomeOutline },
+    { name: "Overview", href: "/dashboard/admin", icon: CiBoxList },
+    { name: "Manage Users", href: "/dashboard/admin/manage-users", icon: FaUserCog },
+    { name: "Manage Deliveries", href: "/dashboard/admin/delivery-manage", icon: GrDeliver },
+    { name: "Manage Marketplace", href: "/dashboard/admin/manage-marketplace", icon: MdOutlineAddShoppingCart },
+    { name: "Analytics", href: "/dashboard/admin/analytics", icon: MdOutlineAnalytics },
+    { name: "Settings", href: "/dashboard/settings", icon: IoSettingsOutline },
   ],
 
   DELIVERY_PARTNER: [
-    { name: 'Home', href: '/', icon: IoHomeOutline },
-    { name: 'Overview', href: '/dashboard/delivery-partner', icon: CiBoxList },
-  { name: 'Assigned', href: '/dashboard/delivery-partner/assigned', icon: MdOutlineAssignment },
-  { name: 'Active', href: '/dashboard/delivery-partner/active-delivery', icon: MdOutlineNotificationsActive },
-  { name: 'Workflow', href: '/dashboard/delivery-partner/delivery-workflow', icon: TiFlowSwitch },
-    { name: 'Settings', href: '/dashboard/settings', icon: IoSettingsOutline },
+    { name: "Home", href: "/", icon: IoHomeOutline },
+    { name: "Overview", href: "/dashboard/delivery-partner", icon: CiBoxList },
+    { name: "Assigned", href: "/dashboard/delivery-partner/assigned", icon: MdOutlineAssignment },
+    { name: "Active", href: "/dashboard/delivery-partner/active-delivery", icon: MdOutlineNotificationsActive },
+    { name: "Workflow", href: "/dashboard/delivery-partner/delivery-workflow", icon: TiFlowSwitch },
+    { name: "Settings", href: "/dashboard/settings", icon: IoSettingsOutline },
   ],
 
   BUYER: [
-    { name: 'Home', href: '/', icon: IoHomeOutline },
-    { name: 'Overview', href: '/dashboard/buyer', icon: CiBoxList },
-    { name: 'Live Bidding', href: '/dashboard/buyer/live-bidding', icon: BiDna },
-    { name: 'Cart', href: '/dashboard/buyer/cart', icon: MdOutlineBookmarkBorder  },
-    { name: 'My Orders', href: '/dashboard/buyer/my-orders', icon: MdOutlineAddShoppingCart },
-    { name: 'Settings', href: '/dashboard/settings', icon: IoSettingsOutline },
+    { name: "Home", href: "/", icon: IoHomeOutline },
+    { name: "Overview", href: "/dashboard/buyer", icon: CiBoxList },
+    { name: "Live Bidding", href: "/dashboard/buyer/live-bidding", icon: BiDna },
+    { name: "Cart", href: "/dashboard/buyer/cart", icon: MdOutlineBookmarkBorder },
+    { name: "My Orders", href: "/dashboard/buyer/my-orders", icon: MdOutlineAddShoppingCart },
+    { name: "Settings", href: "/dashboard/settings", icon: IoSettingsOutline },
   ],
 };
 
-const sidebarLinks = sidebarConfig[role];
-
-export default function dashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
+  const { data: session, status } = useSession();
+
+  const role = (session?.user?.role as Role) || "BUYER";
+  const sidebarLinks = sidebarConfig[role];
+
+  const isActive = (href: string) =>
+    href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(href + "/");
+
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <span className="loading loading-spinner loading-lg" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      
-      {/* --- Desktop Sidebar (Hidden on Mobile) --- */}
+
+      {/* Desktop Sidebar */}
       <aside className="hidden md:flex w-64 border-r border-gray-100 dark:border-zinc-800 flex-col p-6 fixed h-full bg-white dark:bg-zinc-900 z-50">
+        
         <div className="text-2xl font-bold text-deep-green mb-8 flex items-center gap-2">
-           <div className="w-8 h-8">
-             <Logo />
-           </div>
+          <div className="w-8 h-8">
+            <Logo />
+          </div>
         </div>
 
         <nav className="flex-1 space-y-1">
           {sidebarLinks.map((link) => {
             const Icon = link.icon;
-            const isActive = link.href === '/' 
-              ? pathname === '/' 
-              : (pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href + '/')));
+
             return (
               <Link
                 key={link.name}
                 href={link.href}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${
-                  isActive 
-                  ? 'bg-green-600 text-white shadow-lg shadow-green-200 dark:shadow-none' 
-                  : 'text-gray-500 hover:bg-green-50 dark:hover:bg-zinc-800'
+                  isActive(link.href)
+                    ? "bg-green-600 text-white shadow-lg shadow-green-200 dark:shadow-none"
+                    : "text-gray-500 hover:bg-green-50 dark:hover:bg-zinc-800"
                 }`}
               >
                 <Icon className="text-xl" />
@@ -94,29 +133,31 @@ export default function dashboardLayout({ children }: { children: React.ReactNod
           })}
         </nav>
 
-        {/* User Profile */}
+        {/* Profile */}
         <div className="mt-auto pt-6 border-t border-gray-100 dark:border-zinc-800">
-           <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-zinc-700"></div>
-              <div>
-                 <p className="text-sm font-bold dark:text-white">Profile Name</p>
-                 <p className="text-xs text-gray-400">Pro Farmer</p>
-              </div>
-           </div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-zinc-700" />
+            <div>
+              <p className="text-sm font-bold dark:text-white">
+                {session?.user?.name || "Profile Name"}
+              </p>
+              <p className="text-xs text-gray-400">{role}</p>
+            </div>
+          </div>
         </div>
       </aside>
 
-      {/* --- Mobile Bottom Navigation (Hidden on Desktop) --- */}
+      {/* Mobile Bottom Nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 backdrop-blur-lg border-t border-gray-200 dark:border-zinc-800 px-2 py-3 z-50 flex justify-around items-center">
-        {sidebarLinks.map((link) => { 
+        {sidebarLinks.map((link) => {
           const Icon = link.icon;
-          const isActive = pathname === link.href;
+
           return (
-            <Link 
-              key={link.name} 
+            <Link
+              key={link.name}
               href={link.href}
               className={`flex flex-col items-center gap-1 transition-all ${
-                isActive ? 'text-green-600' : 'text-gray-400'
+                isActive(link.href) ? "text-green-600" : "text-gray-400"
               }`}
             >
               <Icon className="text-2xl" />
@@ -126,7 +167,7 @@ export default function dashboardLayout({ children }: { children: React.ReactNod
         })}
       </nav>
 
-      {/* --- Main Content Area --- */}
+      {/* Main */}
       <main className="flex-1 md:ml-64 p-4 md:p-8 pb-24 md:pb-8">
         {children}
       </main>
