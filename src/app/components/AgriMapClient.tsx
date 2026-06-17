@@ -49,22 +49,6 @@ useEffect(() => {
 }, []);
 
 
-// delete L.Icon.Default.prototype._getIconUrl;
-// L.Icon.Default.mergeOptions({
-//   iconUrl:
-//     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-//   shadowUrl:
-//     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-// });
-
-// const getCatStyle = (cat: string) =>
-//   CATEGORY_COLORS[cat] || {
-//     bg: "#f1f5f9",
-//     text: "#334155",
-//     dot: "#64748b",
-//     border: "#e2e8f0",
-//   };
-
 const getCatStyle = (cat: string) =>
   CATEGORY_COLORS[cat as keyof typeof CATEGORY_COLORS] || {
     bg: "#f1f5f9",

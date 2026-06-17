@@ -49,9 +49,6 @@ const LearnLink = ({ href = "#", className = "" }) => (
   </Link>
 );
 
-/* ─── card motion wrapper ─── */
-
-/* ─── card motion wrapper ─── */
 const Card = ({
   children,
   className = "",
@@ -73,23 +70,6 @@ const Card = ({
     {children}
   </motion.div>
 );
-// const Card = ({ children, className = "", ...rest }) => (
-//   <motion.div
-//     initial={{ opacity: 0, y: 16 }}
-//     whileInView={{ opacity: 1, y: 0 }}
-//     viewport={{ once: true, margin: "-60px" }}
-//     whileHover={{ y: -5, transition: { duration: 0.2 } }}
-//     transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-//     className={className}
-//     {...rest}
-//   >
-//     {children}
-//   </motion.div>
-// );
-
-/* ════════════════════════════════════════
-    FEATURES SECTION
-═══════════════════════════════════════ */
 export default function Features() {
   return (
     <section className="w-full px-6 md:px-15 py-15 transition-colors duration-300">
